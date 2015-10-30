@@ -210,10 +210,10 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
             lable3?.text=(items[indexPath.row] as itemMess).time
             lable4?.text=(items[indexPath.row] as itemMess).address
 
-            lable5?.text="关注数:1"
-            lable6?.text="评论数:1"
-            lable7?.text="报名数:1"
-            
+//            lable5?.text="关注数:1"
+//            lable6?.text="评论数:1"
+//            lable7?.text="报名数:1"
+//            
             if ((items[indexPath.row] as itemMess).infocatagory == "0")
             {
                 lable8?.text="求"
@@ -265,7 +265,36 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 }
             }
             
-            
+            var url_str:String = "http://www.bbxiaoqu.com/getitemnums.php"
+            Alamofire.request(.GET,url_str, parameters:["_guid":(items[indexPath.row] as itemMess).guid])
+                .responseJSON {response in
+                    print(response.result.value)
+                    if let JSON1 = response.result.value {
+                        print("JSON1: \(JSON1.count)")
+                        if(JSON1.count==0)
+                        {
+                            lable5?.text="关注数:1"
+                            lable6?.text="评论数:1"
+                            lable7?.text="报名数:1"
+                            
+                        }else
+                        {
+                            let gznum:String = String(JSON1.objectForKey("gznum") as! NSString);
+                            
+                            let bmnum:String = String(JSON1.objectForKey("bmnum") as! NSString);
+                            let dnum:String = String(JSON1.objectForKey("dnum") as! NSString);
+                            
+                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                            lable5?.text="关:"+bmnum
+                                            lable6?.text="评:"+dnum
+                                            lable7?.text="报:"+gznum
+                                            
+                            })
+                            
+                        }
+                        
+                    }
+            }
             
             
             if(indexPath.row%2 == 0)
