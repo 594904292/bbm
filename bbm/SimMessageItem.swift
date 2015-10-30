@@ -78,7 +78,7 @@ class SimMessageItem
         datelabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
         datelabel.text = "2015-10-16"
         datelabel.font = font
-        datelabel.backgroundColor = UIColor.blueColor()
+        //datelabel.backgroundColor = UIColor.blueColor()
         
         var insets:UIEdgeInsets =  (mtype == SimChatType.Mine ?
             SimMessageItem.getTextInsetsMine() : SimMessageItem.getTextInsetsSomeone())
