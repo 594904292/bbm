@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "LoginViewController.(login_r(LoginViewController) -&gt; (String, pass : String) -&gt; ()).(closure #1):LoginViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "OneViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:OneViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "request(Method, URLStringConvertible, parameters : [String : AnyObject]?, encoding : ParameterEncoding, headers : [String : String]?) -&gt; Request:Alamofire.swift">
+      </ContextState>
+      <ContextState
+         contextName = "LoginViewController.login(String, pass : String) -&gt; Bool:LoginViewController.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
