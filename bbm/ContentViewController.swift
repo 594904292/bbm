@@ -18,6 +18,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,Sim
     @IBOutlet weak var lvsv: UIScrollView!
     var txtMsg:UITextField!
     
+    @IBOutlet weak var headimgview: UIImageView!
     var infoid:String = "";
     var guid:String = "";
     var puserid:String=""
@@ -25,7 +26,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,Sim
     
     var senduserid:String=""
     var senduser:String=""
-
+    var headface:String=""
+    
     @IBOutlet weak var sendtime: UILabel!
     @IBOutlet weak var sendaddress: UIImageView!
    
@@ -93,11 +95,11 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,Sim
                         self.infoid = JSON[0].objectForKey("id") as! String;
                         let title:String = JSON[0].objectForKey("title") as! String;
                         let contentstr:String = JSON[0].objectForKey("content") as! String;
-                        let headface:String = JSON[0].objectForKey("headface") as! String;
-                        let sendtimestr:String = JSON[0].objectForKey("sendtime") as! String;
+                         let sendtimestr:String = JSON[0].objectForKey("sendtime") as! String;
                         let infocatagroy:String = JSON[0].objectForKey("infocatagroy") as! String;
-                        
-                        
+
+                        self.headface = JSON[0].objectForKey("headface") as! String
+                    
                         self.puserid = JSON[0].objectForKey("senduser") as! String;
                         self.puser = JSON[0].objectForKey("username") as! String;
                         
@@ -107,9 +109,23 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,Sim
                         })
                         
                     }
+                    self.loadheadface(self.puserid,headname:self.headface)
+
                     self.loaddiscuzzBody(self.infoid)
                 }
         }        
+    }
+    
+    func loadheadface(userid:String,headname:String)
+    {
+        var head:String="http://www.bbxiaoqu.com/uploads/".stringByAppendingString(headface)
+        Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
+            if let d = data as? NSData!
+            {
+                self.headimgview?.image=UIImage(data: d)
+            }
+        }
+        
     }
     
 
