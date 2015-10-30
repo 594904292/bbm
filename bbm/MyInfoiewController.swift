@@ -128,7 +128,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                             {
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                     
-                                    headface?.image = UIImage(data: d)
+                                    self.headface?.image = UIImage(data: d)
                                 })
                             }
                         }
