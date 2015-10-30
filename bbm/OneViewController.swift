@@ -230,29 +230,38 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
             
            if((items[indexPath.row] as itemMess).photo.isKindOfClass(NSNull))
             {
-                headface?.image=UIImage(named: "add")
+                headface?.image=UIImage(named: "icon")
 
             }else
             {
                 var head:String!
                 var ppp:String = (items[indexPath.row] as itemMess).photo;
-                if((ppp.rangeOfString(",") ) != nil)
+                if ppp.characters.count > 0
                 {
-                    var myArray = ppp.componentsSeparatedByString(",")
-                    var headname = myArray[0] as String
-                    head = "http://www.bbxiaoqu.com/uploads/"+headname
+                    if((ppp.rangeOfString(",") ) != nil)
+                    {
+                        var myArray = ppp.componentsSeparatedByString(",")
+                        var headname = myArray[0] as String
+                        head = "http://www.bbxiaoqu.com/uploads/"+headname
+                        
+                         NSLog("-1--\(head)")
+                    }else
+                    {
+                        head = "http://www.bbxiaoqu.com/uploads/"+ppp
+                         NSLog("-2--\(head)")
+                    }
+                    
+                    NSLog("\((items[indexPath.row] as itemMess).photo)")
+                   
+                    Alamofire.request(.GET, head!).response { (_, _, data, _) -> Void in
+                        if let d = data as? NSData!
+                        {
+                             headface?.image=UIImage(data: d)
+                        }
+                    }
                 }else
                 {
-                    head = "http://www.bbxiaoqu.com/uploads/"+ppp
-                }
-                
-                NSLog("\((items[indexPath.row] as itemMess).photo)")
-                NSLog("\(head)")
-                Alamofire.request(.GET, head!).response { (_, _, data, _) -> Void in
-                    if let d = data as? NSData!
-                    {
-                         headface?.image=UIImage(data: d)
-                    }
+                    headface?.image=UIImage(named: "icon")
                 }
             }
             
