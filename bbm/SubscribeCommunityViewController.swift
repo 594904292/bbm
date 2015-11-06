@@ -95,47 +95,41 @@ class SubscribeCommunityViewController: UIViewController ,UINavigationController
          let headface:UIImageView? = (cell?.viewWithTag(5) as? UIImageView)
         let lable1:UILabel? = (cell?.viewWithTag(1) as? UILabel)
         let lable2:UILabel? = (cell?.viewWithTag(2) as? UILabel)
-       
-        //let cell = UITableViewCell(style:.Subtitle, reuseIdentifier:"myCell")
-        //var xq:xiqoquItem = self.items[indexPath.row] as! xiqoquItem;
+  
         var aaa:xiaoquItem = items[indexPath.row] as xiaoquItem
-        var headurl:String = aaa.pic
         
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            headface?.image=UIImage(named: "icon")
+        })
         
-//        
-//        let url = NSURL(fileURLWithPath:headurl)
-//        let request = NSURLRequest(URL: url);
-//        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue()){(_,data,e) -> Void
-//            in
-//            if e == nil
-//            {
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                     headface?.image = UIImage(data: data!)
-//                })
-//               
-//            }
-//        
-//        }
-        //let nsd = NSData(contentsOfURL:NSURL(string: headurl)!)
-        
-        //headface?.image = UIImage(data: nsd!);
-        
-        
-        print("pic: \(aaa.pic)")
-        print("name: \(aaa.name)")
-        print("address: \(aaa.address)")
-        
-
-    Alamofire.request(.GET, headurl).response { (_, _, data, _) -> Void in
-       if let d = data as? NSData!
+        if(aaa.pic.isKindOfClass(NSNull))
         {
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-
-                headface?.image = UIImage(data: d)
-            })
+            headface?.image=UIImage(named: "icon")
+            
+        }else
+        {
+            var headurl:String = aaa.pic
+            if(headurl.characters.count>0)
+            {
+                print("pic: \(aaa.pic)")
+                print("name: \(aaa.name)")
+                print("address: \(aaa.address)")
+                Alamofire.request(.GET, headurl).response { (_, _, data, _) -> Void in
+                   if let d = data as? NSData!
+                    {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                           headface?.image = UIImage(data: d)
+                        })
+                    }
+                }
+            }else
+            {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                   headface?.image=UIImage(named: "icon")
+                })
+           
+            }
         }
-    }
-
 
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
 
@@ -159,10 +153,7 @@ class SubscribeCommunityViewController: UIViewController ,UINavigationController
         
         
         var url_str:String = "http://www.bbxiaoqu.com/getxiaoqu.php?latitude=".stringByAppendingString(lat).stringByAppendingString("&longitude=").stringByAppendingString(lng)
-//        
-//        
-//    
-        Alamofire.request(.GET, url_str, parameters: nil)
+            Alamofire.request(.GET, url_str, parameters: nil)
             
             .responseJSON { response in
                 
@@ -185,14 +176,6 @@ class SubscribeCommunityViewController: UIViewController ,UINavigationController
                         
                         var business:String = ""
                         
-//                        if(data.objectForKey("business")!.isKindOfClass(NSNull))
-//                        {
-//                            business = "";
-//                        }else
-//                        {
-//                            business = data.objectForKey("business") as! String;
-//                            
-//                        }
 
                         
                         

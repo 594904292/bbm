@@ -75,22 +75,36 @@ class GzCommunityViewController: UIViewController ,UINavigationControllerDelegat
         //let cell = UITableViewCell(style:.Subtitle, reuseIdentifier:"myCell")
         //var xq:xiqoquItem = self.items[indexPath.row] as! xiqoquItem;
         var aaa:xiaoquItem = items[indexPath.row] as xiaoquItem
-        var headurl:String = aaa.pic
-        
-        
-           
-        print("pic: \(aaa.pic)")
-        print("name: \(aaa.name)")
-        print("address: \(aaa.address)")
-        
-        
-        Alamofire.request(.GET, headurl).response { (_, _, data, _) -> Void in
-            if let d = data as? NSData!
+        //var headurl:String = aaa.pic
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            headface?.image=UIImage(named: "icon")
+        })
+        if(aaa.pic.isKindOfClass(NSNull))
+        {
+            headface?.image=UIImage(named: "icon")
+            
+        }else
+        {
+            var headurl:String = aaa.pic
+            if(headurl.characters.count>0)
+            {
+                print("pic: \(aaa.pic)")
+                print("name: \(aaa.name)")
+                print("address: \(aaa.address)")
+                Alamofire.request(.GET, headurl).response { (_, _, data, _) -> Void in
+                    if let d = data as? NSData!
+                    {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            headface?.image = UIImage(data: d)
+                        })
+                    }
+                }
+            }else
             {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    
-                    headface?.image = UIImage(data: d)
+                    headface?.image=UIImage(named: "icon")
                 })
+                
             }
         }
         
