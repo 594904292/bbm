@@ -34,10 +34,7 @@ class GzInfoViewController: UIViewController,UINavigationControllerDelegate,UITa
     func backClick()
     {
         NSLog("back");
-        let sb = UIStoryboard(name:"Main", bundle: nil)
-        let vc = sb.instantiateViewControllerWithIdentifier("homeController") as! HomeViewController
-        self.presentViewController(vc, animated: true, completion: nil)
-        
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     /*
@@ -181,8 +178,8 @@ class GzInfoViewController: UIViewController,UINavigationControllerDelegate,UITa
                         
                         
                         let infocatagroy:String = data.objectForKey("infocatagroy") as! String;
-                        var infoobj:itemMess=itemMess(userid:senduser,vname: "", vtime: sendtime, vaddress: address, vcontent: content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, vis_coming: "1", vreaded: "0")
-                        self.items.append(infoobj)
+//                        var infoobj:itemMess=itemMess(userid:senduser,vname: "", vtime: sendtime, vaddress: address, vcontent: content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, vis_coming: "1", vreaded: "0")
+//                        self.items.append(infoobj)
                     }
                     self.tableview.reloadData();
             }

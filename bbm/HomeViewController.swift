@@ -19,7 +19,6 @@ class HomeViewController: UITabBarController,UINavigationControllerDelegate,Apns
     var three:UIViewController!
     var four:UIViewController!
     
-    
     func NewMessage(string:String){
         //qzLabel!.text = string
         //println("qzLabel.text == \(string)")
@@ -49,8 +48,48 @@ class HomeViewController: UITabBarController,UINavigationControllerDelegate,Apns
             item1.image=UIImage(named:images[index])
         }
         self.selectedIndex = 0
+//        if (self.appDelegate().connect())
+//        {
+//            print("show buddy list")
+//            
+//        }
+       // send()
+        //if (self.appDelegate().connect()) {
+          //  print("show buddy list")
+            
+       // }
     }
     
+    func send()
+    {
+        //XMPPFramework主要是通过KissXML来生成XML文件
+        //生成<body>文档
+        let body:DDXMLElement = DDXMLElement.elementWithName("body") as! DDXMLElement
+        body.setStringValue("我来自apple")
+        
+        //生成XML消息文档
+        let mes:DDXMLElement = DDXMLElement.elementWithName("message") as! DDXMLElement
+        //消息类型
+        mes.addAttributeWithName("type",stringValue:"chat")
+        //发送给谁
+        mes.addAttributeWithName("to" ,stringValue:"888@bbxiaoqu")
+         //由谁发送
+        mes.addAttributeWithName("from" ,stringValue:"369@bbxiaoqu")
+        //组合
+        mes.addChild(body)
+        
+        //发送消息
+        //self.appDelegate().xmppStream!.sendElement(mes)
+    
+    }
+    
+    
+    //取得当前程序的委托
+    func  appDelegate() -> AppDelegate{
+        
+        return UIApplication.sharedApplication().delegate as! AppDelegate
+        
+    }
     
     func backClick()
     {
@@ -65,16 +104,6 @@ class HomeViewController: UITabBarController,UINavigationControllerDelegate,Apns
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
 
     

@@ -69,7 +69,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         
         var btn:UIButton = arr[mCurrent] as UIButton;
 
-        btn.setImage(UIImage(named:"add"), forState:UIControlState.Normal)
+        btn.setImage(UIImage(named:"ic_add_picture"), forState:UIControlState.Normal)
         btn.setTitle("添加", forState:UIControlState.Normal)
         btn.enabled=true
         
@@ -82,36 +82,58 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     func backClick()
     {
         NSLog("back");
-        let sb = UIStoryboard(name:"Main", bundle: nil)
-        let vc = sb.instantiateViewControllerWithIdentifier("homeController") as! HomeViewController
-        self.presentViewController(vc, animated: true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
 
     }
     
     
-    func uploadImage(url:String,imagePath:String){
-
-        var fileURL: NSURL = NSURL(fileURLWithPath: imagePath)
-        //SData *dateImg = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
-        //var data:NSData = NSData(contentsOfURL:url)!
-        //let fileURL=NSBundle.mainBundle().URLForResource(imagePath, withExtension: "png")
-        // Alamofire.upload(.POST, url, file: fileURL!)
-      Alamofire.upload(.POST, url, file: fileURL)
-            .progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
-                print(totalBytesWritten)
-                // This closure is NOT called on the main queue for performance
-                // reasons. To update your ui, dispatch to the main queue.
-                dispatch_async(dispatch_get_main_queue()) {
-                    print("Total bytes written on main queue: \(totalBytesWritten)")
-                }
-            }
-            .responseJSON { response in
-                debugPrint(response)
+  
+    func uploadImg(image: String,filename: String){
+        //设定路径
+        var furl: NSURL = NSURL(fileURLWithPath: image)
+        /** 把UIImage转化成NSData */
+        let imageData = NSData(contentsOfURL: furl)
+        if (imageData != nil) {
+        
+        /** 设置上传图片的URL和参数 */
+        let defaults = NSUserDefaults.standardUserDefaults();
+        let user_id = defaults.stringForKey("userid")
+        let url = "http://www.bbxiaoqu.com/upload.php?user=\(user_id!)"
+        let request = NSMutableURLRequest(URL: NSURL(string:url)!)
+        
+        /** 设定上传方法为Post */
+        request.HTTPMethod = "POST"
+        let boundary = NSString(format: "---------------------------14737809831466499882746641449")
+        
+        /** 上传文件必须设置 */
+        let contentType = NSString(format: "multipart/form-data; boundary=%@",boundary)
+        request.addValue(contentType as String, forHTTPHeaderField: "Content-Type")
+        
+        /** 设置上传Image图片属性 */
+        let body = NSMutableData()
+        body.appendData(NSString(format: "\r\n--%@\r\n", boundary).dataUsingEncoding(NSUTF8StringEncoding)!)
+        
+        body.appendData(NSString(format:"Content-Disposition: form-data; name=\"uploadfile\"; filename=\"%@\"\r\n",filename).dataUsingEncoding(NSUTF8StringEncoding)!)
+        
+        body.appendData(NSString(format: "Content-Type: application/octet-stream\r\n\r\n").dataUsingEncoding(NSUTF8StringEncoding)!)
+        body.appendData(imageData! as! NSData)
+        
+        body.appendData(NSString(format: "\r\n--%@\r\n", boundary).dataUsingEncoding(NSUTF8StringEncoding)!)
+        request.HTTPBody = body
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response, data, error) -> Void in
+        
+        if (error == nil && data?.length > 0) {
+        
+        /** 设置解码方式 */
+        let returnString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        let returnData = returnString?.dataUsingEncoding(NSUTF8StringEncoding)
+       
+            print("returnString----\(returnString)")
         }
-    
+        })
+        }
     }
-    
-    
     
     func addClick()
     {
@@ -120,17 +142,31 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         var guid:String
         uuid = CFUUIDCreate(nil)
         guid = CFUUIDCreateString(nil, uuid) as String;
-        
-        
+        let defaults = NSUserDefaults.standardUserDefaults();
+        let userid = defaults.objectForKey("userid") as! String;
+        let lat = defaults.objectForKey("lat") as! String;
+        let lng = defaults.objectForKey("lng") as! String;
+        var photo:String = "";
         for(var i:Int = 0;i<imgarr.count;i++ )
         {
-            var name:String = imgarr[i] as String
+            var path:String = imgarr[i] as String
             
-            uploadImage("http://www.bbxiaoqu.com/upload.php",imagePath:name)
+            var date = NSDate()
+            var timeFormatter = NSDateFormatter()
+            timeFormatter.dateFormat = "yyyMMddHHmmss"
+            var strNowTime = timeFormatter.stringFromDate(date) as String
             
-        
+            var spath:String = userid.stringByAppendingString("/").stringByAppendingString(strNowTime).stringByAppendingString("_").stringByAppendingString(String(i)).stringByAppendingString(".jpg")
+            
+            var fname:String = strNowTime.stringByAppendingString("_").stringByAppendingString(String(i)).stringByAppendingString(".jpg")
 
-        }
+            photo = photo.stringByAppendingString(spath)
+            if(i<imgarr.count-1)
+            {
+             photo = photo+","
+            }
+            uploadImg(path,filename: fname)
+         }
         
         var date = NSDate()
         var timeFormatter = NSDateFormatter()
@@ -140,15 +176,11 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         
         let mess:String = content.text!
         
-        let defaults = NSUserDefaults.standardUserDefaults();
-        let userid = defaults.objectForKey("userid") as! String;
-        let lat = defaults.objectForKey("lat") as! String;
-        let lng = defaults.objectForKey("lng") as! String;
+        
 
         let country = defaults.objectForKey("country") as! String;
         let province = defaults.objectForKey("province") as! String;//省直辖市
         let city = defaults.objectForKey("city") as! String;//城市
-//        let subadministrativearea = defaults.objectForKey("subadministrativearea") as! String;//区县
         let sublocality = defaults.objectForKey("sublocality") as! String;//区县
         let thoroughfare = defaults.objectForKey("thoroughfare") as! String;//街道
         let address = defaults.objectForKey("address") as! String;
@@ -170,7 +202,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         dic["street"]=thoroughfare;
         dic["guid"] = guid;
         
-        dic["photo"] = "";
+        dic["photo"] = photo;
         dic["village"] = thoroughfare;
         dic["address"] = address;
         dic["sendtime"] = strNowTime;
@@ -241,18 +273,38 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     }
     
     
+    //UIImagePicker回调方法
+//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+//        //获取照片的原图
+//        //let image = (info as NSDictionary).objectForKey(UIImagePickerControllerOriginalImage)
+//        //获得编辑后的图片
+//        let image = (info as NSDictionary).objectForKey(UIImagePickerControllerEditedImage)
+//        //保存图片至沙盒
+//        self.saveImage(image as! UIImage, imageName: iconImageFileName)
+//        let fullPath = ((NSHomeDirectory() as NSString).stringByAppendingPathComponent("Documents") as NSString).stringByAppendingPathComponent(iconImageFileName)
+//        //存储后拿出更新头像
+//        let savedImage = UIImage(contentsOfFile: fullPath)
+//        self.icon.image=savedImage
+//        picker.dismissViewControllerAnimated(true, completion: nil)
+//    }
+    
     //选择好照片后choose后执行的方法
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
-        
+        //获取照片的原图
         img = info[UIImagePickerControllerEditedImage] as! UIImage
-        //imgView.image = img
-        let btn:UIButton = arr[mCurrent] as UIButton;
+         let btn:UIButton = arr[mCurrent] as UIButton;
         btn.setImage(img, forState:UIControlState.Normal)
         btn.enabled=false;
         let pos:String = String(mCurrent)
-        self.saveImage(img, newSize: CGSize(width: 256, height: 256), percent: 0.5, imageName: "currentImage.png")
-        let fullPath: String = NSHomeDirectory().stringByAppendingString("/").stringByAppendingString("Documents").stringByAppendingString("/").stringByAppendingString(pos).stringByAppendingString("_.png")
+        var iconImageFileName=pos.stringByAppendingString(".jpg")
+        //保存图片至沙盒
+        //self.saveImage(img, newSize: CGSize(width: 256, height: 256), percent: 0.5, imageName: imgname)
+       self.saveImage(img, newSize: CGSize(width: 256, height: 256), percent: 0.5,imageName: iconImageFileName)
+        
+        //let fullPath: String = NSHomeDirectory().stringByAppendingString("/").stringByAppendingString("Documents").stringByAppendingString("/").stringByAppendingString(pos).stringByAppendingString(".png")
+       let fullPath = ((NSHomeDirectory() as NSString).stringByAppendingPathComponent("Documents") as NSString).stringByAppendingPathComponent(iconImageFileName)
+        
         print("fullPath=\(fullPath)")
         imgarr.append(fullPath);
         
@@ -266,7 +318,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
             let addbtn:UIButton = arr[mCurrent] as UIButton;
             addbtn.setTitle("添加", forState:UIControlState.Normal)
             addbtn.enabled=true
-            addbtn.setImage(UIImage(named:"add"), forState:UIControlState.Normal)
+            addbtn.setImage(UIImage(named:"ic_add_picture"), forState:UIControlState.Normal)
             
         }
 
@@ -275,21 +327,40 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     }
     
     
-    func saveImage(currentImage: UIImage, newSize: CGSize, percent: CGFloat, imageName: String){
-                 //压缩图片尺寸
-                 UIGraphicsBeginImageContext(newSize)
-                  currentImage.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-                 let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-                 UIGraphicsEndImageContext()
-                  //高保真压缩图片质量
-                  //UIImageJPEGRepresentation此方法可将图片压缩，但是图片质量基本不变，第二个参数即图片质量参数。
-                 let imageData: NSData = UIImageJPEGRepresentation(newImage, percent)!
-                  // 获取沙盒目录,这里将图片放在沙盒的documents文件夹中
-                  //应用程序目录的路径
-                  let fullPath: String = NSHomeDirectory().stringByAppendingString("/").stringByAppendingString("Documents").stringByAppendingString("/").stringByAppendingString(imageName)
-                 // 将图片写入文件
-                 imageData.writeToFile(fullPath, atomically: false)
-              }
+    
+    //MARK: - 保存图片至沙盒
+    func saveImage(currentImage:UIImage,newSize: CGSize, percent: CGFloat,imageName:String){
+        
+        UIGraphicsBeginImageContext(newSize)
+         currentImage.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+         let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+          UIGraphicsEndImageContext()
+        let imageData: NSData = UIImageJPEGRepresentation(newImage, percent)!
+
+        
+        //var imageData = NSData()
+        //imageData = UIImageJPEGRepresentation(currentImage, 0.5)!
+        // 获取沙盒目录
+        let fullPath = ((NSHomeDirectory() as NSString).stringByAppendingPathComponent("Documents") as NSString).stringByAppendingPathComponent(imageName)
+        // 将图片写入文件
+        imageData.writeToFile(fullPath, atomically: false)
+    }
+    
+//    func saveImage(currentImage: UIImage, newSize: CGSize, percent: CGFloat, imageName: String){
+//                 //压缩图片尺寸
+//                 UIGraphicsBeginImageContext(newSize)
+//                  currentImage.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+//                 let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+//                 UIGraphicsEndImageContext()
+//                  //高保真压缩图片质量
+//                  //UIImageJPEGRepresentation此方法可将图片压缩，但是图片质量基本不变，第二个参数即图片质量参数。
+//                 let imageData: NSData = UIImageJPEGRepresentation(newImage, percent)!
+//                  // 获取沙盒目录,这里将图片放在沙盒的documents文件夹中
+//                  //应用程序目录的路径
+//                  let fullPath: String = NSHomeDirectory().stringByAppendingString("/").stringByAppendingString(imageName)
+//                 // 将图片写入文件
+//                 imageData.writeToFile(fullPath, atomically: false)
+//              }
     
     
     //cancel后执行的方法

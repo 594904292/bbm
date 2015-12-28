@@ -49,11 +49,7 @@ class MyInterestViewController:UIViewController ,UINavigationControllerDelegate,
     func backClick()
     {
         NSLog("back");
-        let sb = UIStoryboard(name:"Main", bundle: nil)
-        let vc = sb.instantiateViewControllerWithIdentifier("homeController") as! HomeViewController
-        self.presentViewController(vc, animated: true, completion: nil)
-        
-    }
+        self.navigationController?.popViewControllerAnimated(true)    }
     
     /*
     // MARK: - Navigation

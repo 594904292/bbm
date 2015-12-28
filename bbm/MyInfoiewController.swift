@@ -35,12 +35,9 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
         self.navigationItem.title="个人资料"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         // Do any additional setup after loading the view.
-        
-        
-        
         sex.delegate = self
        
-       sex.dataSource = self
+        sex.dataSource = self
         let defaults = NSUserDefaults.standardUserDefaults();
       
         
@@ -59,9 +56,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
     func backClick()
     {
         NSLog("back");
-        let sb = UIStoryboard(name:"Main", bundle: nil)
-        let vc = sb.instantiateViewControllerWithIdentifier("homeController") as! HomeViewController
-        self.presentViewController(vc, animated: true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
         
     }
     
@@ -86,8 +81,6 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                 //                print(response.data)     // server data
                 //                print(response.result)   // result of response serialization
                                 print(response.result.value)
-                
-                
                 if let JSON = response.result.value {
                     print("JSON1: \(JSON.count)")
                     if(JSON.count==0)

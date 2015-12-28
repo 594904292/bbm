@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController,UINavigationControllerDelegate {
     @IBOutlet weak var loginbtn: UIButton!
     
     @IBOutlet weak var login_username: UITextField!
@@ -49,9 +49,17 @@ class LoginViewController: UIViewController {
          if(login(a,pass:b))
         {
             
+//            let sb = UIStoryboard(name:"Main", bundle: nil)
+//            let vc = sb.instantiateViewControllerWithIdentifier("mainController") as! MainViewController
+//            self.presentViewController(vc, animated: true, completion: nil)
+            
             let sb = UIStoryboard(name:"Main", bundle: nil)
-            let vc = sb.instantiateViewControllerWithIdentifier("homeController") as! HomeViewController
-            self.presentViewController(vc, animated: true, completion: nil)
+            let vc = sb.instantiateViewControllerWithIdentifier("mainController") as! MainViewController
+             //创建导航控制器
+            let nvc=UINavigationController(rootViewController:vc);
+            //设置根视图
+            self.view.window!.rootViewController=nvc;
+
         }else
         {
             login_r(a,pass:b)
@@ -68,11 +76,11 @@ class LoginViewController: UIViewController {
     {
       Alamofire.request(.POST, "http://www.bbxiaoqu.com/login.php", parameters:["_userid" : username])
             .responseJSON { response in
-//                print(response.request)  // original URL request
-//                print(response.response) // URL response
-//                print(response.data)     // server data
-//                print(response.result)   // result of response serialization
-//                print(response.result.value)
+                print(response.request)  // original URL request
+                print(response.response) // URL response
+                print(response.data)     // server data
+                print(response.result)   // result of response serialization
+                print(response.result.value)
                 
 
                 if let JSON = response.result.value {
@@ -100,9 +108,18 @@ class LoginViewController: UIViewController {
                         let flag:Bool = self.login(userid, pass:pass)
                         if(flag)
                         {
+//                            let sb = UIStoryboard(name:"Main", bundle: nil)
+//                            let vc = sb.instantiateViewControllerWithIdentifier("mainController") as! MainViewController
+//
+//                            self.presentViewController(vc, animated: true, completion: nil)
+                            
                             let sb = UIStoryboard(name:"Main", bundle: nil)
-                            let vc = sb.instantiateViewControllerWithIdentifier("homeController") as! HomeViewController
-                            self.presentViewController(vc, animated: true, completion: nil)
+                            let vc = sb.instantiateViewControllerWithIdentifier("mainController") as! MainViewController
+                            //创建导航控制器
+                            let nvc=UINavigationController(rootViewController:vc);
+                            //设置根视图
+                            self.view.window!.rootViewController=nvc;
+
                         }else
                         {
                             self.alertView = UIAlertView()
@@ -122,21 +139,6 @@ class LoginViewController: UIViewController {
         alertView!.dismissWithClickedButtonIndex(0, animated:true)
     }
     
-//
-//    func requestUrl(urlString: String){
-//        var url: NSURL = NSURL(string: urlString)!
-//        let request: NSURLRequest = NSURLRequest(URL: url)
-//        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler:{
-//            (response, data, error) -> Void in
-//            if (error != nil) {
-//                //Handle Error here
-//            }else{
-//                //Handle data in NSData type
-//            }
-//            
-//        })
-//    }
-//    
     
     func login(username:String,pass:String)->Bool{
         let sql="select * from [user] where userid='\(username)'and password='\(pass)'";

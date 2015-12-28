@@ -12,17 +12,15 @@ import Alamofire
 
 class addcommuityViewController: UIViewController,UINavigationControllerDelegate, BMKMapViewDelegate, BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate{
     
-    /// 百度地图视图
+    // 百度地图视图
     var mapView: BMKMapView!
-    /// 地理位置编码
+    // 地理位置编码
     var geocodeSearch: BMKGeoCodeSearch!
     var locService: BMKLocationService!
     var isGeoSearch: Bool!
     var first: Bool = true
     var currLocation:BMKUserLocation?;
-    
     @IBOutlet weak var address: UILabel!
-    
     @IBOutlet weak var xiaoquname: UITextField!
     
     override func viewDidLoad() {
@@ -33,19 +31,14 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
         mapView.showsUserLocation = false
         
         //设置位置跟踪态
-        
         mapView.userTrackingMode = BMKUserTrackingModeNone
         
         //显示定位图层
-        
         mapView.showsUserLocation = true
         
-
         //mapView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.view.addSubview(mapView)
-         geocodeSearch = BMKGeoCodeSearch()
-        
-        
+        geocodeSearch = BMKGeoCodeSearch()
         
         // 设置定位精确度，默认：kCLLocationAccuracyBest
         BMKLocationService.setLocationDesiredAccuracy(kCLLocationAccuracyBest)
@@ -61,73 +54,48 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
         mapView.userTrackingMode = BMKUserTrackingModeNone
         //显示定位图层
         mapView.showsUserLocation = true
-        
-        
-        
-        
-        
     }
     
     //处理位置坐标更新
-    
-    //处理方向变更信息
-    
     func didUpdateUserHeading(userLocation: BMKUserLocation!) {
-        
         mapView.updateLocationData(userLocation)
-        
     }
     
     
     
     //处理位置坐标更新
-    
     func didUpdateBMKUserLocation(userLocation: BMKUserLocation!) {
         if first
         {
             currLocation = userLocation
             //print("经度：\(currLocation.location.coordinate.latitude)")
             //print("纬度：\(currLocation.location.coordinate.longitude)")
-        mapView.updateLocationData(userLocation)
-        let url:String = "http://api.map.baidu.com/geocoder/v2/?ak=ROBALpv3vQpKoGOY18hze4kG&callback=renderReverse&location=".stringByAppendingString(String(currLocation!.location.coordinate.latitude)).stringByAppendingString(",").stringByAppendingString(String(currLocation!.location.coordinate.longitude)).stringByAppendingString("&output=json&pois=1")
-            //print("url：\(url)")
+            mapView.updateLocationData(userLocation)
+            let url:String = "http://api.map.baidu.com/geocoder/v2/?ak=ROBALpv3vQpKoGOY18hze4kG&callback=renderReverse&location=".stringByAppendingString(String(currLocation!.location.coordinate.latitude)).stringByAppendingString(",").stringByAppendingString(String(currLocation!.location.coordinate.longitude)).stringByAppendingString("&output=json&pois=1")
+
             Alamofire.request(.GET, url, parameters: nil).responseString
                 {response in
-                    //print(response.result.value)
                     var json:String = response.result.value!
                     json=json.stringByReplacingOccurrencesOfString("renderReverse&&renderReverse(", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                     json=json.stringByReplacingOccurrencesOfString(")", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-
                      //print("json：\(json)")
                     let jsonstring: NSString = json
                     let dd = jsonstring.dataUsingEncoding(NSUTF8StringEncoding)
                     let data: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(dd!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    
                     var status:NSNumber = data["status"] as! NSNumber
                     var result:NSDictionary = data["result"] as! NSDictionary
-                    
-                    
                     var formatted_address:NSString = result["formatted_address"]  as! NSString
                     var addressComponent:NSDictionary = result["addressComponent"] as! NSDictionary
-                    
-                    
                     var country:NSString = addressComponent["country"]  as! NSString
                     var province:NSString = addressComponent["province"]  as! NSString
                     var city:NSString = addressComponent["city"]  as! NSString
                     var district:NSString = addressComponent["district"]  as! NSString
                     var street:NSString = addressComponent["street"]  as! NSString
-                    
-                    
                     self.address.text = "地址:".stringByAppendingString(formatted_address as String)
-                    
-
             }
-            
-            
-          
        }
-        
         first = false
-        
     }
     
 
@@ -169,13 +137,10 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
         NSLog("back");
         let sb = UIStoryboard(name:"Main", bundle: nil)
         let vc = sb.instantiateViewControllerWithIdentifier("subscribeCommunityViewController") as! SubscribeCommunityViewController
-        //self.presentViewController(vc, animated: true, completion: nil)
         
         let nvc=UINavigationController(rootViewController:vc);
         //设置根视图
         self.view.window!.rootViewController=nvc;
-
-        
     }
 
     func onGetGeoCodeResult(searcher: BMKGeoCodeSearch!, result: BMKGeoCodeResult!,  error: BMKSearchErrorCode) {

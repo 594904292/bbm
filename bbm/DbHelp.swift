@@ -114,6 +114,20 @@ class DbHelp
         
         db.execute(sql6 as String);//
         
+        
+        let sql7 = "CREATE table IF NOT EXISTS [friend] (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "userid varchar(100), "
+            + "nickname varchar(20), "
+            + "usericon varchar(50), "
+            + "lastuserid varchar(20), "
+            + "lastnickname varchar(20), "
+            + "lastusericon varchar(100), "
+            + "lastinfo varchar(20), "
+            + "lastime varchar(50), "
+            + "messnum integer)";
+        
+        db.execute(sql7 as String);//
+        
     }
 
 }
