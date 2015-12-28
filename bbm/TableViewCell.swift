@@ -57,7 +57,7 @@ class TableViewCell:UITableViewCell
                     self.avatarImage.layer.borderWidth = 1.0
                     //别人头像，在左边，我的头像在右边
                    let avatarX =  (type == ChatType.Someone) ? 2 : self.frame.size.width - 52
-                    //头像居于消息底部
+                    //头像消息底部
                     let avatarY =  height
                     //set the frame correctly
                     self.avatarImage.frame = CGRectMake(avatarX, avatarY, 50, 50)
@@ -65,6 +65,7 @@ class TableViewCell:UITableViewCell
                 }
             }
 
+            
             
             
        
