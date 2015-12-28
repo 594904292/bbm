@@ -126,7 +126,10 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
              }
     
          func removeTimer() {
-                 timer.invalidate()
+            guard let t = timer else {
+                return;
+            }
+                 t.invalidate()
              }
     
     
