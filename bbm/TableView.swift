@@ -103,10 +103,12 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         super.reloadData()
         
         //滑向最后一部分
-        var secno = self.bubbleSection.count - 1
-        var indexPath =  NSIndexPath(forRow:self.bubbleSection[secno].count,inSection:secno)
-        
-        self.scrollToRowAtIndexPath(indexPath,                atScrollPosition:UITableViewScrollPosition.Bottom,animated:true)
+//        var secno = self.bubbleSection.count - 1
+//        if(secno>0)
+//        {
+//            var indexPath =  NSIndexPath(forRow:self.bubbleSection[secno].count,inSection:secno)
+//            self.scrollToRowAtIndexPath(indexPath,                atScrollPosition:UITableViewScrollPosition.Bottom,animated:true)
+//        }
     }
     func numberOfSectionsInTableView(tableView:UITableView)->Int
     {

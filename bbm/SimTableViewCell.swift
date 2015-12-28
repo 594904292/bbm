@@ -1,6 +1,6 @@
 
 import UIKit
-
+import Alamofire
 class SimTableViewCell:UITableViewCell
 {
     //消息内容视图
@@ -41,9 +41,7 @@ class SimTableViewCell:UITableViewCell
         
         let type =  self.msgItem.mtype
         let width =  self.msgItem.view.frame.size.width
-        
         let height =  self.msgItem.view.frame.size.height
-        
         var x :CGFloat = 0
         
         var y:CGFloat =  0
@@ -52,21 +50,26 @@ class SimTableViewCell:UITableViewCell
         {
             
             let logo =  self.msgItem.logo
-            
-            self.avatarImage = UIImageView(image:UIImage(named:(logo != "" ? logo : "noAvatar.png")))
-            
-            self.avatarImage.layer.cornerRadius = 9.0
-            self.avatarImage.layer.masksToBounds = true
-            self.avatarImage.layer.borderColor = UIColor(white:0.0 ,alpha:0.2).CGColor
-            self.avatarImage.layer.borderWidth = 1.0
-            
-            //别人头像，在左边，我的头像在右边
-            var avatarX :CGFloat = 2
-            //头像居于消息底部
-            let avatarY =  height
-            //set the frame correctly
-            self.avatarImage.frame = CGRectMake(avatarX, avatarY, 50, 50)
-            self.addSubview(self.avatarImage)
+            let logou = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(logo);
+            Alamofire.request(.GET, logou).response { (_, _, data, _) -> Void in
+                if let d = data as? NSData!
+                {
+                    //self.avatarImage?.image=UIImage(data: d)
+                    self.avatarImage = UIImageView(image:UIImage(data: d))
+                    self.avatarImage.layer.cornerRadius = 9.0
+                    self.avatarImage.layer.masksToBounds = true
+                    self.avatarImage.layer.borderColor = UIColor(white:0.0 ,alpha:0.2).CGColor
+                    self.avatarImage.layer.borderWidth = 1.0
+                    //别人头像，在左边，我的头像在右边
+                    let avatarX:CGFloat =  2
+                    //头像居于消息底部
+                    let avatarY:CGFloat =  height
+                    //set the frame correctly
+                    self.avatarImage.frame = CGRectMake(avatarX, avatarY, 30, 30)
+                    self.addSubview(self.avatarImage)
+                }
+            }
+
             
             
             let delta =  self.frame.size.height - (self.msgItem.insets.top + self.msgItem.insets.bottom
@@ -75,7 +78,8 @@ class SimTableViewCell:UITableViewCell
             {
                 y = delta
             }
-            x += 54        }
+            x += 34
+        }
         
         self.customView = self.msgItem.view
         self.customView.frame = CGRectMake(x + self.msgItem.insets.left, y + self.msgItem.insets.top, width, height)
@@ -83,12 +87,12 @@ class SimTableViewCell:UITableViewCell
         self.addSubview(self.customView)
         
         self.customtimeView = self.msgItem.timeview
-        self.customtimeView.frame = CGRectMake(x + self.msgItem.insets.left, y + self.msgItem.insets.top+10, width, height)
+        self.customtimeView.frame = CGRectMake(x + self.msgItem.insets.left, y + self.msgItem.insets.top+12, width, height)
         
         self.addSubview(self.customtimeView)
         
         
-        self.bubbleImage.image = UIImage(named:("yoububble.png"))!.stretchableImageWithLeftCapWidth(21,topCapHeight:14)
+        self.bubbleImage.image = UIImage(named:("yoububble.png"))!.stretchableImageWithLeftCapWidth(21,topCapHeight:24)
         
         self.bubbleImage.frame = CGRectMake(x, y, width + self.msgItem.insets.left
             + self.msgItem.insets.right, height + self.msgItem.insets.top + self.msgItem.insets.bottom)

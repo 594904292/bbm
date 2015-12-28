@@ -51,7 +51,7 @@ class SimTableView:UITableView,UITableViewDelegate, UITableViewDataSource
                 }
                 
                 //按日期排序方法
-                bubbleSection.sortInPlace({$0.date.timeIntervalSince1970 < $1.date.timeIntervalSince1970})
+                //bubbleSection.sortInPlace({$0.date.timeIntervalSince1970 < $1.date.timeIntervalSince1970})
             }
         }
         super.reloadData()
