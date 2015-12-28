@@ -20,8 +20,9 @@ class itemMess: NSObject {
     var guid: String = ""
     var infocatagory: String = ""
     var photo: String = ""
-    var is_coming: String = ""
-    var readed: String = ""
+    var statis: String = ""
+    var visnum: String = ""
+    var plnum: String = ""
     
     var name:String
     {
@@ -30,7 +31,7 @@ class itemMess: NSObject {
         }
     }
     
-    init(userid:String,vname: String,vtime: String,vaddress: String,vcontent: String,vcommunity:String,vlng:String,vlat:String,vguid:String,vinfocatagory:String,vphoto:String,vis_coming:String,vreaded:String) {
+    init(userid:String,vname: String,vtime: String,vaddress: String,vcontent: String,vcommunity:String,vlng:String,vlat:String,vguid:String,vinfocatagory:String,vphoto:String,status:String,visnum:String,plnum:String) {
         self.userid=userid
         self.username = vname
         self.time = vtime
@@ -42,8 +43,9 @@ class itemMess: NSObject {
         self.guid = vguid
         self.infocatagory = vinfocatagory
         self.photo = vphoto
-        self.is_coming = vis_coming
-        self.readed = vreaded
+        self.statis=status
+        self.visnum = visnum
+        self.plnum = plnum
     }
     
 }
