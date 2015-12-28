@@ -88,9 +88,9 @@ public class ZLSwiftFootView: UIView {
     //MARK: KVO methods
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
 
-        if (self.loadMoreAction == nil) {
-            return;
-        }
+//        if (self.loadMoreAction == nil) {
+//            return;
+//        }
         
         let scrollView:UIScrollView = self.scrollView
         if (keyPath == contentSizeKeyPath){
@@ -142,14 +142,14 @@ public class ZLSwiftFootView: UIView {
             
             if (nowContentOffsetY - tableViewMaxHeight) > 0 && scrollView.contentOffset.y != 0{
                 if isEndLoadMore == false && refreshStatus == .Normal {
-                    if loadMoreTempAction != nil{
+                    //if loadMoreTempAction != nil{
                         refreshStatus = .LoadMore
                         self.title = ZLSwithRefreshLoadingText
                         loadMoreTempAction()
                         loadMoreTempAction = {}
-                    }else {
-                        self.title = ZLSwithRefreshMessageText
-                    }
+                    //}else {
+                     //   self.title = ZLSwithRefreshMessageText
+                    //}
                 }
             }else if (isEndLoadMore == false){
                 loadMoreTempAction = loadMoreAction

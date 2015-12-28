@@ -167,10 +167,10 @@ public class ZLSwiftHeadView: UIView {
     
     //MARK: KVO methods
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
-        
-        if (self.action == nil) {
-            return;
-        }
+//        
+//        if (self.action == nil) {
+//            return;
+//        }
         
         if (self.activityView?.isAnimating() == true){
             return ;
@@ -195,7 +195,7 @@ public class ZLSwiftHeadView: UIView {
             // 上拉刷新
             self.headLabel.text = ZLSwithRefreshRecoderText
             if scrollView.dragging == false && self.headImageView.isAnimating() == false{
-                if refreshTempAction != nil {
+                //if refreshTempAction != nil {
                     refreshStatus = .Refresh
                     self.startAnimation()
                     UIView.animateWithDuration(0.25, animations: { () -> Void in
@@ -215,7 +215,7 @@ public class ZLSwiftHeadView: UIView {
                         refreshTempAction()
                         refreshTempAction = {}
                     }
-                }
+                //}
             }
             
         }else{
