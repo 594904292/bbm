@@ -696,7 +696,7 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="112" y="19" width="257" height="21"/>
+                                                        <rect key="frame" x="112" y="19" width="200" height="21"/>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RT3-UD-NBV">
@@ -723,7 +723,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="112" y="31" width="249" height="43"/>
+                                                        <rect key="frame" x="112" y="31" width="200" height="43"/>
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="8" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ql-Zx-Zvb">
@@ -741,7 +741,7 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="196" y="0.0" width="154" height="21"/>
+                                                        <rect key="frame" x="196" y="0.0" width="116" height="21"/>
                                                     </variation>
                                                 </label>
                                             </subviews>
@@ -885,35 +885,73 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="75" width="320" height="478"/>
+                                </variation>
                             </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CnF-uC-C6I">
+                                <rect key="frame" x="-60" y="-14" width="121" height="29"/>
+                                <segments>
+                                    <segment title="待解决"/>
+                                    <segment title="全部"/>
+                                    <segment title="我的"/>
+                                    <segment title="服务"/>
+                                </segments>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="44" width="320" height="29"/>
+                                </variation>
+                                <connections>
+                                    <action selector="segmentValueChange:" destination="vsk-3M-qi4" eventType="valueChanged" id="yDp-af-6TP"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="rjQ-uu-skF" firstAttribute="top" secondItem="SRO-qi-Uga" secondAttribute="bottom" constant="49" id="DS2-Ym-Hjg"/>
+                            <constraint firstItem="SRO-qi-Uga" firstAttribute="top" secondItem="CnF-uC-C6I" secondAttribute="bottom" constant="15" id="E6Z-fu-YNh"/>
+                            <constraint firstItem="rjQ-uu-skF" firstAttribute="top" secondItem="SRO-qi-Uga" secondAttribute="bottom" constant="15" id="ESg-ZN-9Q3">
+                                <variation key="widthClass=compact" constant="5"/>
+                            </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="SRO-qi-Uga" secondAttribute="trailing" constant="-20" id="Ixv-7E-0Lw"/>
                             <constraint firstItem="SRO-qi-Uga" firstAttribute="leading" secondItem="xd0-bq-Zgs" secondAttribute="leadingMargin" constant="-20" id="PvN-E9-nzb"/>
-                            <constraint firstItem="SRO-qi-Uga" firstAttribute="top" secondItem="dHU-tT-oHw" secondAttribute="bottom" id="msD-OY-kPG"/>
+                            <constraint firstItem="SRO-qi-Uga" firstAttribute="top" secondItem="CnF-uC-C6I" secondAttribute="bottom" constant="15" id="XPh-M1-3hg">
+                                <variation key="widthClass=compact" constant="5"/>
+                            </constraint>
+                            <constraint firstAttribute="trailingMargin" secondItem="CnF-uC-C6I" secondAttribute="trailing" constant="-20" id="acM-ZT-W8A"/>
+                            <constraint firstItem="CnF-uC-C6I" firstAttribute="top" secondItem="dHU-tT-oHw" secondAttribute="bottom" constant="20" id="lmb-Ea-S1X">
+                                <variation key="widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="CnF-uC-C6I" firstAttribute="leading" secondItem="xd0-bq-Zgs" secondAttribute="leadingMargin" constant="-20" id="zuV-OE-GMk"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="SRO-qi-Uga"/>
+                                <exclude reference="CnF-uC-C6I"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="DS2-Ym-Hjg"/>
+                                <exclude reference="acM-ZT-W8A"/>
+                                <exclude reference="lmb-Ea-S1X"/>
+                                <exclude reference="zuV-OE-GMk"/>
+                                <exclude reference="E6Z-fu-YNh"/>
                                 <exclude reference="Ixv-7E-0Lw"/>
                                 <exclude reference="PvN-E9-nzb"/>
-                                <exclude reference="msD-OY-kPG"/>
+                                <exclude reference="XPh-M1-3hg"/>
+                                <exclude reference="ESg-ZN-9Q3"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="SRO-qi-Uga"/>
+                                <include reference="CnF-uC-C6I"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="DS2-Ym-Hjg"/>
+                                <include reference="acM-ZT-W8A"/>
+                                <include reference="lmb-Ea-S1X"/>
+                                <include reference="zuV-OE-GMk"/>
+                                <exclude reference="E6Z-fu-YNh"/>
                                 <include reference="Ixv-7E-0Lw"/>
                                 <include reference="PvN-E9-nzb"/>
-                                <include reference="msD-OY-kPG"/>
+                                <include reference="XPh-M1-3hg"/>
+                                <include reference="ESg-ZN-9Q3"/>
                             </mask>
                         </variation>
                     </view>
@@ -923,6 +961,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="_tableView" destination="SRO-qi-Uga" id="gLe-Fe-XkV"/>
+                        <outlet property="segment1" destination="CnF-uC-C6I" id="mrR-wo-Yxs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YhT-qz-9Jq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2122,10 +2161,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="friendscell" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendscell" rowHeight="95" id="vfo-ZI-n3R" customClass="FriendsTableViewCell" customModule="bbm" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="320" height="95"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vfo-ZI-n3R" id="gVY-Bf-cvb">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="94"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtk-Xa-Poo">
