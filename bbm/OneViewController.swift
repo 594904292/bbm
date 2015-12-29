@@ -45,7 +45,11 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         
 
     }
+    @IBOutlet weak var segment1: UISegmentedControl!
     
+    @IBAction func segmentValueChange(sender: AnyObject) {
+        NSLog("you Selected Index\(segment1.selectedSegmentIndex)")
+    }
     func backClick()
     {
         NSLog("back");
