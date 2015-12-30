@@ -13,6 +13,7 @@ class RecentTableViewController: UITableViewController {
     var dataSource = NSMutableArray()
     var currentIndexPath: NSIndexPath?
     var items:[itemRecent]=[]
+    var db: SQLiteDB!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,6 +24,7 @@ class RecentTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.navigationItem.title="会话列表"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
+        db = SQLiteDB.sharedInstance()
         querydata()
     }
     
@@ -40,9 +42,10 @@ class RecentTableViewController: UITableViewController {
     // MARK: - Table view data source
     func querydata()
     {
-        var db: SQLiteDB!
-        db = SQLiteDB.sharedInstance()
-        let sql="select userid,nickname,usericon,lastinfo,lasttime,messnu,lastnickname　from friend";
+        //var db: SQLiteDB!
+        //db = SQLiteDB.sharedInstance()
+        //let sql="select userid,nickname,usericon,lastinfo,lasttime,messnu,lastnickname　from friend";
+        let sql="select * from friend ";
         NSLog(sql)
         let mess = db.query(sql)
         if mess.count > 0 {
@@ -54,8 +57,8 @@ class RecentTableViewController: UITableViewController {
                 let nickname = item["nickname"]!.asString()
                 let usericon = item["usericon"]!.asString()
                 let lastinfo = item["lastinfo"]!.asString()
-                let lasttime = item["messnu"]!.asString()
-                let messnu = item["userid"]!.asString()
+                let lasttime = item["lasttime"]!.asString()
+                let messnu = item["messnu"]!.asString()
                 let lastnickname = item["lastnickname"]!.asString()
                 let item_obj:itemRecent=itemRecent(userid: userid, username: nickname, usericon: usericon, lastinfo: lastinfo, lastchattimer: lasttime, messnum: messnu, lastnickname: lastnickname)
                  self.items.append(item_obj)

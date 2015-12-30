@@ -20,7 +20,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     var myselfheadface:String = "";
     var txtMsg:UITextField!
     var db: SQLiteDB!
-
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -296,10 +296,15 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     
     func addfriend(userid:String,nickname:String,usericon:String,lastuserid:String,lastnickname:String,lastinfo:String,lasttime:String,messnum:Int)
     {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql = "insert into friend(userid,nickname,usericon,lastuserid,lastnickanme,lastinfo,lasttime) values('\(userid )','\(nickname)','\(usericon)','\(lastuserid)','\(lastnickname)','\(lastinfo)','\(lasttime)')";
-        var status = db.execute(sql)
-        print(status)
+       
+//          db.execute("create table if not exists friend(uid integer primary key,userid varchar(100),nickname varchar(100),usericon varchar(100),lastuserid varchar(100),lastnickname varchar(100),lastinfo varchar(100),lasttime varchar(100),messnu varchar(100))")
+        
+        let sql = "insert into friend(userid,nickname,usericon,lastuserid,lastnickname,lastinfo,lasttime,messnu) values('\(userid )','\(nickname)','\(usericon)','\(lastuserid)','\(lastnickname)','\(lastinfo)','\(lasttime)','\(messnum)')"
+                print("sql: \(sql)")
+                //通过封装的方法执行sql
+                let result = db.execute(sql)
+        
+        print(result)
         NSLog(sql)
         
     }
@@ -307,10 +312,27 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     
     func isexit(userid:String)->Bool
     {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select * from friend where userid='"+userid+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
+//        db.execute("create table if not exists t_user(uid integer primary key,uname varchar(20),mobile varchar(20))")
+//        
+//        let sql = "insert into t_user(uname,mobile) values('12','34')"
+//        print("sql: \(sql)")
+//        //通过封装的方法执行sql
+//        let result = db.execute(sql)
+//        print(result)
+//        
+//        let data = db.query("select * from t_user")
+//        if data.count > 0 {
+//            //获取最后一行数据显示
+//            let user = data[data.count - 1]
+//            var  aa =  user["uname"] as? String
+//            var  bb = user["mobile"] as? String
+//            print(aa)
+//        }
+//        
+      
+        let sql1="select * from friend where userid='\(userid )'";
+        NSLog(sql1)
+        let mess = db.query(sql1)
         if( mess.count>0)
         {
             return true
@@ -323,7 +345,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     
     func newmess(userid:String,lastuserid:String,lastinfo:String,lasttime:String)
     {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        
         let sql="update friend set lastuserid='\(lastuserid)',lastinfo='\(lastinfo)',lasttime='\(lasttime)',messnum=messnum+1 where userid='"+userid+"'";
         var status = db.query(sql)
         NSLog(sql)
