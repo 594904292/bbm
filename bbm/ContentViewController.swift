@@ -422,8 +422,48 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     }
     
         
+    @IBAction func report(sender: UIButton) {
         
+        var alertView = UIAlertView()
+        alertView.title = "系统提示"
+        alertView.message = "您确定要举报吗？"
+        alertView.addButtonWithTitle("取消")
+        alertView.addButtonWithTitle("确定")
+        alertView.cancelButtonIndex=0
+        alertView.delegate=self;
+        alertView.show()
+    }
         
+    func alertView(alertView:UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+        if(buttonIndex==alertView.cancelButtonIndex){
+            print("点击了取消")
+        }
+        else
+        {
+            NSLog("add")
+            let defaults = NSUserDefaults.standardUserDefaults();
+            let userid = defaults.objectForKey("userid") as! String;
+            var date = NSDate()
+            var timeFormatter = NSDateFormatter()
+            timeFormatter.dateFormat = "yyy-MM-dd HH:mm:ss"
+            var strNowTime = timeFormatter.stringFromDate(date) as String
+            
+            var  dic:Dictionary<String,String> = ["content" : guid, "userid": userid, "addtime": strNowTime]
+            Alamofire.request(.POST, "http://www.bbxiaoqu.com/savesuggest.php", parameters: dic)
+                .responseJSON { response in
+                    print(response.request)  // original URL request
+                    print(response.response) // URL response
+                    print(response.data)     // server data
+                    print(response.result)   // result of response serialization
+                    print(response.result.value)
+                    //                if let JSON = response.result.value {
+                    //                    print("JSON: \(JSON)")
+                    //                }
+                    
+            }
+            
+        }
+    }
     
     func dismiss(timer:NSTimer){
         alertView!.dismissWithClickedButtonIndex(0, animated:true)
