@@ -20,7 +20,7 @@ class itemMess: NSObject {
     var guid: String = ""
     var infocatagory: String = ""
     var photo: String = ""
-    var statis: String = ""
+    var status: String = ""
     var visnum: String = ""
     var plnum: String = ""
     
@@ -43,7 +43,7 @@ class itemMess: NSObject {
         self.guid = vguid
         self.infocatagory = vinfocatagory
         self.photo = vphoto
-        self.statis=status
+        self.status=status
         self.visnum = visnum
         self.plnum = plnum
     }

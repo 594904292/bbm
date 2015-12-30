@@ -332,7 +332,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     
     func setupSendPanel1()
     {
-        let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-56,320,56))
+        let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-50,320,50))
         
         sendView.backgroundColor=UIColor.grayColor()
         sendView.alpha=0.9

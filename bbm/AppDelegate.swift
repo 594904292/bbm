@@ -53,7 +53,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
             if let body = message.elementForName("body") {
                 msg.body = body.stringValue()
             }
-            
+            var from = message.from().user ;
+            var to = message.to().user;
+            var guid =  message.elementID()
             //完整用户名
             msg.from = message.from().user + "@" + message.from().domain
             
@@ -67,20 +69,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
 
             
             //写一条信息到聊天记录表
-            self.addmess(message.from().user, touserid: touserid, message: msg.body, guid: "", date: strNowTime, readed: "0")
+            self.addmess(from, touserid: to, message: msg.body, guid: "", date: strNowTime, readed: "0")
             //修改通知记录
-            if(self.unreadnum(message.from().user, catagory: "私信")==0)
+            if(self.unreadnum(from, catagory: "私信")==0)
             {
-               self.noticeadd(strNowTime, catagory: "私信", relativeid: message.from().user, content: message.from().user.stringByAppendingString("发送了一条私信"), readed: "０")
+               self.noticeadd(strNowTime, catagory: "私信", relativeid: from, content: from.stringByAppendingString("发送了一条私信"), readed: "０")
             }else
             {
                 
             }
             
             //添加朋友联系人
-            if(!isexit(message.from().user ))
+            if(!isexit(from))
             {
-               self.addfriend(message.from().user, nickname: "", usericon: "", lastuserid: message.from().user, lastnickname: "", lastinfo: msg.body, lasttime: strNowTime, messnum: 0)
+               self.addfriend(from, nickname: "", usericon: "", lastuserid: from, lastnickname: "", lastinfo: msg.body, lasttime: strNowTime, messnum: 0)
+                //更新头像和用户名
             
             }
             

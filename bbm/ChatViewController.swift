@@ -108,13 +108,6 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     
     
     
-    func add(messae:String,guid:String,date:String,senduserid:String,sendnickname:String,sendusericon:String,touserid:String,tousernickname:String,tousericon:String)
-    {
-        let sql = "insert into chat(message,guid,date,senduserid,sendnickname,sendusericon,touserid,tonickname,tousericon) values('\(messae)','\(guid)','\(date)','\(senduserid)','\(sendnickname)','\(sendusericon)','\(touserid)','\(tousernickname)','\(tousericon)')";
-        
-        NSLog("sql: \(sql)")
-         db.execute(sql)
-     }
     
     
     
@@ -292,6 +285,53 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     }
 
     
+    func addchat(messae:String,guid:String,date:String,senduserid:String,sendnickname:String,sendusericon:String,touserid:String,tousernickname:String,tousericon:String)
+    {
+        let sql = "insert into chat(message,guid,date,senduserid,sendnickname,sendusericon,touserid,tonickname,tousericon) values('\(messae)','\(guid)','\(date)','\(senduserid)','\(sendnickname)','\(sendusericon)','\(touserid)','\(tousernickname)','\(tousericon)')";
+        
+        NSLog("sql: \(sql)")
+        db.execute(sql)
+    }
+
+    
+    func addfriend(userid:String,nickname:String,usericon:String,lastuserid:String,lastnickname:String,lastinfo:String,lasttime:String,messnum:Int)
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql = "insert into friend(userid,nickname,usericon,lastuserid,lastnickanme,lastinfo,lasttime) values('\(userid )','\(nickname)','\(usericon)','\(lastuserid)','\(lastnickname)','\(lastinfo)','\(lasttime)')";
+        var status = db.execute(sql)
+        print(status)
+        NSLog(sql)
+        
+    }
+    
+    
+    func isexit(userid:String)->Bool
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from friend where userid='"+userid+"'";
+        NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
+    func newmess(userid:String,lastuserid:String,lastinfo:String,lasttime:String)
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="update friend set lastuserid='\(lastuserid)',lastinfo='\(lastinfo)',lasttime='\(lasttime)',messnum=messnum+1 where userid='"+userid+"'";
+        var status = db.query(sql)
+        NSLog(sql)
+
+        }
+
+    
+    
     func sendMessage()
         
     {
@@ -302,6 +342,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         var sendcontent:String=sender.text!
         var me:UserInfo! = UserInfo(name:myselfname ,logo:(myselfheadface))
         
+     
         //通过通道发送XML文本
         zdl().connect()
             
@@ -339,9 +380,20 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         
         var strNowTime = timeFormatter.stringFromDate(date) as String
         
+        //添加到本地
+        self.addchat(sendcontent, guid: guid, date: strNowTime, senduserid: myself, sendnickname: myselfname, sendusericon: myselfheadface, touserid: from, tousernickname: fromname, tousericon: fromheadface)
         
+        //添加朋友
+        //添加朋友联系人
+        if(!isexit(from))
+        {
+            self.addfriend(from, nickname: fromname, usericon: fromheadface, lastuserid: myself, lastnickname: myselfname, lastinfo: sendcontent, lasttime: strNowTime, messnum: 0)
+            
+        }
+        self.newmess(from, lastuserid: myself, lastinfo: sendcontent, lasttime: strNowTime)
+
         
-        let  dic:Dictionary<String,String> = ["_catatory" : "chat","_senduserid" : myself,"_sendnickname" : myselfname,"_sednusericon" : myselfname,"_touserid" : from,"_tonickname" : fromname,"_tousericon" : fromheadface,"_gudi":guid,"_message":sendcontent,"_channelid":""]
+        let  dic:Dictionary<String,String> = ["_catatory" : "chat","_senduserid" : myself,"_sendnickname" : myselfname,"_sednusericon" : myselfheadface,"_touserid" : from,"_tonickname" : fromname,"_tousericon" : fromheadface,"_gudi":guid,"_message":sendcontent,"_channelid":""]
         
         var url_str:String = "http://www.bbxiaoqu.com/chat.php";
         

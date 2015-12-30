@@ -25,6 +25,7 @@ class InfoTableViewCell: UITableViewCell {
     
     @IBOutlet weak var sendaddress: UILabel!
     
+    @IBOutlet weak var status: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

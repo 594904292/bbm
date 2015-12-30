@@ -26,6 +26,7 @@ class InfopicTableViewCell: UITableViewCell {
     
     @IBOutlet weak var sendtime: UILabel!
     
+    @IBOutlet weak var status: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

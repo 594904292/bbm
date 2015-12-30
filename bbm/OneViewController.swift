@@ -16,7 +16,24 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     var items:[itemMess]=[]
      @IBOutlet weak var _tableView: UITableView!
     func NewMessage(string:String){
-        querydata()//查询数据
+        if(selectedSegmentval==0)
+        {
+            
+            querydata(0)
+        }else if(selectedSegmentval==1)
+        {
+            
+            querydata(1)
+        }else if(selectedSegmentval==2)
+        {
+            
+            querydata(2)
+        }else if(selectedSegmentval==3)
+        {
+            
+            querydata(3)
+        }
+
         
 
     }
@@ -41,14 +58,47 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         
         self._tableView.footerView = XWRefreshAutoNormalFooter(target: self, action: "downPlullLoadData")
         
-        querydata()
+        if(selectedSegmentval==0)
+        {
+             querydata(0)
+        }else if(selectedSegmentval==1)
+        {
+            querydata(1)
+        }else if(selectedSegmentval==2)
+        {
+             querydata(2)
+        }else if(selectedSegmentval==3)
+        {
+             querydata(3)
+        }
+
         
 
     }
     @IBOutlet weak var segment1: UISegmentedControl!
-    
+    var selectedSegmentval:Int=0;
     @IBAction func segmentValueChange(sender: AnyObject) {
         NSLog("you Selected Index\(segment1.selectedSegmentIndex)")
+        selectedSegmentval=segment1.selectedSegmentIndex;
+         self.items.removeAll()
+        self._tableView.reloadData()
+        if(selectedSegmentval==0)
+        {
+        
+            querydata(0)
+        }else if(selectedSegmentval==1)
+        {
+            
+            querydata(1)
+        }else if(selectedSegmentval==2)
+        {
+            
+            querydata(2)
+        }else if(selectedSegmentval==3)
+        {
+            
+            querydata(3)
+        }
     }
     func backClick()
     {
@@ -64,7 +114,24 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         //延迟执行 模拟网络延迟，实际开发中去掉
         xwDelay(1) { () -> Void in
             self.start=0;
-            self.querydata()
+            if(self.selectedSegmentval==0)
+            {
+                
+                self.querydata(0)
+            }else if(self.selectedSegmentval==1)
+            {
+                
+                self.querydata(1)
+            }else if(self.selectedSegmentval==2)
+            {
+                
+                self.querydata(2)
+            }else if(self.selectedSegmentval==3)
+            {
+                
+                self.querydata(3)
+            }
+
             self._tableView.reloadData()
             self._tableView.headerView?.endRefreshing()
             
@@ -78,7 +145,24 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
             self.start=self.limit;
             
             
-           self.querydata()
+            if(self.selectedSegmentval==0)
+            {
+                
+                self.querydata(0)
+            }else if(self.selectedSegmentval==1)
+            {
+                
+                self.querydata(1)
+            }else if(self.selectedSegmentval==2)
+            {
+                
+                self.querydata(2)
+            }else if(self.selectedSegmentval==3)
+            {
+                
+                self.querydata(3)
+            }
+
             self._tableView.reloadData()
             self._tableView.footerView?.endRefreshing()
         }
@@ -115,7 +199,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 
                 cell?.senduser.text=(items[indexPath.row] as itemMess).username
                 cell?.message.text=(items[indexPath.row] as itemMess).content
-                cell?.sendaddress.text=(items[indexPath.row] as itemMess).time
+                cell?.sendtime.text=(items[indexPath.row] as itemMess).time
                 cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
                 if ((items[indexPath.row] as itemMess).infocatagory == "0")
                 {
@@ -131,6 +215,23 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 {
                     cell?.catagory.text="帮"
                 }
+                if ((items[indexPath.row] as itemMess).status == "0")
+                {
+                    cell?.status.text="求助中"
+                    cell?.status.textColor = UIColor.redColor()
+                    
+                }else if ((items[indexPath.row] as itemMess).status == "1")
+                {
+                    cell?.status.text="解决中"
+                    cell?.status.textColor = UIColor.redColor()
+                    
+                }else if ((items[indexPath.row] as itemMess).status == "2")
+                {
+                    cell?.status.text="已解决"
+                    cell?.status.textColor = UIColor.greenColor()
+                    
+                }
+
                 
                if((items[indexPath.row] as itemMess).photo.isKindOfClass(NSNull))
                 {
@@ -181,7 +282,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 }
                 cell?.senduser.text=(items[indexPath.row] as itemMess).username
                 cell?.Message.text=(items[indexPath.row] as itemMess).content
-                cell?.sendaddress.text=(items[indexPath.row] as itemMess).time
+                cell?.sendtime.text=(items[indexPath.row] as itemMess).time
                 cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
 
 
@@ -199,6 +300,24 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 {
                     cell?.catagory.text="帮"
                 }
+                
+                if ((items[indexPath.row] as itemMess).status == "0")
+                {
+                    cell?.status.text="求助中"
+                    cell?.status.textColor = UIColor.redColor()
+                    
+                }else if ((items[indexPath.row] as itemMess).status == "1")
+                {
+                    cell?.status.text="解决中"
+                    cell?.status.textColor = UIColor.redColor()
+                    
+                }else if ((items[indexPath.row] as itemMess).status == "2")
+                {
+                    cell?.status.text="已解决"
+                    cell?.status.textColor = UIColor.greenColor()
+                    
+                }
+
                 
                 cell?.gz.text="关:"+(items[indexPath.row] as itemMess).visnum;
                 cell?.pl.text="评:"+(items[indexPath.row] as itemMess).plnum;
@@ -229,11 +348,27 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     
     
     
-    func querydata()
+    func querydata(Category:Int)
     {
+        var url:String="";
+        if(Category==0)
+        {
+            url="http://www.bbxiaoqu.com/getinfos.php?userid=369&rang=xiaoqu&status=0&start=".stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+
         
-        
-     var url:String="http://www.bbxiaoqu.com/getinfos.php?userid=369&rang=xiaoqu&start=".stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+        }else if(Category==1)
+        {
+            url="http://www.bbxiaoqu.com/getinfos.php?userid=369&rang=xiaoqu&status=1&start=".stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+
+        }else if(Category==2)
+        {
+            url="http://www.bbxiaoqu.com/getinfos.php?userid=369&rang=self&status=1&start=".stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+
+        }else if(Category==3)
+        {
+            url="http://www.bbxiaoqu.com/getinfos.php?userid=369&rang=xiaoqufw&status=1&start=".stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+
+        }
        print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in
@@ -272,7 +407,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                         let status:String = data.objectForKey("status") as! String;
                         let visit:String = data.objectForKey("visit") as! String;
                         let plnum:String = data.objectForKey("plnum") as! String;
-                         let item_obj:itemMess = itemMess(userid: senduserid, vname: sendnickname, vtime: sendtime, vaddress: address, vcontent: content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, status: status, visnum: visit, plnum: plnum)
+                        let item_obj:itemMess = itemMess(userid: senduserid, vname: sendnickname, vtime: sendtime, vaddress: address, vcontent: content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, status: status, visnum: visit, plnum: plnum)
                          self.items.append(item_obj)
 
                     }
