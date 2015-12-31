@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ContentViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate {
+class ContentViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate ,UICollectionViewDataSource,UICollectionViewDelegate{
     
     // var Chats:NSMutableArray!
     //var tableView:SimTableView!
@@ -32,13 +32,43 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     
     @IBOutlet weak var sendaddr: UILabel!
    
-    @IBOutlet weak var pc: UIPageControl!
-    
-    @IBOutlet weak var sv: UIScrollView!
+   
     var timer:NSTimer!
     var picnum:Int = 0
     var photoArr:[String] = []
     var items:[itempl]=[]
+    var pics:[String]=[]
+
+
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return pics.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell:CollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
+        //cell.backgroundColor = UIColor.blackColor()
+       
+        var myhead:String=self.pics[indexPath.row]
+        Alamofire.request(.GET, myhead).response { (_, _, data, _) -> Void in
+            if let d = data as? NSData!
+            {
+                cell.images.image=UIImage(data: d)
+                
+                var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTouch:")
+                cell.images.tag = indexPath.row
+                cell.images .addGestureRecognizer(singleTap)
+            }
+        }
+
+        return cell
+    }
 
     @IBOutlet weak var _tableview: UITableView!
     @IBAction func runchat(sender: UIButton) {
@@ -62,7 +92,9 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         // Do any additional setup after loading the view.
         _tableview!.delegate=self
         _tableview!.dataSource=self
-        
+        collectionView!.dataSource=self
+        collectionView!.delegate=self
+         collectionView.backgroundColor = UIColor.whiteColor()
         loadinfo(guid);
         //setupChatTable1()
         setupSendPanel1()
@@ -106,45 +138,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
 //    }
 //
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-                 let width = self.view.frame.width
-                 let offsetX = scrollView.contentOffset.x
-                 let index = (offsetX + width / 2) / width
-                pc.currentPage = Int(index)
-        }
-    
-         func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-                 removeTimer()
-             }
-    
-        func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-                addTimer()
-             }
-    
-         func addTimer() {
-                 timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "nextImage", userInfo: nil, repeats: true)
-             }
-    
-         func removeTimer() {
-                    guard let t = timer else {
-                                return;
-                }
-                 timer.invalidate()
-             }
-    
-    
-         func nextImage() {
-                var pageIndex = pc.currentPage
-                if pageIndex == picnum {
-                        pageIndex = 0
-                     } else {
-                         pageIndex++
-                     }
-            
-                var offsetX = CGFloat(pageIndex) * self.view.frame.width
-                sv.setContentOffset(CGPointMake(offsetX, 0), animated: true)
-            }
-    
     
     func loadinfo(guid:String)
     {
@@ -185,47 +178,15 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                     {
                          for i in 1...self.photoArr.count{ //loading the images
                             let picname:String = self.photoArr[i-1]
+                             var imgurl = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(picname)
+                            self.pics.append(imgurl)
                             
-                            var imgurl = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(picname)
-                            
-//                            var furl: NSURL = NSURL(fileURLWithPath: imgurl)
-//                            /** 把UIImage转化成NSData */
-//                            let imageData = NSData(contentsOfURL: furl)
-//                            let image = UIImage(data: imageData!)
-                            
-                            let x = CGFloat(i - 1) * self.view.frame.width //这一步获取ScrollView的宽度时我用IPHONE6实体机测试是320，右边会出现第二张图片的一部分，最后还是用ROOT VIEW的宽度
-                            var imageView = UIImageView(frame: CGRectMake(x, 0, self.view.frame.width, self.sv.bounds.height))
-                            Alamofire.request(.GET, imgurl).response { (_, _, data, _) -> Void in
-                                if let d = data as? NSData!
-                                {
-                                    imageView.image=UIImage(data: d)
-                                }
-                            }
-                            
-                            imageView.userInteractionEnabled = true
-                            var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTouch:")
-                            singleTap.view?.tag = i-1
-                            imageView .addGestureRecognizer(singleTap)
-                            
-                                                       //imageView.image = image
-                            self.sv.pagingEnabled = true
-                            self.sv.showsHorizontalScrollIndicator = false
-                            self.sv.scrollEnabled = true
-                            self.sv.addSubview(imageView)
-                            self.sv.delegate = self
                         }
-                        let picw:CGFloat = self.view.frame.width * CGFloat(self.photoArr.count)
-                        
-                        self.sv.contentSize = CGSizeMake(picw, self.sv.frame.height)
-                        self.pc.numberOfPages = self.photoArr.count
-                        self.pc.currentPageIndicatorTintColor = UIColor.redColor()
-                        self.pc.pageIndicatorTintColor = UIColor.whiteColor()
-                        self.addTimer()
-                    }
+                     }
                     //
 
                     
-                    
+                    self.collectionView.reloadData()
                     self.loadheadface(self.puserid,headname:self.headface)
                     self.loaddiscuzzBody(self.infoid)
                 }
@@ -235,8 +196,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     func  imageViewTouch(sender:UITapGestureRecognizer){
         //print("2")
         var index:Int = (sender.view?.tag)!
-        var urlstr:String=self.photoArr[index]
-          var imgurl = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(urlstr)
+        var imgurl:String=self.pics[index]
         var url=NSURL(string: imgurl)
         UIApplication.sharedApplication().openURL(url!)
         

@@ -284,6 +284,7 @@
 		49F3E7FC1C2A83650036F7C7 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3E7FB1C2A83650036F7C7 /* InfoTableViewCell.swift */; };
 		49F3E7FE1C2A83E80036F7C7 /* InfopicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3E7FD1C2A83E80036F7C7 /* InfopicTableViewCell.swift */; };
 		49F3E8001C2A89470036F7C7 /* DynamicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */; };
+		49F6E9861C34D06C007E5B0F /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */; };
 		49FE1DA31BD0A082009B81D9 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA11BD0A082009B81D9 /* TableView.swift */; };
 		49FE1DA41BD0A082009B81D9 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */; };
 		49FE1DA91BD0A0E2009B81D9 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */; };
@@ -816,6 +817,7 @@
 		49F3E7FB1C2A83650036F7C7 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		49F3E7FD1C2A83E80036F7C7 /* InfopicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfopicTableViewCell.swift; sourceTree = "<group>"; };
 		49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTableViewCell.swift; sourceTree = "<group>"; };
+		49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		49FE1DA11BD0A082009B81D9 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
@@ -2105,6 +2107,7 @@
 				49F3E7FB1C2A83650036F7C7 /* InfoTableViewCell.swift */,
 				49F3E7FD1C2A83E80036F7C7 /* InfopicTableViewCell.swift */,
 				49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */,
+				49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -2394,6 +2397,7 @@
 				49F3E78E1C27EA720036F7C7 /* XMPPRoomMessageHybridCoreDataStorageObject.m in Sources */,
 				49F3E7841C27EA720036F7C7 /* XMPPJabberRPCModule.m in Sources */,
 				494435741BB3E3BC004EAECB /* LoginViewController.swift in Sources */,
+				49F6E9861C34D06C007E5B0F /* CollectionViewCell.swift in Sources */,
 				49F3E7AA1C27EA720036F7C7 /* XMPPRegistration.m in Sources */,
 				497E7B7B1BCCFA8100BAEB2F /* GzInfoViewController.swift in Sources */,
 				49F3E7DE1C27EA730036F7C7 /* DDTTYLogger.m in Sources */,
