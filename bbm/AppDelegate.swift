@@ -33,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
     //消息代理
     var xxdl : XxDL?
     
+ 
+    
     //收到消息
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
         //如果消息是聊天消息

@@ -187,7 +187,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         
     {
         
-        let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-56,320,56))
+        let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-56,self.view.frame.size.width,56))
         
         
         

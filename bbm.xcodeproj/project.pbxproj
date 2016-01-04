@@ -32,7 +32,6 @@
 		497E7B681BCB630700BAEB2F /* ZLSwiftHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497E7B631BCB630700BAEB2F /* ZLSwiftHeadView.swift */; };
 		497E7B691BCB630700BAEB2F /* ZLSwiftRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 497E7B641BCB630700BAEB2F /* ZLSwiftRefresh.bundle */; };
 		497E7B6A1BCB630700BAEB2F /* ZLSwiftRefreshExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497E7B651BCB630700BAEB2F /* ZLSwiftRefreshExtension.swift */; };
-		497E7B731BCCF62200BAEB2F /* SubscribeCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497E7B721BCCF62200BAEB2F /* SubscribeCommunityViewController.swift */; };
 		497E7B751BCCF64C00BAEB2F /* SubscribeInterestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497E7B741BCCF64C00BAEB2F /* SubscribeInterestViewController.swift */; };
 		497E7B7A1BCCFA8100BAEB2F /* GzCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497E7B761BCCFA8100BAEB2F /* GzCommunityViewController.swift */; };
 		497E7B7B1BCCFA8100BAEB2F /* GzInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497E7B771BCCFA8100BAEB2F /* GzInfoViewController.swift */; };
@@ -285,6 +284,9 @@
 		49F3E7FE1C2A83E80036F7C7 /* InfopicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3E7FD1C2A83E80036F7C7 /* InfopicTableViewCell.swift */; };
 		49F3E8001C2A89470036F7C7 /* DynamicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */; };
 		49F6E9861C34D06C007E5B0F /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */; };
+		49F6E98D1C3A0DEC007E5B0F /* PicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E98C1C3A0DEC007E5B0F /* PicViewController.swift */; };
+		49F6E98F1C3A297B007E5B0F /* XiaoquTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */; };
+		49F6E9991C3A43FA007E5B0F /* XiaoquTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */; };
 		49FE1DA31BD0A082009B81D9 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA11BD0A082009B81D9 /* TableView.swift */; };
 		49FE1DA41BD0A082009B81D9 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */; };
 		49FE1DA91BD0A0E2009B81D9 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */; };
@@ -402,7 +404,6 @@
 		497E7B631BCB630700BAEB2F /* ZLSwiftHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZLSwiftHeadView.swift; sourceTree = "<group>"; };
 		497E7B641BCB630700BAEB2F /* ZLSwiftRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZLSwiftRefresh.bundle; sourceTree = "<group>"; };
 		497E7B651BCB630700BAEB2F /* ZLSwiftRefreshExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZLSwiftRefreshExtension.swift; sourceTree = "<group>"; };
-		497E7B721BCCF62200BAEB2F /* SubscribeCommunityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeCommunityViewController.swift; sourceTree = "<group>"; };
 		497E7B741BCCF64C00BAEB2F /* SubscribeInterestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscribeInterestViewController.swift; sourceTree = "<group>"; };
 		497E7B761BCCFA8100BAEB2F /* GzCommunityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GzCommunityViewController.swift; sourceTree = "<group>"; };
 		497E7B771BCCFA8100BAEB2F /* GzInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GzInfoViewController.swift; sourceTree = "<group>"; };
@@ -818,6 +819,9 @@
 		49F3E7FD1C2A83E80036F7C7 /* InfopicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfopicTableViewCell.swift; sourceTree = "<group>"; };
 		49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTableViewCell.swift; sourceTree = "<group>"; };
 		49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		49F6E98C1C3A0DEC007E5B0F /* PicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicViewController.swift; sourceTree = "<group>"; };
+		49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoquTableViewCell.swift; sourceTree = "<group>"; };
+		49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoquTableViewController.swift; sourceTree = "<group>"; };
 		49FE1DA11BD0A082009B81D9 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
@@ -970,7 +974,6 @@
 				49CAC3961BBB7EA2006560A6 /* PublishViewController.swift */,
 				4913986D1BC8F9F0007866C1 /* DbHelp.swift */,
 				497E7B741BCCF64C00BAEB2F /* SubscribeInterestViewController.swift */,
-				497E7B721BCCF62200BAEB2F /* SubscribeCommunityViewController.swift */,
 				497E7B761BCCFA8100BAEB2F /* GzCommunityViewController.swift */,
 				497E7B771BCCFA8100BAEB2F /* GzInfoViewController.swift */,
 				497E7B7E1BCCFC2000BAEB2F /* MyInfoiewController.swift */,
@@ -988,6 +991,8 @@
 				49F3E7ED1C291F460036F7C7 /* MyinfosTableViewController.swift */,
 				49F3E7EF1C291F9E0036F7C7 /* SettingViewController.swift */,
 				49F3E7F11C293A370036F7C7 /* GzInfosTableViewController.swift */,
+				49F6E98C1C3A0DEC007E5B0F /* PicViewController.swift */,
+				49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */,
 			);
 			path = bbm;
 			sourceTree = "<group>";
@@ -2108,6 +2113,7 @@
 				49F3E7FD1C2A83E80036F7C7 /* InfopicTableViewCell.swift */,
 				49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */,
 				49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */,
+				49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -2471,6 +2477,7 @@
 				49F3E7C61C27EA720036F7C7 /* XMPPAutoTime.m in Sources */,
 				49F3E7631C27EA720036F7C7 /* XMPPXOAuth2Google.m in Sources */,
 				49F3E7741C27EA720036F7C7 /* XMPPOutgoingFileTransfer.m in Sources */,
+				49F6E9991C3A43FA007E5B0F /* XiaoquTableViewController.swift in Sources */,
 				49F3E7601C27EA720036F7C7 /* XMPPPlainAuthentication.m in Sources */,
 				49F3E7B31C27EA720036F7C7 /* XMPPCapsCoreDataStorageObject.m in Sources */,
 				49F3E7E61C27EA730036F7C7 /* DDXMLNode.m in Sources */,
@@ -2565,14 +2572,15 @@
 				49F3E7C81C27EA720036F7C7 /* NSXMLElement+XEP_0203.m in Sources */,
 				49F3E7831C27EA720036F7C7 /* XMPPIQ+JabberRPCResonse.m in Sources */,
 				49F3E77E1C27EA720036F7C7 /* XMPPRosterMemoryStorage.m in Sources */,
-				497E7B731BCCF62200BAEB2F /* SubscribeCommunityViewController.swift in Sources */,
 				49CAC3971BBB7EA2006560A6 /* PublishViewController.swift in Sources */,
 				49F3E7A71C27EA720036F7C7 /* TURNSocket.m in Sources */,
 				49BAA4131BDA1B4E003AD8B6 /* RegisterViewController.swift in Sources */,
 				49F3E77F1C27EA720036F7C7 /* XMPPUserMemoryStorageObject.m in Sources */,
 				49F3E7C11C27EA720036F7C7 /* XMPPStreamManagementMemoryStorage.m in Sources */,
 				49F3E7811C27EA720036F7C7 /* XMPPSystemInputActivityMonitor.m in Sources */,
+				49F6E98D1C3A0DEC007E5B0F /* PicViewController.swift in Sources */,
 				49F3E7DB1C27EA730036F7C7 /* DDASLLogger.m in Sources */,
+				49F6E98F1C3A297B007E5B0F /* XiaoquTableViewCell.swift in Sources */,
 				49F3E7C21C27EA720036F7C7 /* XMPPStreamManagementStanzas.m in Sources */,
 				49FE1DBC1BD0AD11009B81D9 /* UserInfo.swift in Sources */,
 				49F3E7AF1C27EA720036F7C7 /* XMPPTransports.m in Sources */,

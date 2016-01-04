@@ -29,10 +29,10 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title="发布"
+        //self.title="发布"
         //(UIApplication.sharedApplication().delegate as! AppDelegate).apnsdelegate = self
         //告诉apnsdelegate我在这个里面实现
-         self.navigationItem.title="发布"
+         self.navigationItem.title="求帮助"
          self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "发送", style: UIBarButtonItemStyle.Done, target: self, action: "addClick")
 

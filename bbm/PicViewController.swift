@@ -1,20 +1,33 @@
 //
-//  AddXiaoquViewController.swift
+//  PicViewController.swift
 //  bbm
 //
-//  Created by ericsong on 15/10/19.
-//  Copyright © 2015年 sprin. All rights reserved.
+//  Created by ericsong on 16/1/4.
+//  Copyright © 2016年 sprin. All rights reserved.
 //
 
 import UIKit
-
-class AddXiaoquViewController: UIViewController {
-    //体育　足球　运动　家教　房产　兼职　促销　培训
+import Alamofire
+class PicViewController: UIViewController,UINavigationControllerDelegate {
+    var url:String = "";
+    @IBOutlet weak var pic: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
-        self.navigationItem.title="增加小区"
+        self.navigationItem.title="图片"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
+        
+        
+        Alamofire.request(.GET, url).response { (_, _, data, _) -> Void in
+            if let d = data as? NSData!
+            {
+                self.pic.image=UIImage(data: d)
+                
+               
+            }
+        }
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,10 +48,7 @@ class AddXiaoquViewController: UIViewController {
     func backClick()
     {
         NSLog("back");
-//        let sb = UIStoryboard(name:"Main", bundle: nil)
-//        let vc = sb.instantiateViewControllerWithIdentifier("subscribeCommunityViewController") as! SubscribeCommunityViewController
-//        self.presentViewController(vc, animated: true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
         
     }
-
 }

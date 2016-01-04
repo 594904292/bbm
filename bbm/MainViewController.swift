@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class MainViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class MainViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,BMKLocationServiceDelegate {
 
     @IBAction func cansos(sender: UIButton) {
         var sb = UIStoryboard(name:"Main", bundle: nil)
@@ -30,6 +30,9 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
     @IBOutlet weak var gonggao: UILabel!
     
     @IBOutlet weak var _tableview: UITableView!
+    //定位管理器
+    //let locationManager:CLLocationManager = CLLocationManager()
+    var locService:BMKLocationService!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +72,70 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
 //            
 //        }
 //        self.appDelegate().send("369", to: "18600888703", mess: "from main")
+        
+//        //设置定位服务管理器代理
+//        locationManager.delegate = self
+//        //设备使用电池供电时最高的精度
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        //精确到1000米,距离过滤器，定义了设备移动后获得位置信息的最小距离
+//        locationManager.distanceFilter = 100
+//        ////发送授权申请
+//        locationManager.requestAlwaysAuthorization()
+//        if (CLLocationManager.locationServicesEnabled())
+//        {
+//            //允许使用定位服务的话，开启定位服务更新
+//            locationManager.startUpdatingLocation()
+//            print("定位开始")
+//        }
+        //BMKLocationService.setLocationDesiredAccuracy(KCLLocationAccuracyBest)
+        // 设置定位精确度，默认：kCLLocationAccuracyBest
+        BMKLocationService.setLocationDesiredAccuracy(kCLLocationAccuracyBest)
+        //指定最小距离更新(米)，默认：kCLDistanceFilterNone
+        BMKLocationService.setLocationDistanceFilter(10)
+        
+        //初始化BMKLocationService
+        locService = BMKLocationService()
+        
+        //启动LocationService
+        locService.startUserLocationService()
+//        mapView.showsUserLocation = false
+//        //设置位置跟踪态
+//        mapView.userTrackingMode = BMKUserTrackingModeNone
+//        //显示定位图层
+//        mapView.showsUserLocation = true
+        
      }
+    
+    //处理方向变更信息
+    func didUpdateUserHeading(userLocation: BMKUserLocation!) {
+        print("经度: \(userLocation.location.coordinate.latitude)")
+        print("纬度: \(userLocation.location.coordinate.longitude)")
+        let defaults = NSUserDefaults.standardUserDefaults();
+        defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
+        defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
+        defaults.synchronize();
+        locService.stopUserLocationService()
+    }
+    
+    //处理位置坐标更新
+    func didUpdateBMKUserLocation(userLocation: BMKUserLocation!) {
+        
+        print("经度: \(userLocation.location.coordinate.latitude)")
+        print("纬度: \(userLocation.location.coordinate.longitude)")
+                let defaults = NSUserDefaults.standardUserDefaults();
+                defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
+                defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
+                defaults.synchronize();
+        locService.stopUserLocationService()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+            locService.delegate = self
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+            locService.delegate = nil
+    }
     
     //取得当前程序的委托
     func  appDelegate() -> AppDelegate{
@@ -297,5 +363,112 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    
+//    
+//    //定位改变执行，可以得到新位置、旧位置
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        //获取最新的坐标
+//        
+//        let currLocation:CLLocation = locations.last!
+//        print("经度：\(currLocation.coordinate.longitude)")
+//        print("纬度：\(currLocation.coordinate.latitude)")
+//        
+//        let defaults = NSUserDefaults.standardUserDefaults();
+//        defaults.setObject(String(currLocation.coordinate.latitude), forKey: "lat");
+//        defaults.setObject(String(currLocation.coordinate.longitude), forKey: "lng");
+//        defaults.synchronize();
+//        
+//        
+//        var geocoder:CLGeocoder=CLGeocoder();
+//        geocoder.reverseGeocodeLocation(currLocation,
+//            completionHandler: { (placemarks, error) -> Void in
+//                if error != nil {
+//                    return
+//                }
+//                let p:CLPlacemark = placemarks!.last!
+//                //NSLog(p.description)
+//                print("name：\(p.name)")
+//                print("country：\(p.country)")
+//                print("postalCode：\(p.postalCode)")
+//                print("locality：\(p.locality)")
+//                print("subLocality：\(p.subLocality)")
+//                
+//                print("thoroughfare：\(p.thoroughfare)")
+//                
+//                print("administrativeArea：\(p.administrativeArea)")
+//                print("subAdministrativeArea：\(p.subAdministrativeArea)")
+//                print("inlandWater：\(p.inlandWater)")
+//                
+//                print("areasOfInterest：\(p.areasOfInterest)")
+//                
+//                
+//                
+//                //                    NSLog("\n name:%@\n  country:%@\n postalCode:%@\n ISOcountryCode:%@\n ocean:%@\n inlandWater:%@\n locality:%@\n subLocality:%@\n administrativeArea:%@\n subAdministrativeArea:%@\n thoroughfare:%@\n subThoroughfare:%@\n",
+//                //                        p.name!,
+//                //                        p.country!,
+//                //                        p.postalCode!,
+//                //                        p.ISOcountryCode!,//国家代码
+//                //                        p.ocean!,//大洋
+//                //                        p.inlandWater!,//
+//                //                        p.administrativeArea!,
+//                //                        p.subAdministrativeArea!,
+//                //                        p.locality!,
+//                //                        p.subLocality!,
+//                //                        p.thoroughfare!,
+//                //                        p.subThoroughfare!)
+//                
+//                let defaults = NSUserDefaults.standardUserDefaults();
+//                defaults.setObject(p.country, forKey: "country");
+//                defaults.setObject(p.locality, forKey: "province");//省直辖市
+//                defaults.setObject(p.administrativeArea  , forKey: "city");//城市
+//                defaults.setObject(p.subAdministrativeArea  , forKey: "subadministrativearea");//城市
+//                defaults.setObject(p.subLocality  , forKey: "sublocality");//区县
+//                defaults.setObject(p.thoroughfare  , forKey: "thoroughfare");//街道
+//                defaults.setObject(p.name  , forKey: "address");
+//                defaults.synchronize();
+//                
+//                
+//                let _userid = defaults.objectForKey("userid") as! NSString;
+//                let _token = defaults.objectForKey("token") as! NSString;
+//                //更新下地理位置
+//                
+//                Alamofire.request(.POST, "http://www.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
+//                    .responseJSON { response in
+//                        print(response.request)  // original URL request
+//                        print(response.response) // URL response
+//                        print(response.data)     // server data
+//                        print(response.result)   // result of response serialization
+//                        print(response.result.value)
+//                        
+//                        
+//                }
+//                
+//                
+//                
+//                
+//                Alamofire.request(.POST, "http://www.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
+//                    .responseJSON { response in
+//                        print(response.request)  // original URL request
+//                        print(response.response) // URL response
+//                        print(response.data)     // server data
+//                        print(response.result)   // result of response serialization
+//                        print(response.result.value)
+//                        
+//                        
+//                }
+//                
+//                
+//   
+//        })
+//        
+//      
+//    }
+//    
+//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
+//        print(error)
+//    }
+    
 
 }

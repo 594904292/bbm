@@ -35,3 +35,8 @@ protocol ZtDL {
     func isOff(zt:Zhuangtai)
     func meOff()
 }
+
+
+protocol xiaoquDelegate{
+    func sendxiaoqu(id:String,name:String,lag:String,lng:String)
+}

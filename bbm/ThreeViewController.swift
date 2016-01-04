@@ -18,12 +18,12 @@ class ThreeViewController: UIViewController {
     }
 
     @IBAction func SubscribeCommunity_Click(sender: UIButton) {
-        let sb = UIStoryboard(name:"Main", bundle: nil)
-        let vc = sb.instantiateViewControllerWithIdentifier("subscribeCommunityViewController") as! SubscribeCommunityViewController
-        //创建导航控制器
-        let nvc=UINavigationController(rootViewController:vc);
-        //设置根视图
-        self.view.window!.rootViewController=nvc;
+//        let sb = UIStoryboard(name:"Main", bundle: nil)
+//        let vc = sb.instantiateViewControllerWithIdentifier("subscribeCommunityViewController") as! SubscribeCommunityViewController
+//        //创建导航控制器
+//        let nvc=UINavigationController(rootViewController:vc);
+//        //设置根视图
+//        self.view.window!.rootViewController=nvc;
         NSLog("one")
     }
     

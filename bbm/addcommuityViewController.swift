@@ -135,12 +135,12 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
     func backClick()
     {
         NSLog("back");
-        let sb = UIStoryboard(name:"Main", bundle: nil)
-        let vc = sb.instantiateViewControllerWithIdentifier("subscribeCommunityViewController") as! SubscribeCommunityViewController
-        
-        let nvc=UINavigationController(rootViewController:vc);
-        //设置根视图
-        self.view.window!.rootViewController=nvc;
+//        let sb = UIStoryboard(name:"Main", bundle: nil)
+//        let vc = sb.instantiateViewControllerWithIdentifier("subscribeCommunityViewController") as! SubscribeCommunityViewController
+//        
+//        let nvc=UINavigationController(rootViewController:vc);
+//        //设置根视图
+//        self.view.window!.rootViewController=nvc;
     }
 
     func onGetGeoCodeResult(searcher: BMKGeoCodeSearch!, result: BMKGeoCodeResult!,  error: BMKSearchErrorCode) {

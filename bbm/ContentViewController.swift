@@ -61,13 +61,31 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             {
                 cell.images.image=UIImage(data: d)
                 
-                var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTouch:")
-                cell.images.tag = indexPath.row
-                cell.images .addGestureRecognizer(singleTap)
+//                var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTouch:")
+//                cell.images.tag = indexPath.row
+//                cell.images .addGestureRecognizer(singleTap)
             }
         }
 
         return cell
+    }
+    
+    //实现UICollectionViewDataSource
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    {
+        //某个Cell被选择的事件处理
+        //NSLog("cell #%d was selected",indexPath.row)
+        
+        let url:String=self.pics[indexPath.row]
+        
+        let sb = UIStoryboard(name:"Main", bundle: nil)
+        let vc = sb.instantiateViewControllerWithIdentifier("picviewController") as! PicViewController
+        //创建导航控制器
+        //vc.message = aa.content;
+        vc.url=url
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+        return
     }
 
     @IBOutlet weak var _tableview: UITableView!
@@ -193,14 +211,14 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         }        
     }
   
-    func  imageViewTouch(sender:UITapGestureRecognizer){
-        //print("2")
-        var index:Int = (sender.view?.tag)!
-        var imgurl:String=self.pics[index]
-        var url=NSURL(string: imgurl)
-        UIApplication.sharedApplication().openURL(url!)
-        
-    }
+//    func  imageViewTouch(sender:UITapGestureRecognizer){
+//        //print("2")
+//        var index:Int = (sender.view?.tag)!
+//        var imgurl:String=self.pics[index]
+//        var url=NSURL(string: imgurl)
+//        UIApplication.sharedApplication().openURL(url!)
+//        
+//    }
 
     func loadheadface(userid:String,headname:String)
     {
@@ -292,7 +310,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     
     func setupSendPanel1()
     {
-        let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-50,320,50))
+        let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-50,self.view.frame.size.width,50))
         
         sendView.backgroundColor=UIColor.grayColor()
         sendView.alpha=0.9

@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-class GzInfoViewController: UIViewController,UINavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate{
+class GzInfoViewController: UIViewController,UINavigationControllerDelegate,UIActionSheetDelegate,UITableViewDataSource, UITableViewDelegate{
     
     @IBOutlet weak var tableview: UITableView!
      var items:[itemMess]=[]
