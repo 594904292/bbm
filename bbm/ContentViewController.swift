@@ -61,9 +61,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             {
                 cell.images.image=UIImage(data: d)
                 
-//                var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "imageViewTouch:")
-//                cell.images.tag = indexPath.row
-//                cell.images .addGestureRecognizer(singleTap)
             }
         }
 
@@ -112,49 +109,15 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         _tableview!.dataSource=self
         collectionView!.dataSource=self
         collectionView!.delegate=self
-         collectionView.backgroundColor = UIColor.whiteColor()
+        collectionView.backgroundColor = UIColor.whiteColor()
         loadinfo(guid);
-        //setupChatTable1()
+        
         setupSendPanel1()
 
         // querydata()
         
     }
     
-    
-//    func querydata()
-//    {
-//        
-//        
-//        let url:String="http://www.bbxiaoqu.com/getdynamics.php?userid=369&rang=xiaoqu&start=0&limit=20";
-//        print("url: \(url)")
-//        Alamofire.request(.GET, url, parameters: nil)
-//            .responseJSON { response in
-//                if let jsonItem = response.result.value as? NSArray{
-//                    for data in jsonItem{
-//                        print("data: \(data)")
-//                        
-//                        let id:String = data.objectForKey("id") as! String;
-//                        let userid:String = data.objectForKey("userid") as! String;
-//                        let username:String = data.objectForKey("username") as! String;
-//                        let actionname:String = data.objectForKey("actionname") as! String;
-//                        let actiontime:String = data.objectForKey("actiontime") as! String;
-//                        let guid:String = data.objectForKey("guid") as! String;
-//                        let messdesc:String = data.objectForKey("messdesc") as! String;
-//                        
-//                        let item_obj:itemDaymic = itemDaymic(id: id, userid: userid, username: username, actionname: actionname, actiontime: actiontime, guid: guid, messdesc: messdesc)
-//                        self.items.append(item_obj)
-//                        
-//                    }
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        self._tableview.reloadData();
-//                        self._tableview.doneRefresh();
-//                    })
-//                }
-//        }
-//        
-//    }
-//
     
     
     func loadinfo(guid:String)
@@ -265,8 +228,14 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                                   self.items.append(item_obj)
                             }
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                if(self.items.count==0)
+                                {
+                                    //self._tableview.vi
+                                }else
+                                {
                                 self._tableview.reloadData();
                                 self._tableview.doneRefresh();
+                                }
                             })
 
                             

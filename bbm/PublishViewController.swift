@@ -227,6 +227,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
                 //                if let JSON = response.result.value {
                 //                    print("JSON: \(JSON)")
                 //                }
+                 self.navigationController?.popViewControllerAnimated(true)
         }
     }
     func goImagesel()
