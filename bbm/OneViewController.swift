@@ -116,6 +116,10 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     func addClick()
     {
         NSLog("addClick");
+        var sb = UIStoryboard(name:"Main", bundle: nil)
+        var vc = sb.instantiateViewControllerWithIdentifier("publishController") as! PublishViewController
+        vc.cat=3
+        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     

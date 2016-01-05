@@ -32,12 +32,21 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         //self.title="发布"
         //(UIApplication.sharedApplication().delegate as! AppDelegate).apnsdelegate = self
         //告诉apnsdelegate我在这个里面实现
-         self.navigationItem.title="求帮助"
+        
          self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "发送", style: UIBarButtonItemStyle.Done, target: self, action: "addClick")
 
         
-        
+        if(cat==0)
+        {
+             self.navigationItem.title="求帮助"
+            content.placeholder="请输入你的求助信息"
+        }else if(cat==3)
+        {
+             self.navigationItem.title="能帮助"
+            content.placeholder="请输入你的能帮助信息"
+        }
+
         
         let bw:CGFloat = self.view.frame.width
         var index=0
@@ -209,7 +218,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
        
         dic["networklocationtype"] = "";
         dic["operators"] = "";
-        dic["catagory"] = "1";
+        dic["catagory"] = String(cat) ;
         dic["streetnumber"] = "-1";
         dic["floor"] = "-1";
         dic["infocatagroy"] = "1";

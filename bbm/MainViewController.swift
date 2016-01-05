@@ -11,6 +11,12 @@ import Alamofire
 
 class MainViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,BMKLocationServiceDelegate {
 
+    @IBAction func gonggaobtn(sender: UIButton) {
+        
+        var urlstr:String="http://www.bbxiaoqu.com/wap/gonggao.php?id=".stringByAppendingString(ggid)
+        var url=NSURL(string: urlstr)
+        UIApplication.sharedApplication().openURL(url!)
+    }
     @IBAction func cansos(sender: UIButton) {
         var sb = UIStoryboard(name:"Main", bundle: nil)
         var vc = sb.instantiateViewControllerWithIdentifier("tabone") as! OneViewController
@@ -21,19 +27,21 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
     @IBAction func sos(sender: UIButton) {
         var sb = UIStoryboard(name:"Main", bundle: nil)
         var vc = sb.instantiateViewControllerWithIdentifier("publishController") as! PublishViewController
+        vc.cat=0;
         self.navigationController?.pushViewController(vc, animated: true)
 
     }
     var items:[itemDaymic]=[]
-    var cities=["成都","北京","上海","深圳","天津","成都","北京","上海","深圳","天津"]
-    var ggid:String = "";
-    @IBOutlet weak var gonggao: UILabel!
+     var ggid:String = "";
+    
+    
+    @IBOutlet weak var ggview: UIView!
     
     @IBOutlet weak var _tableview: UITableView!
     //定位管理器
     //let locationManager:CLLocationManager = CLLocationManager()
     var locService:BMKLocationService!
-    
+    var marquee: CHWMarqueeView?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,49 +52,19 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "退出", style: UIBarButtonItemStyle.Done, target: self, action: "exitClick")
         
         
-       
+       self.view.userInteractionEnabled=true
         
         showgg()
-        gonggao.userInteractionEnabled = true
-        //gonggao.addGestureRecognizer(UIGestureRecognizer(target: self, action: "showggpage"))
-        gonggao.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("showpage")))
-        //gonggao.addGestureRecognizer(UITapGestureRecognizer(target: <#T##AnyObject?#>, action: Selector))
-        
         
         _tableview!.delegate=self
         _tableview!.dataSource=self
-//        self._tableview.headerView = XWRefreshNormalHeader(target: self, action: "upPullLoadData")
-//        
-//        self._tableview.headerView?.beginRefreshing()
-//        self._tableview.headerView?.endRefreshing()
-//        
-//        self._tableview.footerView = XWRefreshAutoNormalFooter(target: self, action: "downPlullLoadData")
+
         self.automaticallyAdjustsScrollViewInsets = false
         
         querydata()
         self.appDelegate().connect()
         
-//        if (self.appDelegate().connect())
-//        {
-//            print("show buddy list")
-//            
-//        }
-//        self.appDelegate().send("369", to: "18600888703", mess: "from main")
-        
-//        //设置定位服务管理器代理
-//        locationManager.delegate = self
-//        //设备使用电池供电时最高的精度
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        //精确到1000米,距离过滤器，定义了设备移动后获得位置信息的最小距离
-//        locationManager.distanceFilter = 100
-//        ////发送授权申请
-//        locationManager.requestAlwaysAuthorization()
-//        if (CLLocationManager.locationServicesEnabled())
-//        {
-//            //允许使用定位服务的话，开启定位服务更新
-//            locationManager.startUpdatingLocation()
-//            print("定位开始")
-//        }
+
         //BMKLocationService.setLocationDesiredAccuracy(KCLLocationAccuracyBest)
         // 设置定位精确度，默认：kCLLocationAccuracyBest
         BMKLocationService.setLocationDesiredAccuracy(kCLLocationAccuracyBest)
@@ -98,12 +76,11 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         //启动LocationService
         locService.startUserLocationService()
-//        mapView.showsUserLocation = false
-//        //设置位置跟踪态
-//        mapView.userTrackingMode = BMKUserTrackingModeNone
-//        //显示定位图层
-//        mapView.showsUserLocation = true
-        
+
+        //self.ggimg.userInteractionEnabled = true
+        //self.ggimg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("showpage")))
+
+       
      }
     
     //处理方向变更信息
@@ -122,10 +99,10 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         print("经度: \(userLocation.location.coordinate.latitude)")
         print("纬度: \(userLocation.location.coordinate.longitude)")
-                let defaults = NSUserDefaults.standardUserDefaults();
-                defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
-                defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
-                defaults.synchronize();
+        let defaults = NSUserDefaults.standardUserDefaults();
+        defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
+        defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
+        defaults.synchronize();
         locService.stopUserLocationService()
     }
     
@@ -139,9 +116,7 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     //取得当前程序的委托
     func  appDelegate() -> AppDelegate{
-        
-        return UIApplication.sharedApplication().delegate as! AppDelegate
-        
+         return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
 
@@ -149,35 +124,26 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     //MARK: 加载数据
     func upPullLoadData(){
-        
         //延迟执行 模拟网络延迟，实际开发中去掉
         xwDelay(1) { () -> Void in
             self.querydata()
             self._tableview.reloadData()
             self._tableview.headerView?.endRefreshing()
-            
         }
-        
     }
     
     func downPlullLoadData(){
-        
         xwDelay(1) { () -> Void in
-            
-            
             self.querydata()
             self._tableview.reloadData()
             self._tableview.footerView?.endRefreshing()
         }
-        
-    }
+     }
     
 
     
     func querydata()
     {
-        
-        
         let url:String="http://www.bbxiaoqu.com/getdynamics.php?userid=369&rang=xiaoqu&start=0&limit=20";
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
@@ -187,7 +153,6 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 if let jsonItem = response.result.value as? NSArray{
                     for data in jsonItem{
                         print("data: \(data)")
-                        
                         let id:String = data.objectForKey("id") as! String;
                         let userid:String = data.objectForKey("userid") as! String;
                         let username:String = data.objectForKey("username") as! String;
@@ -210,8 +175,6 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
                     self.successNotice("网络请求错误")
                     print("网络请求错误")
                 }
-                
-
         }
         
     }
@@ -228,8 +191,6 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     func showgg()
     {
-        
-        
         var url:String="http://www.bbxiaoqu.com/gonggao.php"
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
@@ -239,11 +200,20 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
                     if let jsonItem = response.result.value as? NSArray{
                         for data in jsonItem{
                             //print("data: \(data)")
-                            
-                            let id:String = data.objectForKey("id") as! String;
+                              let id:String = data.objectForKey("id") as! String;
                             let title:String = data.objectForKey("title") as! String;
-                            self.gonggao.text=title
+                           
                             self.ggid=id;
+                            self.marquee = CHWMarqueeView(frame: CGRectMake(45, 250, self.view.bounds.size.width-45, 45), title: title)
+                            self.marquee!.userInteractionEnabled = true
+                            self.marquee!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("showpage")))
+                            //fffbca
+                            //self.marquee?.backgroundColor=UIColor(red: 0x100/0x100, green: 0xb4/0x100, blue: 0x9f/0x100, alpha: 1)
+                            
+                            self.marquee?.backgroundColor=UIColor(red: 255/255, green: 251/255, blue: 202/255, alpha: 1)
+
+
+                            self.view.addSubview(self.marquee!)
                         }
                     }
                 }else

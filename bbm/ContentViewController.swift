@@ -148,10 +148,17 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                         self.puserid = JSON[0].objectForKey("senduser") as! String;
                         self.puser = JSON[0].objectForKey("username") as! String;
                         
+                        var report = JSON[0].objectForKey("report") as! String;
+
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.contentLab.text = contentstr;
                             self.sendtime.text = sendtimestr;
                             self.sendaddr.text = sendaddress;
+                            if(report=="1")
+                            {
+                                self.reportbtn.setTitle("已举报", forState: UIControlState.Normal)
+                                self.reportbtn.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
+                            }
                         })
                     }
   
@@ -390,6 +397,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         }
     }
     
+    @IBOutlet weak var reportbtn: UIButton!
         
     @IBAction func report(sender: UIButton) {
         
@@ -417,8 +425,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             timeFormatter.dateFormat = "yyy-MM-dd HH:mm:ss"
             var strNowTime = timeFormatter.stringFromDate(date) as String
             
-            var  dic:Dictionary<String,String> = ["content" : guid, "userid": userid, "addtime": strNowTime]
-            Alamofire.request(.POST, "http://www.bbxiaoqu.com/savesuggest.php", parameters: dic)
+            var  dic:Dictionary<String,String> = ["guid" : guid, "userid": userid, "addtime": strNowTime]
+            Alamofire.request(.POST, "http://www.bbxiaoqu.com/savereport.php", parameters: dic)
                 .responseJSON { response in
                     if(response.result.isSuccess)
                     {
@@ -431,6 +439,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                         //                if let JSON = response.result.value {
                         //                    print("JSON: \(JSON)")
                         //                }
+                        self.reportbtn.setTitle("已举报", forState: UIControlState.Normal)
+                        self.reportbtn.enabled=false
                         
                     }else
                     {

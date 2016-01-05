@@ -288,6 +288,7 @@
 		49F6E98F1C3A297B007E5B0F /* XiaoquTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */; };
 		49F6E9991C3A43FA007E5B0F /* XiaoquTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */; };
 		49F6E99C1C3B855C007E5B0F /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */; };
+		49F6E9A31C3BA3DD007E5B0F /* CHWMarqueeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9A21C3BA3DD007E5B0F /* CHWMarqueeView.swift */; };
 		49FE1DA31BD0A082009B81D9 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA11BD0A082009B81D9 /* TableView.swift */; };
 		49FE1DA41BD0A082009B81D9 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */; };
 		49FE1DA91BD0A0E2009B81D9 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */; };
@@ -824,6 +825,7 @@
 		49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoquTableViewCell.swift; sourceTree = "<group>"; };
 		49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoquTableViewController.swift; sourceTree = "<group>"; };
 		49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
+		49F6E9A21C3BA3DD007E5B0F /* CHWMarqueeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHWMarqueeView.swift; sourceTree = "<group>"; };
 		49FE1DA11BD0A082009B81D9 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
@@ -968,6 +970,7 @@
 				4944354E1BB3E20D004EAECB /* LaunchScreen.storyboard */,
 				494435731BB3E3BC004EAECB /* LoginViewController.swift */,
 				49BAA4121BDA1B4E003AD8B6 /* RegisterViewController.swift */,
+				49F6E9A21C3BA3DD007E5B0F /* CHWMarqueeView.swift */,
 				494435751BB3E6A1004EAECB /* HomeViewController.swift */,
 				497E9AE81BB8D4CC00653FB4 /* OneViewController.swift */,
 				497E9AEA1BB8D4F100653FB4 /* TwoViewController.swift */,
@@ -2471,6 +2474,7 @@
 				49F3E77A1C27EA720036F7C7 /* XMPPRoster.xcdatamodel in Sources */,
 				49F3E77D1C27EA720036F7C7 /* XMPPResourceMemoryStorageObject.m in Sources */,
 				49F3E7DF1C27EA730036F7C7 /* DDContextFilterLogFormatter.m in Sources */,
+				49F6E9A31C3BA3DD007E5B0F /* CHWMarqueeView.swift in Sources */,
 				498701871C17EDF5006361F8 /* MessageDelegate.swift in Sources */,
 				49FE1DCA1BD0F634009B81D9 /* SimTableViewCell.swift in Sources */,
 				4987FF681C17C113006361F8 /* XWRefreshStateHeader.swift in Sources */,
