@@ -59,7 +59,11 @@ class RecentTableViewController: UITableViewController {
                 let lastinfo = item["lastinfo"]!.asString()
                 let lasttime = item["lasttime"]!.asString()
                 let messnu = item["messnu"]!.asString()
-                let lastnickname = item["lastnickname"]!.asString()
+                var lastnickname = item["lastuserid"]!.asString()
+                if(loadusername(item["lastuserid"]!.asString()).characters.count>0)
+                {
+                    lastnickname=loadusername(item["lastuserid"]!.asString())
+                }
                 let item_obj:itemRecent=itemRecent(userid: userid, username: nickname, usericon: usericon, lastinfo: lastinfo, lastchattimer: lasttime, messnum: messnu, lastnickname: lastnickname)
                  self.items.append(item_obj)
             }
@@ -68,6 +72,27 @@ class RecentTableViewController: UITableViewController {
         
     }
     
+    
+    func loadusername(userid:String)->String
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from users where userid='"+userid+"'";
+        NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            NSLog("ok")
+            let item = mess[0] as SQLRow
+            return item["nickname"]!.asString()
+        }
+        else
+        {
+            NSLog("fail")
+            
+            return ""
+        }
+    }
+
 
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -122,6 +147,15 @@ class RecentTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         NSLog("select \(indexPath.row)")
+        
+        let defaults = NSUserDefaults.standardUserDefaults();
+        var senduserid = defaults.objectForKey("userid") as! String;
+        let sb = UIStoryboard(name:"Main", bundle: nil)
+        let vc = sb.instantiateViewControllerWithIdentifier("chatviewController") as! ChatViewController
+        //创建导航控制器
+        vc.from=(self.items[indexPath.row] as itemRecent).userid
+        vc.myself=senduserid;
+        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     

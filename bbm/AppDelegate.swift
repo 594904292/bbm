@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Alamofire
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
 
@@ -33,7 +33,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
     //消息代理
     var xxdl : XxDL?
     
- 
+    
+//    func loadusername(userid:String) -> String
+//    {
+//        var username="";
+//        var url_str:String = "http://www.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
+//        Alamofire.request(.POST,url_str, parameters:nil)
+//            .responseJSON { response in
+//                print(response.result.value)
+//                if let JSON = response.result.value {
+//                    print("JSON1: \(JSON.count)")
+//                       username = JSON[0].objectForKey("username") as! String;
+//                    
+//                }
+//        }
+//        var flag:Int = 0
+//        while(username.characters.count==0 && flag<10){
+//            sleep(200)
+//            flag++
+//        }
+//        return username;
+//    }
+//    
+//    func loadheadface(userid:String) -> String
+//    {
+//        var headfaceurl="";
+//        var url_str:String = "http://www.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
+//        Alamofire.request(.POST,url_str, parameters:nil)
+//            .responseJSON { response in
+//                print(response.result.value)
+//                if let JSON = response.result.value {
+//                    print("JSON1: \(JSON.count)")
+//                    headfaceurl = JSON[0].objectForKey("headface") as! String;
+//                    
+//                }
+//        }
+//        var flag:Int = 0
+//        while(headfaceurl.characters.count==0 && flag<10){
+//            sleep(200)
+//            flag++
+//        }
+//        return headfaceurl;
+//    }
+
     
     //收到消息
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
@@ -66,12 +108,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
             
             var date = NSDate()
             var timeFormatter = NSDateFormatter()
-            timeFormatter.dateFormat = "yyy-MM-dd HH:mm:ss.SSS" //(格式可俺按自己需求修整)
+            timeFormatter.dateFormat = "yyy-MM-dd HH:mm:ss" //(格式可俺按自己需求修整)
             var strNowTime = timeFormatter.stringFromDate(date) as String
-
+            //cleanchat()
             
             //写一条信息到聊天记录表
-            self.addmess(from, touserid: to, message: msg.body, guid: "", date: strNowTime, readed: "0")
+            self.addchat(from, touserid: to, message: msg.body, guid: "", date: strNowTime, readed: "0")
             //修改通知记录
             if(self.unreadnum(from, catagory: "私信")==0)
             {
@@ -88,13 +130,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
                 //更新头像和用户名
             
             }
-            
+            self.newmess(from, lastuserid: from, lastinfo: msg.body, lasttime: strNowTime)
             //添加到消息代理中
             xxdl?.newMsg(msg)
             
 
         }
     }
+    
+//    func cleanchat()
+//    {
+//        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+//        let sql = "delete from chat";
+//        db.execute(sql)
+//        
+//        let sql1 = "delete from users";
+//        db.execute(sql1)
+//
+//        
+//    }
+
+    
     func unreadnumchat(from:String,to:String)->Int
     {
         var db: SQLiteDB! = SQLiteDB.sharedInstance()
@@ -104,6 +160,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
         let item = mess[0] as SQLRow
         let num1 = item["num1"]!.asInt()
         return num1;
+    }
+
+   
+    func newmess(userid:String, lastuserid:String, lastinfo:String, lasttime:String)
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql = "update friend set lastuserid='\(lastuserid)',lastinfo='\(lastinfo)',lasttime='\(lasttime)' where userid='\(userid)'";
+        db.execute(sql)
+        
     }
 
     
@@ -126,10 +191,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
     }
 
     
-    func addmess(senduserid:String,touserid:String,message:String,guid:String,date:String,readed:String)
+//    func addchat(messae:String,guid:String,date:String,senduserid:String,sendnickname:String,sendusericon:String,touserid:String,tousernickname:String,tousericon:String)
+//    {
+//        let sql = "insert into chat(message,guid,date,senduserid,sendnickname,sendusericon,touserid,tonickname,tousericon) values('\(messae)','\(guid)','\(date)','\(senduserid)','\(sendnickname)','\(sendusericon)','\(touserid)','\(tousernickname)','\(tousericon)')";
+//        
+//        NSLog("sql: \(sql)")
+//        db.execute(sql)
+//    }
+//    
+
+    
+    func loadusername(userid:String)->String
     {
         var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql = "insert into chat(senduserid,touserid,message,guid,date,readed) values('\(senduserid)','\(touserid)',''\(message)','','\(date)','0')";
+        let sql="select * from users where userid='"+userid+"'";
+        NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            let item = mess[0] as SQLRow
+            return item["nickname"]!.asString()
+        }
+        else
+        {
+            return ""
+        }
+    }
+
+    func loadheadface(userid:String)->String
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from users where userid='"+userid+"'";
+        NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            let item = mess[0] as SQLRow
+            return item["usericon"]!.asString()
+        }
+        else
+        {
+            return ""
+        }
+    }
+
+    func isexituser(userid:String)->Bool
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from users where userid='"+userid+"'";
+        NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+
+    
+    func addchat(senduserid:String,touserid:String,message:String,guid:String,date:String,readed:String)
+    {
+        var sendnickname:String=loadusername(senduserid)
+        var sendusericon:String=loadheadface(senduserid)
+
+        var tonickname:String=loadusername(touserid)
+        var tousericon:String=loadheadface(touserid)
+
+        
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql = "insert into chat(senduserid,sendnickname,sendusericon,touserid,tonickname,tousericon,message,guid,date,readed) values('\(senduserid)','\(sendnickname)','\(sendnickname)','\(touserid)','\(tonickname)','\(tousericon)','\(message)','','\(date)','0')";
         db.execute(sql)
     }
 

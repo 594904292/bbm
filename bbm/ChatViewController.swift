@@ -42,10 +42,12 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         let defaults = NSUserDefaults.standardUserDefaults();
         myselfname = defaults.objectForKey("nickname") as! String;
         myselfheadface = defaults.objectForKey("headface") as! String;
-        getData()
+       
         
-        loaduserinfo()
-        
+        loaduserinfo(from)
+        loaduserinfo(myself)
+
+         getData()
         setupChatTable()
         
         setupSendPanel()
@@ -84,11 +86,11 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     
     
     
-    func loaduserinfo()
+    func loaduserinfo(userid:String)
         
     {
         
-        Alamofire.request(.GET, "http://www.bbxiaoqu.com/getuserinfo.php?userid="+from, parameters: nil)
+        Alamofire.request(.GET, "http://www.bbxiaoqu.com/getuserinfo.php?userid="+userid, parameters: nil)
             
             .responseJSON { response in
                 if(response.result.isSuccess)
@@ -97,8 +99,19 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                         
                         for data in jsonItem{
                             print("data: \(data)")
-                            self.fromname = data.objectForKey("username") as! String;
-                            self.fromheadface = data.objectForKey("headface") as! String;
+                            if(userid==self.from)
+                            {
+                                self.fromname = data.objectForKey("username") as! String;
+                                self.fromheadface = data.objectForKey("headface") as! String;
+                            }
+                            var name:String = data.objectForKey("username") as! String;
+                            var headface:String = data.objectForKey("headface") as! String;
+
+                            if(!self.isexituser(userid))
+                            {//缓存用户数据
+                                self.addusers(userid, nickname: name, usericon: headface)
+                                //更新聊天记录
+                            }
                         }
                         
                     }
@@ -133,15 +146,20 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                 //let guid = item["guid"]!.asString()
                 let date = item["date"]!.asString()
                 
-                let sendnickname = item["sendnickname"]!.asString()
+               
                 
                 let senduserid = item["senduserid"]!.asString()
+                let touserid = item["touserid"]!.asString()
                 
-                let sendusericon = item["sendusericon"]!.asString()
                 
-                let tonickname = item["tonickname"]!.asString()
+                let sendnickname = self.loadusername(senduserid)
                 
-                let tousericon = item["tousericon"]!.asString()
+                let sendusericon = self.loadheadface(senduserid)
+
+                
+                let tonickname = self.loadusername(touserid)
+                
+                let tousericon = self.loadheadface(touserid)
                 
                 //var now=NSDate();
                 
@@ -151,7 +169,13 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                 
                 var now=fmt.dateFromString(date)!;
                 
-                if(senduserid == myself)
+                NSLog(senduserid)
+                NSLog(self.myself)
+
+                let defaults = NSUserDefaults.standardUserDefaults();
+                let userid = defaults.objectForKey("userid") as! NSString;
+                
+                if(senduserid == userid)
                     
                 {
                     
@@ -290,6 +314,81 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         return UIApplication.sharedApplication().delegate as! AppDelegate
     }
 
+    
+    
+    func loadusername(userid:String)->String
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from users where userid='"+userid+"'";
+        NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            NSLog("ok")
+            let item = mess[0] as SQLRow
+            return item["nickname"]!.asString()
+        }
+        else
+        {
+            NSLog("fail")
+
+            return ""
+        }
+    }
+    
+    func loadheadface(userid:String)->String
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from users where userid='"+userid+"'";
+        NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            NSLog("ok")
+            let item = mess[0] as SQLRow
+            return item["usericon"]!.asString()
+        }
+        else
+        {
+            NSLog("fail")
+
+            return ""
+        }
+    }
+    
+    func isexituser(userid:String)->Bool
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from users where userid='"+userid+"'";
+        NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            NSLog("ok")
+            return true
+        }
+        else
+        {
+            NSLog("fail")
+            return false
+        }
+    }
+    
+    
+    func addusers(userid:String,nickname:String,usericon:String)
+    {
+        
+        //          db.execute("create table if not exists friend(uid integer primary key,userid varchar(100),nickname varchar(100),usericon varchar(100),lastuserid varchar(100),lastnickname varchar(100),lastinfo varchar(100),lasttime varchar(100),messnu varchar(100))")
+        
+        let sql = "insert into users(userid,nickname,usericon) values('\(userid )','\(nickname)','\(usericon)')"
+        print("sql: \(sql)")
+        //通过封装的方法执行sql
+        let result = db.execute(sql)
+        
+        print(result)
+        NSLog(sql)
+        
+    }
     
     func addchat(messae:String,guid:String,date:String,senduserid:String,sendnickname:String,sendusericon:String,touserid:String,tousernickname:String,tousericon:String)
     {
