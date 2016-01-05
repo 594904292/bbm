@@ -125,6 +125,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         var url_str:String = "http://www.bbxiaoqu.com/getinfo.php?guid=".stringByAppendingString(guid)
         Alamofire.request(.GET,url_str, parameters:nil)
             .responseJSON {response in
+                if(response.result.isSuccess)
+                {
                 print(response.result.value)
                 var photo:String=""
                 if let JSON = response.result.value {
@@ -171,6 +173,11 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                     self.loadheadface(self.puserid,headname:self.headface)
                     self.loaddiscuzzBody(self.infoid)
                 }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
         }        
     }
   
@@ -204,7 +211,9 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             Alamofire.request(.GET,url_str, parameters:nil)
     
                 .responseJSON { response in
-    
+                    
+                    if(response.result.isSuccess)
+                    {
                     if let JSON = response.result.value as? NSArray {
     
                         print("JSON1: \(JSON.count)")
@@ -230,9 +239,11 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 if(self.items.count==0)
                                 {
+                                    self._tableview.hidden=true
                                     //self._tableview.vi
                                 }else
                                 {
+                                    self._tableview.hidden=false
                                 self._tableview.reloadData();
                                 self._tableview.doneRefresh();
                                 }
@@ -248,7 +259,11 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                         self._tableview.reloadData();
     
                     }
-    
+            }else
+            {
+                self.successNotice("网络请求错误")
+                print("网络请求错误")
+            }
             }
     
         }
@@ -354,6 +369,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         var url_str:String = "http://www.bbxiaoqu.com/discuzz.php";
         Alamofire.request(.POST,url_str, parameters:dic)
             .responseString{ response in
+                if(response.result.isSuccess)
+                {
                 if let ret = response.result.value  {
                     if String(ret)=="1"
                     {
@@ -364,6 +381,11 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                         NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
                         self.alertView!.show()
                     }
+                }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
                 }
         }
     }
@@ -398,14 +420,23 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             var  dic:Dictionary<String,String> = ["content" : guid, "userid": userid, "addtime": strNowTime]
             Alamofire.request(.POST, "http://www.bbxiaoqu.com/savesuggest.php", parameters: dic)
                 .responseJSON { response in
-                    print(response.request)  // original URL request
-                    print(response.response) // URL response
-                    print(response.data)     // server data
-                    print(response.result)   // result of response serialization
-                    print(response.result.value)
-                    //                if let JSON = response.result.value {
-                    //                    print("JSON: \(JSON)")
-                    //                }
+                    if(response.result.isSuccess)
+                    {
+
+                        print(response.request)  // original URL request
+                        print(response.response) // URL response
+                        print(response.data)     // server data
+                        print(response.result)   // result of response serialization
+                        print(response.result.value)
+                        //                if let JSON = response.result.value {
+                        //                    print("JSON: \(JSON)")
+                        //                }
+                        
+                    }else
+                    {
+                        self.successNotice("网络请求错误")
+                        print("网络请求错误")
+                    }
                     
             }
             
@@ -501,7 +532,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         
         var myhead:String="http://www.bbxiaoqu.com/uploads/".stringByAppendingString(picname)
        NSLog("myhead \(myhead)")
-        Alamofire.request(.GET, myhead).response { (_, _, data, _) -> Void in
+        Alamofire.request(.GET, myhead).response {
+            (_, _, data, _) -> Void in
             if let d = data as? NSData!
             {
                 img5?.image=UIImage(data: d)

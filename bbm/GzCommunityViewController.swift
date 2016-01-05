@@ -127,6 +127,8 @@ class GzCommunityViewController: UIViewController ,UINavigationControllerDelegat
         var url_str:String = "http://www.bbxiaoqu.com/getgzxiaoqu.php?userid=".stringByAppendingString(userid)        //
         Alamofire.request(.GET, url_str, parameters: nil)
             .responseJSON { response in
+                if(response.result.isSuccess)
+                {
                 if let jsonItem = response.result.value as? NSArray{
                     for data in jsonItem{
                         
@@ -175,6 +177,13 @@ class GzCommunityViewController: UIViewController ,UINavigationControllerDelegat
                     }
                     self.tableview.reloadData()
                 }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
+                
+
         }
     }
     

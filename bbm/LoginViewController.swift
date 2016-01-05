@@ -76,6 +76,8 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
     {
       Alamofire.request(.POST, "http://www.bbxiaoqu.com/login.php", parameters:["_userid" : username])
             .responseJSON { response in
+                if(response.result.isSuccess)
+                {
                 print(response.request)  // original URL request
                 print(response.response) // URL response
                 print(response.data)     // server data
@@ -131,6 +133,11 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
                         }
                     
                     }
+                }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
                 }
         }
     }

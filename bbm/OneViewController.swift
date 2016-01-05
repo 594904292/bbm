@@ -46,6 +46,11 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         self.navigationItem.title="我能帮"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         
+        
+      
+        self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "添加", style: UIBarButtonItemStyle.Done, target: self, action: "addClick")
+        
+        
               // weak var weakSelf = self as OneViewController
        // (UIApplication.sharedApplication().delegate as! AppDelegate).apnsdelegate = self
         _tableView!.delegate=self
@@ -104,6 +109,13 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     {
         NSLog("back");
         self.navigationController?.popViewControllerAnimated(true)
+        
+    }
+    
+    
+    func addClick()
+    {
+        NSLog("addClick");
         
     }
     
@@ -372,6 +384,9 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
        print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in
+                if(response.result.isSuccess)
+                {
+
                 if let jsonItem = response.result.value as? NSArray{
                     for data in jsonItem{
                         //print("data: \(data)")
@@ -415,6 +430,13 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                     self._tableView.doneRefresh()
 
                 }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
+                
+
          }
         
     }

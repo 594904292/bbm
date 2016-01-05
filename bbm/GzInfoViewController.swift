@@ -135,15 +135,11 @@ class GzInfoViewController: UIViewController,UINavigationControllerDelegate,UIAc
     func SaveRemoteData()
     {
         var guid:String="";
-        //Alamofire.request(.GET, "http://www.bbxiaoqu.com/getgzinfo.php?guid=", parameters: nil)
-            Alamofire.request(.GET, "http://www.bbxiaoqu.com/getlastinfo.php", parameters: nil)
+        Alamofire.request(.GET, "http://www.bbxiaoqu.com/getlastinfo.php", parameters: nil)
             .responseJSON { response in
-                //            if let JSON = response.result.value {
-                //                print("JSON: \(JSON)")
-                //            }
-                //                let weatherinfo: AnyObject = json.objectForKey("weatherinfo")!
-                //                city.text = weatherinfo.objectForKey("city") as String
-                if let jsonItem = response.result.value as? NSArray{
+                if(response.result.isSuccess)
+                {
+                 if let jsonItem = response.result.value as? NSArray{
                     for data in jsonItem{
                         print("data: \(data)")
                         
@@ -178,12 +174,18 @@ class GzInfoViewController: UIViewController,UINavigationControllerDelegate,UIAc
                         
                         
                         let infocatagroy:String = data.objectForKey("infocatagroy") as! String;
-//                        var infoobj:itemMess=itemMess(userid:senduser,vname: "", vtime: sendtime, vaddress: address, vcontent: content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, vis_coming: "1", vreaded: "0")
-//                        self.items.append(infoobj)
+
                     }
                     self.tableview.reloadData();
             }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
+
         }
+                
     }
     
 

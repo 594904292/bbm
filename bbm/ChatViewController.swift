@@ -91,15 +91,21 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         Alamofire.request(.GET, "http://www.bbxiaoqu.com/getuserinfo.php?userid="+from, parameters: nil)
             
             .responseJSON { response in
-                
-                if let jsonItem = response.result.value as? NSArray{
-                    
-                    for data in jsonItem{
-                        print("data: \(data)")
-                        self.fromname = data.objectForKey("username") as! String;
-                        self.fromheadface = data.objectForKey("headface") as! String;
+                if(response.result.isSuccess)
+                {
+                    if let jsonItem = response.result.value as? NSArray{
+                        
+                        for data in jsonItem{
+                            print("data: \(data)")
+                            self.fromname = data.objectForKey("username") as! String;
+                            self.fromheadface = data.objectForKey("headface") as! String;
+                        }
+                        
                     }
-                    
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
                 }
                 
         }
@@ -422,28 +428,35 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         Alamofire.request(.POST,url_str, parameters:dic)
             
             .responseString{ response in
-                
-                if let ret = response.result.value  {
-                    
-                    if String(ret)=="1"
-                        
-                    {
-                        
-                        self.alertView = UIAlertView()
-                        
-                        self.alertView!.title = "提示"
-                        
-                        self.alertView!.message = "发送成功"
-                        
-                        self.alertView!.addButtonWithTitle("关闭")
-                        
-                        NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
-                        
-                        self.alertView!.show()
+                if(response.result.isSuccess)
+                {
+                    if let ret = response.result.value  {
+                        if String(ret)=="1"
+                            
+                        {
+                            
+                            self.alertView = UIAlertView()
+                            
+                            self.alertView!.title = "提示"
+                            
+                            self.alertView!.message = "发送成功"
+                            
+                            self.alertView!.addButtonWithTitle("关闭")
+                            
+                            NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
+                            
+                            self.alertView!.show()
+                            
+                        }
                         
                     }
-                    
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
                 }
+                
+
                 
         }
         

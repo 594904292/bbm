@@ -287,6 +287,7 @@
 		49F6E98D1C3A0DEC007E5B0F /* PicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E98C1C3A0DEC007E5B0F /* PicViewController.swift */; };
 		49F6E98F1C3A297B007E5B0F /* XiaoquTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */; };
 		49F6E9991C3A43FA007E5B0F /* XiaoquTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */; };
+		49F6E99C1C3B855C007E5B0F /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */; };
 		49FE1DA31BD0A082009B81D9 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA11BD0A082009B81D9 /* TableView.swift */; };
 		49FE1DA41BD0A082009B81D9 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */; };
 		49FE1DA91BD0A0E2009B81D9 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */; };
@@ -822,6 +823,7 @@
 		49F6E98C1C3A0DEC007E5B0F /* PicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicViewController.swift; sourceTree = "<group>"; };
 		49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoquTableViewCell.swift; sourceTree = "<group>"; };
 		49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoquTableViewController.swift; sourceTree = "<group>"; };
+		49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
 		49FE1DA11BD0A082009B81D9 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
@@ -984,6 +986,7 @@
 				49BAA40E1BD9E477003AD8B6 /* tagUIView.swift */,
 				491398711BC90A8F007866C1 /* ContentViewController.swift */,
 				498701881C192951006361F8 /* MainViewController.swift */,
+				49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */,
 				49F3E5401C27C9380036F7C7 /* XMPPManager.swift */,
 				49F3E5421C27E10B0036F7C7 /* WXMessage.swift */,
 				49F3E7E91C291EF60036F7C7 /* RecentTableViewController.swift */,
@@ -2564,6 +2567,7 @@
 				49F3E7B81C27EA720036F7C7 /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
 				49F3E7BC1C27EA720036F7C7 /* XMPPMessage+XEP_0172.m in Sources */,
 				49FE1DA31BD0A082009B81D9 /* TableView.swift in Sources */,
+				49F6E99C1C3B855C007E5B0F /* SwiftNotice.swift in Sources */,
 				4913986E1BC8F9F0007866C1 /* DbHelp.swift in Sources */,
 				49F3E7BD1C27EA720036F7C7 /* XMPPPresence+XEP_0172.m in Sources */,
 				4987018B1C1962AD006361F8 /* itemDaymic.swift in Sources */,

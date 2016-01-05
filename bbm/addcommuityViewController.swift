@@ -74,7 +74,9 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
             let url:String = "http://api.map.baidu.com/geocoder/v2/?ak=ROBALpv3vQpKoGOY18hze4kG&callback=renderReverse&location=".stringByAppendingString(String(currLocation!.location.coordinate.latitude)).stringByAppendingString(",").stringByAppendingString(String(currLocation!.location.coordinate.longitude)).stringByAppendingString("&output=json&pois=1")
 
             Alamofire.request(.GET, url, parameters: nil).responseString
-                {response in
+            {response in
+                if(response.result.isSuccess)
+                {
                     var json:String = response.result.value!
                     json=json.stringByReplacingOccurrencesOfString("renderReverse&&renderReverse(", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
                     json=json.stringByReplacingOccurrencesOfString(")", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
@@ -93,6 +95,11 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
                     var district:NSString = addressComponent["district"]  as! NSString
                     var street:NSString = addressComponent["street"]  as! NSString
                     self.address.text = "地址:".stringByAppendingString(formatted_address as String)
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
             }
        }
         first = false

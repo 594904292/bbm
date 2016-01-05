@@ -182,6 +182,8 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in
+                if(response.result.isSuccess)
+                {
                 if let jsonItem = response.result.value as? NSArray{
                     for data in jsonItem{
                         print("data: \(data)")
@@ -203,6 +205,13 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
                         self._tableview.doneRefresh();
                     })
                 }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
+                
+
         }
         
     }
@@ -225,15 +234,22 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in
-                if let jsonItem = response.result.value as? NSArray{
-                    for data in jsonItem{
-                        //print("data: \(data)")
-                        
-                        let id:String = data.objectForKey("id") as! String;
-                        let title:String = data.objectForKey("title") as! String;
-                        self.gonggao.text=title
-                        self.ggid=id;
+                if response.result.isSuccess
+                {
+                    if let jsonItem = response.result.value as? NSArray{
+                        for data in jsonItem{
+                            //print("data: \(data)")
+                            
+                            let id:String = data.objectForKey("id") as! String;
+                            let title:String = data.objectForKey("title") as! String;
+                            self.gonggao.text=title
+                            self.ggid=id;
+                        }
                     }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
                 }
         }
     }

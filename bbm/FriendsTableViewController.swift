@@ -47,6 +47,9 @@ class FriendsTableViewController: UITableViewController {
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in
+                if(response.result.isSuccess)
+                {
+
                 if let jsonItem = response.result.value as? NSArray{
                     for data in jsonItem{
                         print("data: \(data)")
@@ -65,6 +68,11 @@ class FriendsTableViewController: UITableViewController {
                         
                     })
                 }
+        }else
+        {
+            self.successNotice("网络请求错误")
+            print("网络请求错误")
+        }
         }
         
     }
@@ -94,12 +102,13 @@ class FriendsTableViewController: UITableViewController {
         var avatar:String = (self.items[indexPath.row] as Friends).avatar;
         
         var head = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(avatar)
-     
-        Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
-            if let d = data as? NSData!
-            {
-                cell?.headface.image=UIImage(data: d)
-            }
+         Alamofire.request(.GET, head).response {
+                 (_, _, data, _) -> Void in
+                if let d = data as? NSData!
+                {
+                    cell?.headface.image=UIImage(data: d)
+                }
+            
         }
 
          return cell!

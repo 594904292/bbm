@@ -53,7 +53,9 @@ class XiaoquTableViewController: UITableViewController ,UINavigationControllerDe
         Alamofire.request(.GET, url_str, parameters: nil)
             
             .responseJSON { response in
-                
+                if(response.result.isSuccess)
+                {
+
                 if let jsonItem = response.result.value as? NSArray{
                     
                     for data in jsonItem{
@@ -128,6 +130,12 @@ class XiaoquTableViewController: UITableViewController ,UINavigationControllerDe
                     })
 
                 }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
+
         }
     }
 

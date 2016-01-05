@@ -222,6 +222,9 @@ class MyinfosTableViewController: UITableViewController {
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in
+                if(response.result.isSuccess)
+                {
+
                 if let jsonItem = response.result.value as? NSArray{
                     for data in jsonItem{
                         //print("data: \(data)")
@@ -265,6 +268,12 @@ class MyinfosTableViewController: UITableViewController {
                     self.tableView.doneRefresh()
                     
                 }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
+
         }
         
     }
