@@ -21,6 +21,8 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
         //self.login_username.text="888"
         //self.login_password.text="888"
          // Do any additional setup after loading the view.
+        //var sqlitehelpInstance1=sqlitehelp.shareInstance()
+        //sqlitehelpInstance1.removeallgz()
         
     }
     //控件失去焦点

@@ -367,22 +367,25 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     func querydata(Category:Int)
     {
         var url:String="";
+        let defaults = NSUserDefaults.standardUserDefaults();
+        let userid = defaults.objectForKey("userid") as! String;
+        
         if(Category==0)
         {
-            url="http://www.bbxiaoqu.com/getinfos.php?userid=369&rang=xiaoqu&status=0&start=".stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://www.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&status=0&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         
         }else if(Category==1)
         {
-            url="http://www.bbxiaoqu.com/getinfos.php?userid=369&rang=xiaoqu&status=1&start=".stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://www.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         }else if(Category==2)
         {
-            url="http://www.bbxiaoqu.com/getinfos.php?userid=369&rang=self&status=1&start=".stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://www.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=self&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         }else if(Category==3)
         {
-            url="http://www.bbxiaoqu.com/getinfos.php?userid=369&rang=xiaoqufw&status=1&start=".stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://www.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqufw&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         }
        print("url: \(url)")

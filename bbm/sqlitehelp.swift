@@ -22,7 +22,7 @@ class sqlitehelp: NSObject {
         return YRSingleton.instance!
     }
     
-    
+    /*朋友*/
     
     func isexitfriend(userid:String)->Bool
     {
@@ -58,7 +58,7 @@ class sqlitehelp: NSObject {
         db.execute(sql)
         
     }
-    
+    /*通知*/
        
     func addnotice(date:String, catagory:String, relativeid:String, content:String, readed:String)
     {
@@ -91,7 +91,8 @@ class sqlitehelp: NSObject {
     }
 
     
-    
+    /*聊天*/
+
     func addchat(senduserid:String,touserid:String,message:String,guid:String,date:String,readed:String)
     {
         var sendnickname:String=loadusername(senduserid)
@@ -140,9 +141,9 @@ class sqlitehelp: NSObject {
         return num1;
     }
     
-    
-    
-    func loadusername(userid:String)->String
+    /*用户*/
+
+     func loadusername(userid:String)->String
     {
         var db: SQLiteDB! = SQLiteDB.sharedInstance()
         let sql="select * from users where userid='"+userid+"'";
@@ -207,6 +208,78 @@ class sqlitehelp: NSObject {
         
     }
 
+    /*关注*/
+    func removeallgz()->Bool
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="delete from messagegz ";
+        let result = db.execute(sql)
+        return true
+    }
+
+    func getguids(userid:String)->String
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from messagegz where userid='"+userid+"'";
+        //NSLog(sql)
+        let mess = db.query(sql)
+        
+        var guids:String="";
+        if(mess.count>0)
+        {
+            for i in 0...mess.count-1
+            {
+                let item = mess[i] as SQLRow
+                let infoid = item["infoid"]!.asString()
+                guids += "'".stringByAppendingString(infoid).stringByAppendingString("'")
+                if(i<mess.count-1)
+                {
+                   guids += ","
+                }
+                
+            }
+        }
+        return guids;
+    }
     
+    
+    func addgz(infoid:String,userid:String)
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql = "insert into messagegz(infoid,userid) values('\(infoid )','\(userid)')"
+        print("sql: \(sql)")
+        //通过封装的方法执行sql
+        let result = db.execute(sql)
+        
+        print(result)
+        NSLog(sql)
+        
+    }
+    
+    func removegz(infoid:String,userid:String)->Bool
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="delete from messagegz where infoid='"+infoid+"' and userid='"+userid+"'";
+        let result = db.execute(sql)
+        return true
+   }
+
+    func isexitgz(infoid:String,userid:String)->Bool
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from messagegz where infoid='"+infoid+"' and userid='"+userid+"'";
+        //NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
+
     
 }

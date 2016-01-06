@@ -144,7 +144,9 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     func querydata()
     {
-        let url:String="http://www.bbxiaoqu.com/getdynamics.php?userid=369&rang=xiaoqu&start=0&limit=20";
+        let defaults = NSUserDefaults.standardUserDefaults();
+        let userid = defaults.objectForKey("userid") as! String;
+        let url:String="http://www.bbxiaoqu.com/getdynamics.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&start=0&limit=20");
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in

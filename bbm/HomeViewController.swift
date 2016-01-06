@@ -60,28 +60,28 @@ class HomeViewController: UITabBarController,UINavigationControllerDelegate,Apns
        // }
     }
     
-    func send()
-    {
-        //XMPPFramework主要是通过KissXML来生成XML文件
-        //生成<body>文档
-        let body:DDXMLElement = DDXMLElement.elementWithName("body") as! DDXMLElement
-        body.setStringValue("我来自apple")
-        
-        //生成XML消息文档
-        let mes:DDXMLElement = DDXMLElement.elementWithName("message") as! DDXMLElement
-        //消息类型
-        mes.addAttributeWithName("type",stringValue:"chat")
-        //发送给谁
-        mes.addAttributeWithName("to" ,stringValue:"888@bbxiaoqu")
-         //由谁发送
-        mes.addAttributeWithName("from" ,stringValue:"369@bbxiaoqu")
-        //组合
-        mes.addChild(body)
-        
-        //发送消息
-        //self.appDelegate().xmppStream!.sendElement(mes)
-    
-    }
+//    func send()
+//    {
+//        //XMPPFramework主要是通过KissXML来生成XML文件
+//        //生成<body>文档
+//        let body:DDXMLElement = DDXMLElement.elementWithName("body") as! DDXMLElement
+//        body.setStringValue("我来自apple")
+//        
+//        //生成XML消息文档
+//        let mes:DDXMLElement = DDXMLElement.elementWithName("message") as! DDXMLElement
+//        //消息类型
+//        mes.addAttributeWithName("type",stringValue:"chat")
+//        //发送给谁
+//        mes.addAttributeWithName("to" ,stringValue:"888@bbxiaoqu")
+//         //由谁发送
+//        mes.addAttributeWithName("from" ,stringValue:"369@bbxiaoqu")
+//        //组合
+//        mes.addChild(body)
+//        
+//        //发送消息
+//        //self.appDelegate().xmppStream!.sendElement(mes)
+//    
+//    }
     
     
     //取得当前程序的委托

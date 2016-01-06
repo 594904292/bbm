@@ -290,6 +290,7 @@
 		49F6E99C1C3B855C007E5B0F /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */; };
 		49F6E9A31C3BA3DD007E5B0F /* CHWMarqueeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9A21C3BA3DD007E5B0F /* CHWMarqueeView.swift */; };
 		49F6E9A51C3CBB24007E5B0F /* sqlitehelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9A41C3CBB24007E5B0F /* sqlitehelp.swift */; };
+		49F6E9A71C3CD57F007E5B0F /* PlTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9A61C3CD57F007E5B0F /* PlTableViewCell.swift */; };
 		49FE1DA31BD0A082009B81D9 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA11BD0A082009B81D9 /* TableView.swift */; };
 		49FE1DA41BD0A082009B81D9 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */; };
 		49FE1DA91BD0A0E2009B81D9 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */; };
@@ -828,6 +829,7 @@
 		49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
 		49F6E9A21C3BA3DD007E5B0F /* CHWMarqueeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHWMarqueeView.swift; sourceTree = "<group>"; };
 		49F6E9A41C3CBB24007E5B0F /* sqlitehelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sqlitehelp.swift; sourceTree = "<group>"; };
+		49F6E9A61C3CD57F007E5B0F /* PlTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlTableViewCell.swift; sourceTree = "<group>"; };
 		49FE1DA11BD0A082009B81D9 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
@@ -979,7 +981,6 @@
 				497E9AEC1BB8D53E00653FB4 /* ThreeViewController.swift */,
 				497E9AEE1BB8D54C00653FB4 /* FourViewController.swift */,
 				49CAC3961BBB7EA2006560A6 /* PublishViewController.swift */,
-				4913986D1BC8F9F0007866C1 /* DbHelp.swift */,
 				497E7B741BCCF64C00BAEB2F /* SubscribeInterestViewController.swift */,
 				497E7B761BCCFA8100BAEB2F /* GzCommunityViewController.swift */,
 				497E7B771BCCFA8100BAEB2F /* GzInfoViewController.swift */,
@@ -2122,6 +2123,7 @@
 				49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */,
 				49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */,
 				49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */,
+				49F6E9A61C3CD57F007E5B0F /* PlTableViewCell.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -2141,6 +2143,7 @@
 				49380B031C2A9EF5008EF785 /* Friends.swift */,
 				49380B0A1C310362008EF785 /* itemRecent.swift */,
 				49F6E9A41C3CBB24007E5B0F /* sqlitehelp.swift */,
+				4913986D1BC8F9F0007866C1 /* DbHelp.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -2532,6 +2535,7 @@
 				49F3E53F1C2401FB0036F7C7 /* itempl.swift in Sources */,
 				497E9AE91BB8D4CC00653FB4 /* OneViewController.swift in Sources */,
 				49F3E7AD1C27EA720036F7C7 /* XMPPMessage+XEP_0085.m in Sources */,
+				49F6E9A71C3CD57F007E5B0F /* PlTableViewCell.swift in Sources */,
 				497E7B661BCB630700BAEB2F /* ZLSwiftConstDefine.swift in Sources */,
 				49F3E7B41C27EA720036F7C7 /* XMPPCapsResourceCoreDataStorageObject.m in Sources */,
 				49F3E5431C27E10B0036F7C7 /* WXMessage.swift in Sources */,
@@ -2755,7 +2759,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ni ha (V5W7R3B3PQ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2782,7 +2786,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "25d48cb1-19d1-4f98-afc2-28b4de608ecc";
+				PROVISIONING_PROFILE = "5605e312-ee5c-48e7-986d-25efca56cf1b";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
@@ -2793,7 +2797,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ni ha (V5W7R3B3PQ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2820,7 +2824,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "25d48cb1-19d1-4f98-afc2-28b4de608ecc";
+				PROVISIONING_PROFILE = "5605e312-ee5c-48e7-986d-25efca56cf1b";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";

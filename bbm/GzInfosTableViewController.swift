@@ -214,9 +214,19 @@ class GzInfosTableViewController: UITableViewController {
     
     func querydata()
     {
+         var sqlitehelpInstance1=sqlitehelp.shareInstance()
         
+        let defaults = NSUserDefaults.standardUserDefaults();
+        var userid = defaults.objectForKey("userid") as! String;
         
-        var url:String="http://www.bbxiaoqu.com/getgzinfo.php?guid='DF1C155E-F184-4EC2-B04D-FD0A7FD050A9'";
+        var guids:String = sqlitehelpInstance1.getguids(userid)
+        if(guids.characters.count==0)
+        {
+            self.successNotice("无收藏信息")
+            print("无收藏信息")
+            return;
+        }
+        var url:String="http://www.bbxiaoqu.com/getgzinfo.php?guid=".stringByAppendingString(guids);
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in

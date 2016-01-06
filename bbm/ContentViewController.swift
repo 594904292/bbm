@@ -38,7 +38,9 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     var photoArr:[String] = []
     var items:[itempl]=[]
     var pics:[String]=[]
-
+    
+    var issolution:Bool=false;//是否解决
+    var solutionid:String="0"//解决ID
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -85,6 +87,36 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         return
     }
 
+    @IBOutlet weak var gzbtn: UIButton!
+    
+    @IBAction func gzbtnaction(sender: UIButton) {
+        if(gzbtn.titleLabel?.text == "收藏")
+        {
+            gzbtn.setTitle("取消", forState: UIControlState.Normal)
+            
+            var sqlitehelpInstance1=sqlitehelp.shareInstance()
+            
+            let defaults = NSUserDefaults.standardUserDefaults();
+            var userid = defaults.objectForKey("userid") as! String;
+            sqlitehelpInstance1.addgz(guid, userid: userid)
+            
+            
+            self.successNotice("收藏成功")
+            print("收藏成功")
+            
+        }else
+        {
+            gzbtn.setTitle("收藏", forState: UIControlState.Normal)
+            var sqlitehelpInstance1=sqlitehelp.shareInstance()
+            
+            let defaults = NSUserDefaults.standardUserDefaults();
+            var userid = defaults.objectForKey("userid") as! String;
+            sqlitehelpInstance1.removegz(guid, userid: userid)
+            
+            self.successNotice("取消收藏成功")
+            print("取消收藏成功")
+        }
+    }
     @IBOutlet weak var _tableview: UITableView!
     @IBAction func runchat(sender: UIButton) {
         let defaults = NSUserDefaults.standardUserDefaults();
@@ -149,7 +181,15 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                         self.puser = JSON[0].objectForKey("username") as! String;
                         
                         var report = JSON[0].objectForKey("report") as! String;
-
+                        if(JSON[0].objectForKey("issolution") as! String == "1")
+                        {
+                            self.issolution=true
+                        }else
+                        {
+                            self.issolution=false
+                        }
+                        self.solutionid = JSON[0].objectForKey("solutionid") as! String;
+                        
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.contentLab.text = contentstr;
                             self.sendtime.text = sendtimestr;
@@ -174,7 +214,23 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                         }
                      }
                     //
+                    var sqlitehelpInstance1=sqlitehelp.shareInstance()
+                    
+                    let defaults = NSUserDefaults.standardUserDefaults();
+                    var userid = defaults.objectForKey("userid") as! String;
+                    if(sqlitehelpInstance1.isexitgz(self.guid, userid: userid))
+                    {
+                        self.gzbtn.titleLabel?.userInteractionEnabled = true
+                        self.gzbtn.titleLabel?.text="取消"
+                        //self.gzbtn.titleLabel?.frame.size.width = 80
+                        //let sendButton = UIButton(frame:CGRectMake(235,10,77,36))
+                    }else
+                    {
+                        self.gzbtn.titleLabel?.userInteractionEnabled = true
 
+                        self.gzbtn.titleLabel?.text="收藏"
+                        // self.gzbtn.titleLabel?.frame.size.width = 50
+                    }
                     
                     self.collectionView.reloadData()
                     self.loadheadface(self.puserid,headname:self.headface)
@@ -188,14 +244,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         }        
     }
   
-//    func  imageViewTouch(sender:UITapGestureRecognizer){
-//        //print("2")
-//        var index:Int = (sender.view?.tag)!
-//        var imgurl:String=self.pics[index]
-//        var url=NSURL(string: imgurl)
-//        UIApplication.sharedApplication().openURL(url!)
-//        
-//    }
 
     func loadheadface(userid:String,headname:String)
     {
@@ -352,13 +400,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         var timeFormatter = NSDateFormatter()
         timeFormatter.dateFormat = "yyy-MM-dd HH:mm:ss"
         var strNowTime = timeFormatter.stringFromDate(date) as String
-        
-//        let thisChat =   SimMessageItem(body:sender.text!,logo:self.headface,
-//            date:strNowTime, mtype:SimChatType.Mine)
-//        Chats.addObject(thisChat)
-        //self.tableView.chatDataSource = self
-        //self.tableView.reloadData()
-        
+
         let defaults = NSUserDefaults.standardUserDefaults();
         senduserid = defaults.objectForKey("userid") as! String;
         senduser = defaults.objectForKey("nickname") as! String;
@@ -382,7 +424,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                     if String(ret)=="1"
                     {
                         self.alertView = UIAlertView()
-                        self.alertView!.title = "注册提示"
+                        self.alertView!.title = "提示"
                         self.alertView!.message = "发送成功"
                         self.alertView!.addButtonWithTitle("关闭")
                         NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
@@ -456,39 +498,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     func dismiss(timer:NSTimer){
         alertView!.dismissWithClickedButtonIndex(0, animated:true)
     }
-//    
-//    /*创建表格及数据*/
-//    func setupChatTable1()
-//    {
-//        self.tableView = SimTableView(frame:CGRectMake(0, 250,
-//        self.view.frame.size.width, self.view.frame.size.height - 250))
-//        //tableView.backgroundColor = UIColor.greenColor()
-//        //创建一个重用的单元格
-//        self.tableView!.registerClass(SimTableViewCell.self, forCellReuseIdentifier: "MsgCell")
-//        
-//        
-//        Chats = NSMutableArray()
-//        //Chats.addObjectsFromArray([first,second, third, fouth, fifth, zero, zero1])
-//        
-//        
-//        self.tableView.chatDataSource = self
-//        self.tableView.reloadData()
-//        self.view.addSubview(self.tableView)
-//    }
-//    
-  
-    
-//    /*返回对话记录中的全部行数*/
-//    func rowsForChatTable(tableView:SimTableView) -> Int
-//    {
-//        return self.Chats.count
-//    }
-//    
-//    /*返回某一行的内容*/
-//    func chatTableView(tableView:SimTableView, dataForRow row:Int) -> SimMessageItem
-//    {
-//        return Chats[row] as! SimMessageItem
-//    }
+
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -499,69 +509,118 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-        
     {
-        
-        
-        
         let cellId = "daymiccell"
-        
-        //无需强制转换
-        
-        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as UITableViewCell?
-        
+        var cell:PlTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as! PlTableViewCell?
         if(cell == nil)
-            
         {
-            
-            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
-            
+            cell = PlTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
         }
-        
-        let lable1:UILabel? = (cell?.viewWithTag(1) as? UILabel)
-        
-        lable1?.text=(self.items[indexPath.row] as itempl).username
-        
-        let lable2:UILabel? = (cell?.viewWithTag(2) as? UILabel)
-        
-        lable2?.text=(self.items[indexPath.row] as itempl).actiontime
-        
-        let lable3:UILabel? = (cell?.viewWithTag(3) as? UILabel)
-        //lable3?.w
-        //var label = UILabel(frame: CGRectMake(0,0,ScreenWidth,0))
-        //var viewBounds:CGRect = UIScreen.mainScreen().applicationFrame
-        // lable3?.frame = CGRectMake(0,0,viewBounds.width/2,0);
-        lable3?.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        lable3?.numberOfLines=0
-        
-        lable3?.text=(self.items[indexPath.row] as itempl).content
-        let img5:UIImageView? = (cell?.viewWithTag(5) as? UIImageView)
-        
-        
+        cell?.pluser?.text=(self.items[indexPath.row] as itempl).username
+        cell?.pltime.text=(self.items[indexPath.row] as itempl).actiontime
+        cell?.plcontent?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        cell?.plcontent?.numberOfLines=0
+        cell?.plcontent?.text=(self.items[indexPath.row] as itempl).content
         var picname:String = (self.items[indexPath.row] as itempl).headface;
-        
         var myhead:String="http://www.bbxiaoqu.com/uploads/".stringByAppendingString(picname)
-       NSLog("myhead \(myhead)")
         Alamofire.request(.GET, myhead).response {
             (_, _, data, _) -> Void in
             if let d = data as? NSData!
             {
-                img5?.image=UIImage(data: d)
-
+                cell?.plheadface?.image=UIImage(data: d)
             }
         }
         
-        return cell!
+        tableView.userInteractionEnabled = true
+        if(self.issolution)
+        {
+            if(self.solutionid==(self.items[indexPath.row] as itempl).id)
+            {
+                cell?.plgoodbtn.enabled=false;
+                cell?.plgoodbtn.hidden=false
+
+            
+            }else
+            {
+                cell?.plgoodbtn.hidden=true
+
+            }
+        }else
+        {
+            let defaults = NSUserDefaults.standardUserDefaults();
+            let userid = defaults.objectForKey("userid") as! String;
+            if(self.puserid == userid)
+            {
+                cell?.plgoodbtn.userInteractionEnabled = true
+                cell?.plgoodbtn.tag = indexPath.row
+                cell?.plgoodbtn.addTarget(self,action:Selector("tapped:"),forControlEvents:.TouchUpInside)
+
+            }else
+            {
+                cell?.plgoodbtn.hidden=true
+            }
+        }
         
+        
+         return cell!
+    }
+    
+    
+    func tapped(button:UIButton){
+        //print(button.titleForState(.Normal))
+        var pos:Int = button.tag
+        
+        var date = NSDate()
+        var timeFormatter = NSDateFormatter()
+        timeFormatter.dateFormat = "yyy-MM-dd HH:mm:ss"
+        var strNowTime = timeFormatter.stringFromDate(date) as String
+        
+        var  dic:Dictionary<String,String> = ["_infoid" : infoid, "_guid": guid]
+        
+         dic["_solutiontype"] = "1"
+         dic["_solutionpostion"] = (self.items[pos] as itempl).id
+         dic["_solutionuserid"] = (self.items[pos] as itempl).userid
+        dic["_solutiontime"] = strNowTime
+        
+        Alamofire.request(.POST, "http://www.bbxiaoqu.com/solution.php", parameters: dic)
+            .responseJSON { response in
+                if(response.result.isSuccess)
+                {
+                    
+                    print(response.request)  // original URL request
+                    print(response.response) // URL response
+                    print(response.data)     // server data
+                    print(response.result)   // result of response serialization
+                    print(response.result.value)
+                    //                if let JSON = response.result.value {
+                    //                    print("JSON: \(JSON)")
+                    //                }
+                    self.reportbtn.setTitle("已举报", forState: UIControlState.Normal)
+                    self.reportbtn.enabled=false
+                    
+                    
+                    self.successNotice("举报成功")
+                    print("举报成功")
+
+                    
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
+                
+        }
+        
+
         
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-    {
-        NSLog("select \(indexPath.row)")
-    }
-    
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+//    {
+//        NSLog("select \(indexPath.row)")
+//    }
+//    
     
 }
 

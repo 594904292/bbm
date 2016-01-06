@@ -42,8 +42,9 @@ class FriendsTableViewController: UITableViewController {
     func querydata()
     {
         
-        
-        let url:String="http://www.bbxiaoqu.com/getfriends.php?mid1=369";
+        let defaults = NSUserDefaults.standardUserDefaults();
+        let userid = defaults.objectForKey("userid") as! String;
+        let url:String="http://www.bbxiaoqu.com/getfriends.php?mid1=".stringByAppendingString(userid);
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in
