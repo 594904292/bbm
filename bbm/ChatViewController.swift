@@ -29,7 +29,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         
         super.viewDidLoad()
         
-        self.navigationItem.title="查看"
+        self.navigationItem.title="私聊"
         
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         
@@ -47,7 +47,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         loaduserinfo(from)
         loaduserinfo(myself)
 
-         getData()
+        getData()
         setupChatTable()
         
         setupSendPanel()
@@ -67,7 +67,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
             //加入到未读消息组
             //msgList.append(aMsg)
             
-             let me:UserInfo! = UserInfo(name:fromname ,logo:(fromheadface))
+            let me:UserInfo! = UserInfo(name:fromname ,logo:(fromheadface))
             let thisChat =  MessageItem(body:aMsg.body, user:me, date:NSDate(), mtype:ChatType.Someone)
             
             Chats.addObject(thisChat)
@@ -98,7 +98,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                     if let jsonItem = response.result.value as? NSArray{
                         
                         for data in jsonItem{
-                            print("data: \(data)")
+                            //print("data: \(data)")
                             if(userid==self.from)
                             {
                                 self.fromname = data.objectForKey("username") as! String;
@@ -107,9 +107,9 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                             var name:String = data.objectForKey("username") as! String;
                             var headface:String = data.objectForKey("headface") as! String;
 
-                            if(!self.isexituser(userid))
+                            if(!sqlitehelp.shareInstance().isexituser(userid))
                             {//缓存用户数据
-                                self.addusers(userid, nickname: name, usericon: headface)
+                                sqlitehelp.shareInstance().addusers(userid, nickname: name, usericon: headface)
                                 //更新聊天记录
                             }
                         }
@@ -152,14 +152,14 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                 let touserid = item["touserid"]!.asString()
                 
                 
-                let sendnickname = self.loadusername(senduserid)
+                let sendnickname = sqlitehelp.shareInstance().loadusername(senduserid)
                 
-                let sendusericon = self.loadheadface(senduserid)
+                let sendusericon = sqlitehelp.shareInstance().loadheadface(senduserid)
 
                 
-                let tonickname = self.loadusername(touserid)
+                let tonickname = sqlitehelp.shareInstance().loadusername(touserid)
                 
-                let tousericon = self.loadheadface(touserid)
+                let tousericon = sqlitehelp.shareInstance().loadheadface(touserid)
                 
                 //var now=NSDate();
                 
@@ -189,7 +189,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                     
                 {
                     
-                    var to:UserInfo! = UserInfo(name:tonickname ,logo:(tousericon))
+                    var to:UserInfo! = UserInfo(name:sendnickname ,logo:(sendusericon))
                     
                     let itemobj =  MessageItem(body:message, user:to,  date:now, mtype:ChatType.Someone)
                     
@@ -301,163 +301,11 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         
     }
     
-    
-//       //取得当前程序的委托
-//    func  appDelegate() -> AppDelegate{
-//        
-//        return UIApplication.sharedApplication().delegate as! AppDelegate
-//        
-//    }
-
     //获取总代理
     func zdl() -> AppDelegate {
         return UIApplication.sharedApplication().delegate as! AppDelegate
     }
 
-    
-    
-    func loadusername(userid:String)->String
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select * from users where userid='"+userid+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
-        if( mess.count>0)
-        {
-            NSLog("ok")
-            let item = mess[0] as SQLRow
-            return item["nickname"]!.asString()
-        }
-        else
-        {
-            NSLog("fail")
-
-            return ""
-        }
-    }
-    
-    func loadheadface(userid:String)->String
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select * from users where userid='"+userid+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
-        if( mess.count>0)
-        {
-            NSLog("ok")
-            let item = mess[0] as SQLRow
-            return item["usericon"]!.asString()
-        }
-        else
-        {
-            NSLog("fail")
-
-            return ""
-        }
-    }
-    
-    func isexituser(userid:String)->Bool
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select * from users where userid='"+userid+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
-        if( mess.count>0)
-        {
-            NSLog("ok")
-            return true
-        }
-        else
-        {
-            NSLog("fail")
-            return false
-        }
-    }
-    
-    
-    func addusers(userid:String,nickname:String,usericon:String)
-    {
-        
-        //          db.execute("create table if not exists friend(uid integer primary key,userid varchar(100),nickname varchar(100),usericon varchar(100),lastuserid varchar(100),lastnickname varchar(100),lastinfo varchar(100),lasttime varchar(100),messnu varchar(100))")
-        
-        let sql = "insert into users(userid,nickname,usericon) values('\(userid )','\(nickname)','\(usericon)')"
-        print("sql: \(sql)")
-        //通过封装的方法执行sql
-        let result = db.execute(sql)
-        
-        print(result)
-        NSLog(sql)
-        
-    }
-    
-    func addchat(messae:String,guid:String,date:String,senduserid:String,sendnickname:String,sendusericon:String,touserid:String,tousernickname:String,tousericon:String)
-    {
-        let sql = "insert into chat(message,guid,date,senduserid,sendnickname,sendusericon,touserid,tonickname,tousericon) values('\(messae)','\(guid)','\(date)','\(senduserid)','\(sendnickname)','\(sendusericon)','\(touserid)','\(tousernickname)','\(tousericon)')";
-        
-        NSLog("sql: \(sql)")
-        db.execute(sql)
-    }
-
-    
-    func addfriend(userid:String,nickname:String,usericon:String,lastuserid:String,lastnickname:String,lastinfo:String,lasttime:String,messnum:Int)
-    {
-       
-//          db.execute("create table if not exists friend(uid integer primary key,userid varchar(100),nickname varchar(100),usericon varchar(100),lastuserid varchar(100),lastnickname varchar(100),lastinfo varchar(100),lasttime varchar(100),messnu varchar(100))")
-        
-        let sql = "insert into friend(userid,nickname,usericon,lastuserid,lastnickname,lastinfo,lasttime,messnu) values('\(userid )','\(nickname)','\(usericon)','\(lastuserid)','\(lastnickname)','\(lastinfo)','\(lasttime)','\(messnum)')"
-                print("sql: \(sql)")
-                //通过封装的方法执行sql
-                let result = db.execute(sql)
-        
-        print(result)
-        NSLog(sql)
-        
-    }
-    
-    
-    func isexit(userid:String)->Bool
-    {
-//        db.execute("create table if not exists t_user(uid integer primary key,uname varchar(20),mobile varchar(20))")
-//        
-//        let sql = "insert into t_user(uname,mobile) values('12','34')"
-//        print("sql: \(sql)")
-//        //通过封装的方法执行sql
-//        let result = db.execute(sql)
-//        print(result)
-//        
-//        let data = db.query("select * from t_user")
-//        if data.count > 0 {
-//            //获取最后一行数据显示
-//            let user = data[data.count - 1]
-//            var  aa =  user["uname"] as? String
-//            var  bb = user["mobile"] as? String
-//            print(aa)
-//        }
-//        
-      
-        let sql1="select * from friend where userid='\(userid )'";
-        NSLog(sql1)
-        let mess = db.query(sql1)
-        if( mess.count>0)
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
-    }
-    
-    func newmess(userid:String,lastuserid:String,lastinfo:String,lasttime:String)
-    {
-        
-        let sql="update friend set lastuserid='\(lastuserid)',lastinfo='\(lastinfo)',lasttime='\(lasttime)',messnum=messnum+1 where userid='"+userid+"'";
-        var status = db.query(sql)
-        NSLog(sql)
-
-        }
-
-    
     
     func sendMessage()
         
@@ -508,16 +356,16 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         var strNowTime = timeFormatter.stringFromDate(date) as String
         
         //添加到本地
-        self.addchat(sendcontent, guid: guid, date: strNowTime, senduserid: myself, sendnickname: myselfname, sendusericon: myselfheadface, touserid: from, tousernickname: fromname, tousericon: fromheadface)
+        sqlitehelp.shareInstance().addchat(sendcontent, guid: guid, date: strNowTime, senduserid: myself, sendnickname: myselfname, sendusericon: myselfheadface, touserid: from, tousernickname: fromname, tousericon: fromheadface)
         
         //添加朋友
         //添加朋友联系人
-        if(!isexit(from))
+        if(!sqlitehelp.shareInstance().isexitfriend(from))
         {
-            self.addfriend(from, nickname: fromname, usericon: fromheadface, lastuserid: myself, lastnickname: myselfname, lastinfo: sendcontent, lasttime: strNowTime, messnum: 0)
+            sqlitehelp.shareInstance().addfriend(from, nickname: fromname, usericon: fromheadface, lastuserid: myself, lastnickname: myselfname, lastinfo: sendcontent, lasttime: strNowTime, messnum: 0)
             
         }
-        self.newmess(from, lastuserid: myself, lastinfo: sendcontent, lasttime: strNowTime)
+        sqlitehelp.shareInstance().updatefriendlastinfo(from, lastuserid: myself, lastinfo: sendcontent, lasttime: strNowTime)
 
         
         let  dic:Dictionary<String,String> = ["_catatory" : "chat","_senduserid" : myself,"_sendnickname" : myselfname,"_sednusericon" : myselfheadface,"_touserid" : from,"_tonickname" : fromname,"_tousericon" : fromheadface,"_gudi":guid,"_message":sendcontent,"_channelid":""]

@@ -289,6 +289,7 @@
 		49F6E9991C3A43FA007E5B0F /* XiaoquTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */; };
 		49F6E99C1C3B855C007E5B0F /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */; };
 		49F6E9A31C3BA3DD007E5B0F /* CHWMarqueeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9A21C3BA3DD007E5B0F /* CHWMarqueeView.swift */; };
+		49F6E9A51C3CBB24007E5B0F /* sqlitehelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9A41C3CBB24007E5B0F /* sqlitehelp.swift */; };
 		49FE1DA31BD0A082009B81D9 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA11BD0A082009B81D9 /* TableView.swift */; };
 		49FE1DA41BD0A082009B81D9 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */; };
 		49FE1DA91BD0A0E2009B81D9 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */; };
@@ -826,6 +827,7 @@
 		49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoquTableViewController.swift; sourceTree = "<group>"; };
 		49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
 		49F6E9A21C3BA3DD007E5B0F /* CHWMarqueeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CHWMarqueeView.swift; sourceTree = "<group>"; };
+		49F6E9A41C3CBB24007E5B0F /* sqlitehelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sqlitehelp.swift; sourceTree = "<group>"; };
 		49FE1DA11BD0A082009B81D9 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		49FE1DA21BD0A082009B81D9 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		49FE1DA71BD0A0E2009B81D9 /* MessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
@@ -2138,6 +2140,7 @@
 				49F3E53E1C2401FB0036F7C7 /* itempl.swift */,
 				49380B031C2A9EF5008EF785 /* Friends.swift */,
 				49380B0A1C310362008EF785 /* itemRecent.swift */,
+				49F6E9A41C3CBB24007E5B0F /* sqlitehelp.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -2519,6 +2522,7 @@
 				497E9AED1BB8D53E00653FB4 /* ThreeViewController.swift in Sources */,
 				49F3E7621C27EA720036F7C7 /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				49F3E7701C27EA720036F7C7 /* XMPPBandwidthMonitor.m in Sources */,
+				49F6E9A51C3CBB24007E5B0F /* sqlitehelp.swift in Sources */,
 				49F3E79B1C27EA720036F7C7 /* XMPPvCardTemp.m in Sources */,
 				49F3E78C1C27EA720036F7C7 /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				49F3E7D31C27EA730036F7C7 /* GCDMulticastDelegate.m in Sources */,

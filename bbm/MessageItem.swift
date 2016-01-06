@@ -46,11 +46,11 @@ class MessageItem
         
         var size =  body.boundingRectWithSize(CGSizeMake(CGFloat(width), CGFloat(height))  ,     options:NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:nil ,     context:nil)
         
-        var label =  UILabel(frame:CGRectMake(0, 0, size.size.width, size.size.height))
+        var label =  UILabel(frame:CGRectMake(0, 0, size.size.width+2, size.size.height))
         
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.text = (body.length != 0 ? body as String : "")
+        label.text = (body.length != 0 ? body as String : "").stringByAppendingString(" ")
         label.font = font
         label.backgroundColor = UIColor.clearColor()
         

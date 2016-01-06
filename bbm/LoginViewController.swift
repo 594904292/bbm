@@ -62,7 +62,7 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
 
         }else
         {
-            login_r(a,pass:b)
+            login_r(a,password:b)
         }
     }
     
@@ -72,17 +72,17 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
         self.presentViewController(vc, animated: true, completion: nil)
     }
     
-    func login_r(username:String,pass:String)
+    func login_r(username:String,password:String)
     {
       Alamofire.request(.POST, "http://www.bbxiaoqu.com/login.php", parameters:["_userid" : username])
             .responseJSON { response in
                 if(response.result.isSuccess)
                 {
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                print(response.result.value)
+//                print(response.request)  // original URL request
+//                print(response.response) // URL response
+//                print(response.data)     // server data
+//                print(response.result)   // result of response serialization
+//                print(response.result.value)
                 
 
                 if let JSON = response.result.value {
@@ -102,34 +102,36 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
                     {
                         let userid:String = JSON.objectForKey("userid") as! String;
                         let pass:String = JSON.objectForKey("pass") as! String;
-                        let telphone:String = JSON.objectForKey("telphone") as! String;
-                        let headface:String = JSON.objectForKey("headface") as! String;
-                        let username:String = JSON.objectForKey("username") as! String;
-                        
-                        self.saveuser(userid, nickname: username, password: pass, telphone: telphone, headface: headface)
-                        let flag:Bool = self.login(userid, pass:pass)
-                        if(flag)
+                        if(pass==password)
                         {
-//                            let sb = UIStoryboard(name:"Main", bundle: nil)
-//                            let vc = sb.instantiateViewControllerWithIdentifier("mainController") as! MainViewController
-//
-//                            self.presentViewController(vc, animated: true, completion: nil)
+                            let telphone:String = JSON.objectForKey("telphone") as! String;
+                            let headface:String = JSON.objectForKey("headface") as! String;
+                            let username:String = JSON.objectForKey("username") as! String;
                             
-                            let sb = UIStoryboard(name:"Main", bundle: nil)
-                            let vc = sb.instantiateViewControllerWithIdentifier("mainController") as! MainViewController
-                            //创建导航控制器
-                            let nvc=UINavigationController(rootViewController:vc);
-                            //设置根视图
-                            self.view.window!.rootViewController=nvc;
+                            self.saveuser(userid, nickname: username, password: pass, telphone: telphone, headface: headface)
+                            let flag:Bool = self.login(userid, pass:pass)
+                            if(flag)
+                            {
+                                
+                                let sb = UIStoryboard(name:"Main", bundle: nil)
+                                let vc = sb.instantiateViewControllerWithIdentifier("mainController") as! MainViewController
+                                //创建导航控制器
+                                let nvc=UINavigationController(rootViewController:vc);
+                                //设置根视图
+                                self.view.window!.rootViewController=nvc;
 
+                            }else
+                            {
+                                self.alertView = UIAlertView()
+                                self.alertView!.title = "登陆提示"
+                                self.alertView!.message = "密码错误"
+                                self.alertView!.addButtonWithTitle("关闭")
+                                NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
+                                self.alertView!.show()
+                            }
                         }else
                         {
-                            self.alertView = UIAlertView()
-                            self.alertView!.title = "登陆提示"
-                            self.alertView!.message = "密码错误"
-                            self.alertView!.addButtonWithTitle("关闭")
-                            NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
-                            self.alertView!.show()
+                            self.successNotice("密码错误")
                         }
                     
                     }
@@ -163,6 +165,7 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
                 let defaults = NSUserDefaults.standardUserDefaults();
                 defaults.setObject(nickname, forKey: "nickname");
                 defaults.setObject(userid, forKey: "userid");
+                defaults.setObject(pass, forKey: "password");
                 defaults.setObject(telphone, forKey: "telphone");
                 defaults.setObject(headface, forKey: "headface");
             

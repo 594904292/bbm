@@ -112,25 +112,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
             var strNowTime = timeFormatter.stringFromDate(date) as String
             //cleanchat()
             
+            
+            var sqlitehelpInstance1=sqlitehelp.shareInstance()
+            
             //写一条信息到聊天记录表
-            self.addchat(from, touserid: to, message: msg.body, guid: "", date: strNowTime, readed: "0")
+            sqlitehelpInstance1.addchat(from, touserid: to, message: msg.body, guid: "", date: strNowTime, readed: "0")
             //修改通知记录
-            if(self.unreadnum(from, catagory: "私信")==0)
+            if(sqlitehelpInstance1.unreadnoticenum(from, catagory: "私信")==0)
             {
-               self.noticeadd(strNowTime, catagory: "私信", relativeid: from, content: from.stringByAppendingString("发送了一条私信"), readed: "０")
+               sqlitehelpInstance1.addnotice(strNowTime, catagory: "私信", relativeid: from, content: from.stringByAppendingString("发送了一条私信"), readed: "０")
             }else
             {
-                
+//                let unreadchatnum:String=self.unreadchatnum(from, to: to) as! String
+//                self.updateusercontent(from,content: from.stringByAppendingString("发送了").stringByAppendingString(unreadchatnum).stringByAppendingString("条私信"))
             }
             
             //添加朋友联系人
-            if(!isexit(from))
+            if(!sqlitehelpInstance1.isexitfriend(from))
             {
-               self.addfriend(from, nickname: "", usericon: "", lastuserid: from, lastnickname: "", lastinfo: msg.body, lasttime: strNowTime, messnum: 0)
+               sqlitehelpInstance1.addfriend(from, nickname: "", usericon: "", lastuserid: from, lastnickname: "", lastinfo: msg.body, lasttime: strNowTime, messnum: 0)
                 //更新头像和用户名
             
             }
-            self.newmess(from, lastuserid: from, lastinfo: msg.body, lasttime: strNowTime)
+            sqlitehelpInstance1.updatefriendlastinfo(from, lastuserid: from, lastinfo: msg.body, lasttime: strNowTime)
             //添加到消息代理中
             xxdl?.newMsg(msg)
             
@@ -150,148 +154,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
 //        
 //    }
 
-    
-    func unreadnumchat(from:String,to:String)->Int
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select count(*) as num1 from chat where senduserid='"+from+"' and readed=0 and touserid='"+to+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
-        let item = mess[0] as SQLRow
-        let num1 = item["num1"]!.asInt()
-        return num1;
-    }
-
    
-    func newmess(userid:String, lastuserid:String, lastinfo:String, lasttime:String)
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql = "update friend set lastuserid='\(lastuserid)',lastinfo='\(lastinfo)',lasttime='\(lasttime)' where userid='\(userid)'";
-        db.execute(sql)
-        
-    }
-
-    
-    func noticeadd(date:String, catagory:String, relativeid:String, content:String, readed:String)
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql = "insert into notice(date,catagory,relativeid,content,readed) values('\(date)','\(catagory)','\(relativeid)','\(content)','\(readed)')";
-        db.execute(sql)
-
-    
-    }
-    func unreadnum(userid:String,catagory:String)->Int
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select * from notice where relativeid='"+userid+"' and readed=0 and catagory='"+catagory+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
-        return mess.count
-
-    }
-
-    
-//    func addchat(messae:String,guid:String,date:String,senduserid:String,sendnickname:String,sendusericon:String,touserid:String,tousernickname:String,tousericon:String)
-//    {
-//        let sql = "insert into chat(message,guid,date,senduserid,sendnickname,sendusericon,touserid,tonickname,tousericon) values('\(messae)','\(guid)','\(date)','\(senduserid)','\(sendnickname)','\(sendusericon)','\(touserid)','\(tousernickname)','\(tousericon)')";
-//        
-//        NSLog("sql: \(sql)")
-//        db.execute(sql)
-//    }
-//    
-
-    
-    func loadusername(userid:String)->String
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select * from users where userid='"+userid+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
-        if( mess.count>0)
-        {
-            let item = mess[0] as SQLRow
-            return item["nickname"]!.asString()
-        }
-        else
-        {
-            return ""
-        }
-    }
-
-    func loadheadface(userid:String)->String
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select * from users where userid='"+userid+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
-        if( mess.count>0)
-        {
-            let item = mess[0] as SQLRow
-            return item["usericon"]!.asString()
-        }
-        else
-        {
-            return ""
-        }
-    }
-
-    func isexituser(userid:String)->Bool
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select * from users where userid='"+userid+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
-        if( mess.count>0)
-        {
-            return true
-        }
-        else
-        {
-            return false
-        }
-    }
-
-    
-    func addchat(senduserid:String,touserid:String,message:String,guid:String,date:String,readed:String)
-    {
-        var sendnickname:String=loadusername(senduserid)
-        var sendusericon:String=loadheadface(senduserid)
-
-        var tonickname:String=loadusername(touserid)
-        var tousericon:String=loadheadface(touserid)
-
-        
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql = "insert into chat(senduserid,sendnickname,sendusericon,touserid,tonickname,tousericon,message,guid,date,readed) values('\(senduserid)','\(sendnickname)','\(sendnickname)','\(touserid)','\(tonickname)','\(tousericon)','\(message)','','\(date)','0')";
-        db.execute(sql)
-    }
-
-    
-    func addfriend(userid:String,nickname:String,usericon:String,lastuserid:String,lastnickname:String,lastinfo:String,lasttime:String,messnum:Int)
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql = "insert into friend(userid,nickname,usericon,lastuserid,lastnickanme,lastinfo,lasttime,messnum) values('\(userid )','\(nickname)','\(usericon)','\(lastuserid)','\(lastnickname)','\(lastinfo)','\(lasttime)','\(messnum)')";
-        db.execute(sql)
-
-    }
-
-    
-    func isexit(userid:String)->Bool
-    {
-        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql="select * from friend where userid='"+userid+"'";
-        NSLog(sql)
-        let mess = db.query(sql)
-        if( mess.count>0)
-        {
-            return true
-        }
-        else
-        {
-         return false
-        }
-    }
-
+   
     
     //收到状态
     func xmppStream(sender: XMPPStream!, didReceivePresence presence: XMPPPresence!) {
@@ -362,10 +226,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
         if xs!.isConnected(){
             return true
         }
+        // defaults.setObject(userid, forKey: "userid");
+        //defaults.setObject(pass, forKey: "password");
+        
+        let defaults = NSUserDefaults.standardUserDefaults();
+        let userid:String = defaults.objectForKey("userid") as! String;
+        let pass:String = defaults.objectForKey("password") as! String;
         
         //获取系统中保存的用户名、密码、服务器地址
-        let user:String = "888@bbxiaoqu"
-        let password:String = "888"
+        let user:String = userid.stringByAppendingString("@bbxiaoqu")
+        let password:String = pass
         let server:String = "101.200.194.1"
         
         // (user!= nil && password != nil) {
