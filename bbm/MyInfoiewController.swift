@@ -163,12 +163,57 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                         let telphone:String = JSON[0].objectForKey("telphone") as! String;
                         let headfaceurl:String = JSON[0].objectForKey("headface") as! String;
                         let username:String = JSON[0].objectForKey("username") as! String;
-                         let community:String = JSON[0].objectForKey("community") as! String;
-                        let community_id:String = JSON[0].objectForKey("community_id") as! String;
-                        let community_lat:String = JSON[0].objectForKey("community_lat") as! String;
-                        let community_lng:String = JSON[0].objectForKey("community_lng") as! String;
-                         let age:String = JSON[0].objectForKey("age") as! String;
-                         let usersex:String = JSON[0].objectForKey("sex") as! String;
+                        var community:String;
+                        if(JSON[0].objectForKey("community")!.isKindOfClass(NSNull))
+                        {
+                            community="";
+                        }else
+                        {
+                            community = JSON[0].objectForKey("community") as! String;
+                        }
+                        var community_id:String;
+                        if(JSON[0].objectForKey("community_id")!.isKindOfClass(NSNull))
+                        {
+                            community_id="";
+                        }else
+                        {
+                            community_id = JSON[0].objectForKey("community_id") as! String;
+                        }
+                        
+                        var community_lat:String;
+                        if(JSON[0].objectForKey("community_lat")!.isKindOfClass(NSNull))
+                        {
+                            community_lat="";
+                        }else
+                        {
+                            community_lat = JSON[0].objectForKey("community_lat") as! String;
+                        }
+                        var community_lng:String;
+                        if(JSON[0].objectForKey("community_lng")!.isKindOfClass(NSNull))
+                        {
+                            community_lng="";
+                        }else
+                        {
+                            community_lng = JSON[0].objectForKey("community_lng") as! String;
+                        }
+                        
+                        var age:String;
+                        if(JSON[0].objectForKey("age")!.isKindOfClass(NSNull))
+                        {
+                            age="";
+                        }else
+                        {
+                            age = JSON[0].objectForKey("age") as! String;
+                        }
+                        
+                        var usersex:String;
+                        if(JSON[0].objectForKey("sex")!.isKindOfClass(NSNull))
+                        {
+                            usersex="1";
+                        }else
+                        {
+                            usersex = JSON[0].objectForKey("sex") as! String;
+                        }
                         
                         
                         self.xiaoquid=community_id;
