@@ -65,7 +65,6 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         self.appDelegate().connect()
         
 
-        //BMKLocationService.setLocationDesiredAccuracy(KCLLocationAccuracyBest)
         // 设置定位精确度，默认：kCLLocationAccuracyBest
         BMKLocationService.setLocationDesiredAccuracy(kCLLocationAccuracyBest)
         //指定最小距离更新(米)，默认：kCLDistanceFilterNone
@@ -73,37 +72,42 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         //初始化BMKLocationService
         locService = BMKLocationService()
-        
+        locService.delegate = self
         //启动LocationService
         locService.startUserLocationService()
-
-        //self.ggimg.userInteractionEnabled = true
-        //self.ggimg.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("showpage")))
-
        
      }
     
     //处理方向变更信息
     func didUpdateUserHeading(userLocation: BMKUserLocation!) {
-        print("经度: \(userLocation.location.coordinate.latitude)")
-        print("纬度: \(userLocation.location.coordinate.longitude)")
-        let defaults = NSUserDefaults.standardUserDefaults();
-        defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
-        defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
-        defaults.synchronize();
-        locService.stopUserLocationService()
+        if(userLocation.location != nil)
+        {
+            print("经度: \(userLocation.location.coordinate.latitude)")
+            print("纬度: \(userLocation.location.coordinate.longitude)")
+            let defaults = NSUserDefaults.standardUserDefaults();
+            defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
+            defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
+            defaults.synchronize();
+            locService.stopUserLocationService()
+        }else{
+            NSLog("userLocation.location is nil")
+        }
     }
     
     //处理位置坐标更新
     func didUpdateBMKUserLocation(userLocation: BMKUserLocation!) {
-        
-        print("经度: \(userLocation.location.coordinate.latitude)")
-        print("纬度: \(userLocation.location.coordinate.longitude)")
-        let defaults = NSUserDefaults.standardUserDefaults();
-        defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
-        defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
-        defaults.synchronize();
-        locService.stopUserLocationService()
+         if(userLocation.location != nil)
+         {
+            print("经度: \(userLocation.location.coordinate.latitude)")
+            print("纬度: \(userLocation.location.coordinate.longitude)")
+            let defaults = NSUserDefaults.standardUserDefaults();
+            defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
+            defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
+            defaults.synchronize();
+            locService.stopUserLocationService()
+         }else{
+            NSLog("userLocation.location is nil")
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
