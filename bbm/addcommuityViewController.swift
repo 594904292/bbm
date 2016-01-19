@@ -47,6 +47,7 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
         
         //初始化BMKLocationService
         locService = BMKLocationService()
+        locService.delegate=self
         //启动LocationService
         locService.startUserLocationService()
         mapView.showsUserLocation = false
@@ -58,7 +59,10 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
     
     //处理位置坐标更新
     func didUpdateUserHeading(userLocation: BMKUserLocation!) {
-        mapView.updateLocationData(userLocation)
+        if(userLocation!=nil)
+        {
+            mapView.updateLocationData(userLocation)
+        }
     }
     
     
@@ -67,38 +71,41 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
     func didUpdateBMKUserLocation(userLocation: BMKUserLocation!) {
         if first
         {
-            currLocation = userLocation
-            //print("经度：\(currLocation.location.coordinate.latitude)")
-            //print("纬度：\(currLocation.location.coordinate.longitude)")
-            mapView.updateLocationData(userLocation)
-            let url:String = "http://api.map.baidu.com/geocoder/v2/?ak=ROBALpv3vQpKoGOY18hze4kG&callback=renderReverse&location=".stringByAppendingString(String(currLocation!.location.coordinate.latitude)).stringByAppendingString(",").stringByAppendingString(String(currLocation!.location.coordinate.longitude)).stringByAppendingString("&output=json&pois=1")
+            if(userLocation.location!=nil)
+            {
+                currLocation = userLocation
+                //print("经度：\(currLocation.location.coordinate.latitude)")
+                //print("纬度：\(currLocation.location.coordinate.longitude)")
+                mapView.updateLocationData(userLocation)
+                let url:String = "http://api.map.baidu.com/geocoder/v2/?ak=ROBALpv3vQpKoGOY18hze4kG&callback=renderReverse&location=".stringByAppendingString(String(currLocation!.location.coordinate.latitude)).stringByAppendingString(",").stringByAppendingString(String(currLocation!.location.coordinate.longitude)).stringByAppendingString("&output=json&pois=1")
 
-            Alamofire.request(.GET, url, parameters: nil).responseString
-            {response in
-                if(response.result.isSuccess)
-                {
-                    var json:String = response.result.value!
-                    json=json.stringByReplacingOccurrencesOfString("renderReverse&&renderReverse(", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                    json=json.stringByReplacingOccurrencesOfString(")", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-                     //print("json：\(json)")
-                    let jsonstring: NSString = json
-                    let dd = jsonstring.dataUsingEncoding(NSUTF8StringEncoding)
-                    let data: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(dd!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                    
-                    var status:NSNumber = data["status"] as! NSNumber
-                    var result:NSDictionary = data["result"] as! NSDictionary
-                    var formatted_address:NSString = result["formatted_address"]  as! NSString
-                    var addressComponent:NSDictionary = result["addressComponent"] as! NSDictionary
-                    var country:NSString = addressComponent["country"]  as! NSString
-                    var province:NSString = addressComponent["province"]  as! NSString
-                    var city:NSString = addressComponent["city"]  as! NSString
-                    var district:NSString = addressComponent["district"]  as! NSString
-                    var street:NSString = addressComponent["street"]  as! NSString
-                    self.address.text = "地址:".stringByAppendingString(formatted_address as String)
-                }else
-                {
-                    self.successNotice("网络请求错误")
-                    print("网络请求错误")
+                Alamofire.request(.GET, url, parameters: nil).responseString
+                {response in
+                    if(response.result.isSuccess)
+                    {
+                        var json:String = response.result.value!
+                        json=json.stringByReplacingOccurrencesOfString("renderReverse&&renderReverse(", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                        json=json.stringByReplacingOccurrencesOfString(")", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+                         //print("json：\(json)")
+                        let jsonstring: NSString = json
+                        let dd = jsonstring.dataUsingEncoding(NSUTF8StringEncoding)
+                        let data: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(dd!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                        
+                        var status:NSNumber = data["status"] as! NSNumber
+                        var result:NSDictionary = data["result"] as! NSDictionary
+                        var formatted_address:NSString = result["formatted_address"]  as! NSString
+                        var addressComponent:NSDictionary = result["addressComponent"] as! NSDictionary
+                        var country:NSString = addressComponent["country"]  as! NSString
+                        var province:NSString = addressComponent["province"]  as! NSString
+                        var city:NSString = addressComponent["city"]  as! NSString
+                        var district:NSString = addressComponent["district"]  as! NSString
+                        var street:NSString = addressComponent["street"]  as! NSString
+                        self.address.text = "地址:".stringByAppendingString(formatted_address as String)
+                    }else
+                    {
+                        self.successNotice("网络请求错误")
+                        print("网络请求错误")
+                    }
                 }
             }
        }
