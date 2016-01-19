@@ -41,7 +41,7 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
     
     @IBAction func loginAction(sender: AnyObject) {
         var a = self.login_username.text as String!
-        var b = self.login_password.text as String!
+        let b = self.login_password.text as String!
         db = SQLiteDB.sharedInstance()
         let dbHelp = DbHelp()
         dbHelp.initdb()//生成表
@@ -76,17 +76,20 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
     
     func login_r(username:String,password:String)
     {
+        if(username.characters.count==0)
+        {
+            self.alertView = UIAlertView()
+            self.alertView!.title = "登陆提示"
+            self.alertView!.message = "用户名不能为空"
+            self.alertView!.addButtonWithTitle("关闭")
+            NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
+            self.alertView!.show()
+            return;
+        }
       Alamofire.request(.POST, "http://www.bbxiaoqu.com/login.php", parameters:["_userid" : username])
             .responseJSON { response in
                 if(response.result.isSuccess)
                 {
-//                print(response.request)  // original URL request
-//                print(response.response) // URL response
-//                print(response.data)     // server data
-//                print(response.result)   // result of response serialization
-//                print(response.result.value)
-                
-
                 if let JSON = response.result.value {
                     print("JSON1: \(JSON.count)")
                    if(JSON.count==0)
