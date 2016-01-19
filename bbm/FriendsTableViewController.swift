@@ -51,7 +51,13 @@ class FriendsTableViewController: UITableViewController {
                 if(response.result.isSuccess)
                 {
 
-                if let jsonItem = response.result.value as? NSArray{
+                    if let jsonItem = response.result.value as? NSArray{
+                    if(jsonItem.count==0)
+                    {
+                          self.successNotice("好友列表为空")
+                            print("好友列表为空")
+                            return;
+                    }
                     for data in jsonItem{
                         print("data: \(data)")
                         

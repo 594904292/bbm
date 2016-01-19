@@ -67,6 +67,12 @@ class RecentTableViewController: UITableViewController {
                 let item_obj:itemRecent=itemRecent(userid: userid, username: nickname, usericon: usericon, lastinfo: lastinfo, lastchattimer: lasttime, messnum: messnu, lastnickname: lastnickname)
                  self.items.append(item_obj)
             }
+        }else
+        {   self.successNotice("会话列表为空")
+            print("会话列表为空")
+            return;
+
+        
         }
         
         
