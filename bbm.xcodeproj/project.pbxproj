@@ -2759,7 +2759,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ni ha (V5W7R3B3PQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: ni ha (GAX7B99CPF)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2786,7 +2786,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5605e312-ee5c-48e7-986d-25efca56cf1b";
+				PROVISIONING_PROFILE = "25d48cb1-19d1-4f98-afc2-28b4de608ecc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
@@ -2797,7 +2797,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ni ha (V5W7R3B3PQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: ni ha (GAX7B99CPF)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2824,7 +2824,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5605e312-ee5c-48e7-986d-25efca56cf1b";
+				PROVISIONING_PROFILE = "25d48cb1-19d1-4f98-afc2-28b4de608ecc";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
