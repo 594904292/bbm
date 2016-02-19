@@ -394,9 +394,9 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 if(response.result.isSuccess)
                 {
 
-                if let jsonItem = response.result.value as? NSArray{
-                    for data in jsonItem{
-                        //print("data: \(data)")
+                    if let jsonItem = response.result.value as? NSArray{
+                        for data in jsonItem{
+                            //print("data: \(data)")
                         
                         let content:String = data.objectForKey("content") as! String;
                         let senduserid:String = data.objectForKey("senduser") as! String;

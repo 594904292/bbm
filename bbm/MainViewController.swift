@@ -241,9 +241,36 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
     func exitClick()
     {
         NSLog("exitClick")
-        exit(0)
+        //exit(0)
+        var alertView = UIAlertView()
+        alertView.title = "系统提示"
+        alertView.message = "您确定要退出吗？"
+        alertView.addButtonWithTitle("取消")
+        alertView.addButtonWithTitle("确定")
+        alertView.cancelButtonIndex=0
+        alertView.delegate=self;
+        alertView.show()
+        
+       
     }
     
+    
+    func alertView(alertView:UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+        if(buttonIndex==alertView.cancelButtonIndex){
+            
+        }
+        else
+        {
+            let sb = UIStoryboard(name:"Main", bundle: nil)
+            let vc = sb.instantiateViewControllerWithIdentifier("loginController") as! LoginViewController
+            //创建导航控制器
+            let nvc=UINavigationController(rootViewController:vc);
+            //设置根视图
+            self.view.window!.rootViewController=nvc;
+
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

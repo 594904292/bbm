@@ -13,19 +13,21 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     var cat=0;
     @IBOutlet weak var content: UITextField!
     
+    @IBOutlet weak var contenttip: UILabel!
+    var alertView:UIAlertView?
     var img = UIImage()
   
    var arr = [UIButton]()
     var mCurrent:Int = 0;
     var imgarr = [String]()
     
-//    
-//    func NewMessage(string:String){
-//        //qzLabel!.text = string
-//        //println("qzLabel.text == \(string)")
-//       //print("\(string)")
-//    }
+    @IBAction func contentexit(sender: UITextField) {
+        sender.resignFirstResponder()
+    }
     
+    @IBAction func controlTouchDown(sender: UIControl) {
+        content.resignFirstResponder()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,6 +148,71 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     
     func addClick()
     {
+        
+        if(content.text?.characters.count==0)
+        {
+            self.alertView = UIAlertView()
+            self.alertView!.title = "提示"
+            self.alertView!.message = "消息为空"
+            self.alertView!.addButtonWithTitle("关闭")
+            NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
+            self.alertView!.show()
+            return;
+        }
+        var alertView = UIAlertView()
+        alertView.title = "系统提示"
+        alertView.message = "您确定发布信息吗？"
+        alertView.addButtonWithTitle("取消")
+        alertView.addButtonWithTitle("确定")
+        alertView.cancelButtonIndex=0
+        alertView.delegate=self;
+        alertView.show()
+    }
+    
+    func dismiss(timer:NSTimer){
+        alertView!.dismissWithClickedButtonIndex(0, animated:true)
+    }
+    
+    func alertView(alertView:UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+        if(buttonIndex==alertView.cancelButtonIndex){
+            print("点击了取消")
+        }
+        else
+        {
+            NSLog("add")
+            
+            let mess:String = content.text!
+            Alamofire.request(.POST, "http://www.bbxiaoqu.com/words/isbadword.php", parameters:["mess" : mess])
+                .responseJSON { response in
+                    if(response.result.isSuccess)
+                    {
+                        if let jsonItem = response.result.value as? NSArray{
+                            if(jsonItem.count==0)
+                            {
+                                self.savedb();
+                            }else
+                            {
+                                var wwwstr:String="";
+                                for data in jsonItem{
+                                    wwwstr=wwwstr+(data as! String)+","
+                                    
+                                }
+                                self.contenttip.text="内容不能包含:".stringByAppendingString(wwwstr).stringByAppendingString("等敏感词信息")
+                                self.contenttip.textColor=UIColor.redColor()
+                                self.errorNotice("有敏感词")
+                            }
+                        }
+                    }else
+                    {
+                        self.successNotice("网络请求错误")
+                        print("网络请求错误")
+                    }
+            }
+        }
+    }
+    
+    func savedb()
+    {
         NSLog("add")
         var uuid:CFUUIDRef
         var guid:String
@@ -168,14 +235,14 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
             var spath:String = userid.stringByAppendingString("/").stringByAppendingString(strNowTime).stringByAppendingString("_").stringByAppendingString(String(i)).stringByAppendingString(".jpg")
             
             var fname:String = strNowTime.stringByAppendingString("_").stringByAppendingString(String(i)).stringByAppendingString(".jpg")
-
+            
             photo = photo.stringByAppendingString(spath)
             if(i<imgarr.count-1)
             {
-             photo = photo+","
+                photo = photo+","
             }
             uploadImg(path,filename: fname)
-         }
+        }
         
         var date = NSDate()
         var timeFormatter = NSDateFormatter()
@@ -185,17 +252,12 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         
         let mess:String = content.text!
         
-        
-
         let country = defaults.objectForKey("country") as! String;
         let province = defaults.objectForKey("province") as! String;//省直辖市
         let city = defaults.objectForKey("city") as! String;//城市
         let sublocality = defaults.objectForKey("sublocality") as! String;//区县
         let thoroughfare = defaults.objectForKey("thoroughfare") as! String;//街道
         let address = defaults.objectForKey("address") as! String;
-
-        
-        
         
         var  dic:Dictionary<String,String> = ["content" : mess, "guid": guid]
         dic["title"]="";
@@ -215,13 +277,13 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         dic["village"] = thoroughfare;
         dic["address"] = address;
         dic["sendtime"] = strNowTime;
-       
+        
         dic["networklocationtype"] = "";
         dic["operators"] = "";
         dic["catagory"] = String(cat) ;
         dic["streetnumber"] = "-1";
         dic["floor"] = "-1";
-        dic["infocatagroy"] = "1";
+        dic["infocatagroy"] = "０";
         dic["direction"] = "-1";
         dic["radius"] = "-1";
         dic["speed"] = "-1";
@@ -236,7 +298,9 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
                 //                if let JSON = response.result.value {
                 //                    print("JSON: \(JSON)")
                 //                }
-                 self.navigationController?.popViewControllerAnimated(true)
+                
+                self.successNotice("发布成功")
+                self.navigationController?.popViewControllerAnimated(true)
         }
     }
     func goImagesel()

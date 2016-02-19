@@ -18,12 +18,9 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
     var db: SQLiteDB!
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.login_username.text="888"
-        //self.login_password.text="888"
-         // Do any additional setup after loading the view.
-        //var sqlitehelpInstance1=sqlitehelp.shareInstance()
-        //sqlitehelpInstance1.removeallgz()
-        
+        db = SQLiteDB.sharedInstance()
+        let dbHelp = DbHelp()
+        dbHelp.initdb()//生成表
     }
     //控件失去焦点
     @IBAction func usernameExit(sender: UITextField) {
@@ -42,13 +39,8 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
     @IBAction func loginAction(sender: AnyObject) {
         var a = self.login_username.text as String!
         let b = self.login_password.text as String!
-        db = SQLiteDB.sharedInstance()
-        let dbHelp = DbHelp()
-        dbHelp.initdb()//生成表
-        let sql="delete from user";
-        db.query(sql)
-        
-         if(login(a,pass:b))
+
+        if(login(a,pass:b))
         {
             
 //            let sb = UIStoryboard(name:"Main", bundle: nil)

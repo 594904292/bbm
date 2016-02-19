@@ -24,7 +24,31 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
     @IBOutlet weak var sex: UIPickerView!
     
     var img = UIImage()
+    @IBAction func controlTouchdown(sender: UIControl) {
+        nickname.resignFirstResponder()
+        age.resignFirstResponder()
+        xiaoqu.resignFirstResponder()
+        tel.resignFirstResponder()
+        sex.resignFirstResponder()
+    }
 
+    @IBAction func nicknameexit(sender: AnyObject) {
+        sender.resignFirstResponder()
+    }
+    
+    @IBAction func ageexit(sender: AnyObject) {
+        sender.resignFirstResponder()
+    }
+    
+    @IBAction func xiaoquexit(sender: UITextField) {
+        sender.resignFirstResponder()
+    }
+    
+    @IBAction func telexit(sender: UITextField) {
+        sender.resignFirstResponder()
+    }
+    
+    
     func changeWord(controller:XiaoquTableViewController,xqname:String,xqid:String,xqlat:String,xqlng:String){
         //qzLabel!.text = string
         xiaoqu.text=xqname

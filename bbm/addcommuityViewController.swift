@@ -59,7 +59,7 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
     
     //处理位置坐标更新
     func didUpdateUserHeading(userLocation: BMKUserLocation!) {
-        if(userLocation!=nil)
+        if(userLocation != nil)
         {
             mapView.updateLocationData(userLocation)
         }
@@ -71,7 +71,7 @@ class addcommuityViewController: UIViewController,UINavigationControllerDelegate
     func didUpdateBMKUserLocation(userLocation: BMKUserLocation!) {
         if first
         {
-            if(userLocation.location!=nil)
+            if(userLocation.location != nil)
             {
                 currLocation = userLocation
                 //print("经度：\(currLocation.location.coordinate.latitude)")
