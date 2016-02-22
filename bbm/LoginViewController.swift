@@ -8,14 +8,30 @@
 
 import UIKit
 import Alamofire
-class LoginViewController: UIViewController,UINavigationControllerDelegate {
+class LoginViewController: UIViewController {
     @IBOutlet weak var loginbtn: UIButton!
+    @IBOutlet weak var searchpassbtn: UIButton!
     
     @IBOutlet weak var login_username: UITextField!
     
     @IBOutlet weak var login_password: UITextField!
     var alertView:UIAlertView?
     var db: SQLiteDB!
+    
+    
+    @IBAction func jumpsearchpass(sender: UIButton) {
+        self.navigationItem.title=""
+        let sb = UIStoryboard(name:"Main", bundle: nil)
+        let vc = sb.instantiateViewControllerWithIdentifier("searchController") as! SearchPassViewController
+        //创建导航控制器
+        let nvc=UINavigationController(rootViewController:vc);
+        //设置根视图
+        self.view.window!.rootViewController=nvc;
+
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         db = SQLiteDB.sharedInstance()
@@ -61,9 +77,18 @@ class LoginViewController: UIViewController,UINavigationControllerDelegate {
     }
     
     @IBAction func register(sender: UIButton) {
+       // let sb = UIStoryboard(name:"Main", bundle: nil)
+        //let vc = sb.instantiateViewControllerWithIdentifier("registerController") as! RegisterViewController
+        //self.presentViewController(vc, animated: true, completion: nil)
+        
+        
+        self.navigationItem.title=""
         let sb = UIStoryboard(name:"Main", bundle: nil)
         let vc = sb.instantiateViewControllerWithIdentifier("registerController") as! RegisterViewController
-        self.presentViewController(vc, animated: true, completion: nil)
+        //创建导航控制器
+        let nvc=UINavigationController(rootViewController:vc);
+        //设置根视图
+        self.view.window!.rootViewController=nvc;
     }
     
     func login_r(username:String,password:String)

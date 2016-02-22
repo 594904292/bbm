@@ -77,6 +77,8 @@
 		4987FF691C17C113006361F8 /* UIScrollViewExtension-XW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4987FF5B1C17C113006361F8 /* UIScrollViewExtension-XW.swift */; };
 		4987FF6A1C17C113006361F8 /* xw_icon.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4987FF5D1C17C113006361F8 /* xw_icon.bundle */; };
 		4996C0561BC7AA4F00A35FC7 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 4996C0551BC7AA4F00A35FC7 /* add.png */; };
+		49987AE81C7AB8DF00AFA8F0 /* SearchPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49987AE71C7AB8DE00AFA8F0 /* SearchPassViewController.swift */; };
+		49987AEF1C7AB8F800AFA8F0 /* ResetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49987AEE1C7AB8F800AFA8F0 /* ResetPassViewController.swift */; };
 		49B8AAB11BE088D00052475F /* icon_76.png in Resources */ = {isa = PBXBuildFile; fileRef = 49B8AAAE1BE088D00052475F /* icon_76.png */; };
 		49B8AAB21BE088D00052475F /* icon_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 49B8AAAF1BE088D00052475F /* icon_120.png */; };
 		49B8AAB31BE088D00052475F /* icon_152.png in Resources */ = {isa = PBXBuildFile; fileRef = 49B8AAB01BE088D00052475F /* icon_152.png */; };
@@ -463,6 +465,8 @@
 		4987FF781C17C507006361F8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4987FF7A1C17C52E006361F8 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		4996C0551BC7AA4F00A35FC7 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
+		49987AE71C7AB8DE00AFA8F0 /* SearchPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPassViewController.swift; path = ../SearchPassViewController.swift; sourceTree = "<group>"; };
+		49987AEE1C7AB8F800AFA8F0 /* ResetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResetPassViewController.swift; path = ../ResetPassViewController.swift; sourceTree = "<group>"; };
 		49B8AAAE1BE088D00052475F /* icon_76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_76.png; path = "全局/icon_76.png"; sourceTree = "<group>"; };
 		49B8AAAF1BE088D00052475F /* icon_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_120.png; path = "全局/icon_120.png"; sourceTree = "<group>"; };
 		49B8AAB01BE088D00052475F /* icon_152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_152.png; path = "全局/icon_152.png"; sourceTree = "<group>"; };
@@ -960,6 +964,8 @@
 		494435441BB3E20D004EAECB /* bbm */ = {
 			isa = PBXGroup;
 			children = (
+				49987AEE1C7AB8F800AFA8F0 /* ResetPassViewController.swift */,
+				49987AE71C7AB8DE00AFA8F0 /* SearchPassViewController.swift */,
 				498701841C17EDF5006361F8 /* ChatDelegate.swift */,
 				498701851C17EDF5006361F8 /* MessageDelegate.swift */,
 				49FE1DAC1BD0A1F9009B81D9 /* images */,
@@ -2538,6 +2544,7 @@
 				49F6E9A71C3CD57F007E5B0F /* PlTableViewCell.swift in Sources */,
 				497E7B661BCB630700BAEB2F /* ZLSwiftConstDefine.swift in Sources */,
 				49F3E7B41C27EA720036F7C7 /* XMPPCapsResourceCoreDataStorageObject.m in Sources */,
+				49987AE81C7AB8DF00AFA8F0 /* SearchPassViewController.swift in Sources */,
 				49F3E5431C27E10B0036F7C7 /* WXMessage.swift in Sources */,
 				4987FF631C17C113006361F8 /* XWRefreshAutoStateFooter.swift in Sources */,
 				49F3E7C91C27EA720036F7C7 /* XEP_0223.m in Sources */,
@@ -2577,6 +2584,7 @@
 				49F3E7B11C27EA720036F7C7 /* XMPPCapabilities.xcdatamodel in Sources */,
 				49FE1DC41BD0F04C009B81D9 /* SimTableView.swift in Sources */,
 				49F3E7B81C27EA720036F7C7 /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
+				49987AEF1C7AB8F800AFA8F0 /* ResetPassViewController.swift in Sources */,
 				49F3E7BC1C27EA720036F7C7 /* XMPPMessage+XEP_0172.m in Sources */,
 				49FE1DA31BD0A082009B81D9 /* TableView.swift in Sources */,
 				49F6E99C1C3B855C007E5B0F /* SwiftNotice.swift in Sources */,
@@ -2786,7 +2794,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "25d48cb1-19d1-4f98-afc2-28b4de608ecc";
+				PROVISIONING_PROFILE = "2583a3f5-8802-425d-b94a-fc4ef20789ba";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
@@ -2824,7 +2832,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "25d48cb1-19d1-4f98-afc2-28b4de608ecc";
+				PROVISIONING_PROFILE = "2583a3f5-8802-425d-b94a-fc4ef20789ba";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";

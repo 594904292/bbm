@@ -9,16 +9,37 @@
 import UIKit
 import Alamofire
 class RegisterViewController: UIViewController {
-
+    
     var alertView:UIAlertView?
-    
     @IBOutlet weak var telphone_edit: UITextField!
-    
     @IBOutlet weak var password_edit: UITextField!
-    
     @IBOutlet weak var authoncode: UITextField!
-    
     @IBOutlet weak var authonbtn: UIButton!
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title="注册"
+         // Do any additional setup after loading the view.
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
+    }
+    
+    func backClick()
+    {
+        NSLog("back");
+        //self.navigationController?.popViewControllerAnimated(true)
+        let sb = UIStoryboard(name:"Main", bundle: nil)
+        let vc = sb.instantiateViewControllerWithIdentifier("loginController") as! LoginViewController
+        //创建导航控制器
+        //let nvc=UINavigationController(rootViewController:vc);
+        //设置根视图
+        //self.view.window!.rootViewController=nvc;
+        
+        // let sb = UIStoryboard(name:"Main", bundle: nil)
+        //let vc = sb.instantiateViewControllerWithIdentifier("registerController") as! RegisterViewController
+        self.presentViewController(vc, animated: true, completion: nil)
+        
+    }
     
     @IBAction func getauthoncode(sender: UIButton) {
         let tel:String = self.telphone_edit.text as String!
@@ -53,39 +74,37 @@ class RegisterViewController: UIViewController {
                     // print("JSON: \(JSON)")
                    if String(ret)=="1"
                    {
+                        self.alertView = UIAlertView()
+                        self.alertView!.title = "注册提示"
+                        self.alertView!.message = "保存成功"
+                        self.alertView!.addButtonWithTitle("关闭")
+                        NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
+                        self.alertView!.show()
                     
-                    self.alertView = UIAlertView()
-                    self.alertView!.title = "注册提示"
-                    self.alertView!.message = "保存成功"
-                    self.alertView!.addButtonWithTitle("关闭")
-                    NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
-                    self.alertView!.show()
-                    
-                    } else if String(ret)=="2"
+                   } else if String(ret)=="2"
                    {
-                    self.alertView = UIAlertView()
-                    self.alertView!.title = "注册提示"
-                    self.alertView!.message = "用户ID已注册"
-                    self.alertView!.addButtonWithTitle("关闭")
-                    NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
-                    self.alertView!.show()
-                    }else if String(ret)=="3"
+                        self.alertView = UIAlertView()
+                        self.alertView!.title = "注册提示"
+                        self.alertView!.message = "用户ID已注册"
+                        self.alertView!.addButtonWithTitle("关闭")
+                        NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
+                        self.alertView!.show()
+                   }else if String(ret)=="3"
                    {
-                    self.alertView = UIAlertView()
-                    self.alertView!.title = "注册提示"
-                    self.alertView!.message = "手机号已注册"
-                    self.alertView!.addButtonWithTitle("关闭")
-                    NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
-                    self.alertView!.show()
+                        self.alertView = UIAlertView()
+                        self.alertView!.title = "注册提示"
+                        self.alertView!.message = "手机号已注册"
+                        self.alertView!.addButtonWithTitle("关闭")
+                        NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
+                        self.alertView!.show()
                     }else if String(ret)=="4"
                    {
-                    self.alertView = UIAlertView()
-                    self.alertView!.title = "注册提示"
-                    self.alertView!.message = "保存失败"
-                    self.alertView!.addButtonWithTitle("关闭")
-                    NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
-                    self.alertView!.show()
-                    
+                        self.alertView = UIAlertView()
+                        self.alertView!.title = "注册提示"
+                        self.alertView!.message = "保存失败"
+                        self.alertView!.addButtonWithTitle("关闭")
+                        NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
+                        self.alertView!.show()
                     }
                 }
         }
@@ -97,12 +116,6 @@ class RegisterViewController: UIViewController {
         self.presentViewController(vc, animated: true, completion: nil)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -12,12 +12,10 @@ import Alamofire
 class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate {
     var cat=0;
     @IBOutlet weak var content: UITextField!
-    
     @IBOutlet weak var contenttip: UILabel!
     var alertView:UIAlertView?
     var img = UIImage()
-  
-   var arr = [UIButton]()
+    var arr = [UIButton]()
     var mCurrent:Int = 0;
     var imgarr = [String]()
     
@@ -35,7 +33,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         //(UIApplication.sharedApplication().delegate as! AppDelegate).apnsdelegate = self
         //告诉apnsdelegate我在这个里面实现
         
-         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
+        self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "发送", style: UIBarButtonItemStyle.Done, target: self, action: "addClick")
 
         
@@ -223,9 +221,13 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         let lat = defaults.objectForKey("lat") as! String;
         let lng = defaults.objectForKey("lng") as! String;
         var photo:String = "";
-        for(var i:Int = 0;i<imgarr.count;i++ )
+        print(self.imgarr.count)
+
+        for(var i:Int = 0;i<self.imgarr.count;i++ )
         {
-            var path:String = imgarr[i] as String
+             NSLog("for")
+            
+            var path:String = self.imgarr[i] as String
             
             var date = NSDate()
             var timeFormatter = NSDateFormatter()
@@ -251,13 +253,63 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         
         
         let mess:String = content.text!
+        var country:String = "";
+        if(defaults.objectIsForcedForKey("country"))
+        {
+            var country = defaults.objectForKey("country") as! String;
+        }else
+        {
+            var country = "";
+        }
         
-        let country = defaults.objectForKey("country") as! String;
-        let province = defaults.objectForKey("province") as! String;//省直辖市
-        let city = defaults.objectForKey("city") as! String;//城市
-        let sublocality = defaults.objectForKey("sublocality") as! String;//区县
-        let thoroughfare = defaults.objectForKey("thoroughfare") as! String;//街道
-        let address = defaults.objectForKey("address") as! String;
+        var province:String = "";
+
+        if(defaults.objectIsForcedForKey("province"))
+        {
+            var province = defaults.objectForKey("province") as! String;
+        }else
+        {
+            var province = "";
+        }
+        
+        var city:String = "";
+
+        if(defaults.objectIsForcedForKey("city"))
+        {
+            var city = defaults.objectForKey("city") as! String;
+        }else
+        {
+            var city = "";
+        }
+        
+         var sublocality:String = "";
+        if(defaults.objectIsForcedForKey("sublocality"))
+        {
+            var sublocality = defaults.objectForKey("sublocality") as! String;
+        }else
+        {
+            var sublocality = "";
+        }
+        
+        var thoroughfare:String = "";
+        if(defaults.objectIsForcedForKey("thoroughfare"))
+        {
+            var thoroughfare = defaults.objectForKey("thoroughfare") as! String;
+        }else
+        {
+            var thoroughfare = "";
+        }
+        
+        
+        var address:String = "";
+        if(defaults.objectIsForcedForKey("address"))
+        {
+            var address = defaults.objectForKey("address") as! String;
+        }else
+        {
+            var address = "";
+        }
+        
         
         var  dic:Dictionary<String,String> = ["content" : mess, "guid": guid]
         dic["title"]="";
