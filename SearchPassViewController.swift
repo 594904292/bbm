@@ -16,6 +16,30 @@ class SearchPassViewController: UIViewController {
     
     @IBOutlet weak var nextbtn: UIButton!
     var lastauthcode:String = "9811";
+    
+    
+    @IBAction func controltouchdown(sender: AnyObject) {
+        telphone.resignFirstResponder()
+        authcode.resignFirstResponder()
+    }
+    
+    @IBAction func telphone_exit(sender: UITextField) {
+        self.resignFirstResponder()
+        
+    }
+    
+    @IBAction func authcode_exit(sender: UITextField) {
+        
+        self.resignFirstResponder()
+    }
+    
+//    @IBAction func ControlTouchDown(sender: UIControl) {
+//        
+//         telphone.resignFirstResponder()
+//        authcode.resignFirstResponder()
+//    }
+    
+    
     @IBAction func GetAuthcode(sender: UIButton) {
         if(self.telphone.text!.characters.count==0)
         {

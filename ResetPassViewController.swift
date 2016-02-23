@@ -17,6 +17,13 @@ class ResetPassViewController: UIViewController {
     @IBOutlet weak var pass2: UITextField!
     
      var alertView:UIAlertView?
+    
+    
+    
+    
+    
+    
+    
     @IBAction func resetpass(sender: UIButton) {
         if(pass1.text != pass2.text)
         {
