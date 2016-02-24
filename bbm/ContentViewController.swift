@@ -11,8 +11,7 @@ import Alamofire
 
 class ContentViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate ,UICollectionViewDataSource,UICollectionViewDelegate{
     
-    // var Chats:NSMutableArray!
-    //var tableView:SimTableView!
+
     var alertView:UIAlertView?
     @IBOutlet weak var contentLab: UILabel!
     @IBOutlet weak var lvsv: UIScrollView!
@@ -27,9 +26,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     var senduserid:String=""
     var senduser:String=""
     var headface:String=""
-    
+    var isjb:Bool = false;
     @IBOutlet weak var sendtime: UILabel!
-    
     @IBOutlet weak var sendaddr: UILabel!
    
    
@@ -56,7 +54,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell:CollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
         //cell.backgroundColor = UIColor.blackColor()
-       
         var myhead:String=self.pics[indexPath.row]
         Alamofire.request(.GET, myhead).response { (_, _, data, _) -> Void in
             if let d = data as? NSData!
@@ -136,6 +133,9 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         super.viewDidLoad()
         self.navigationItem.title="查看"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
+        self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "举报", style: UIBarButtonItemStyle.Done, target: self, action: "reportClick")
+        
+        self.reportbtn.hidden=true
         // Do any additional setup after loading the view.
         _tableview!.delegate=self
         _tableview!.dataSource=self
@@ -196,6 +196,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                             self.sendaddr.text = sendaddress;
                             if(report=="1")
                             {
+                                self.isjb=true
+                                self.reportbtn.hidden=false
                                 self.reportbtn.setTitle("已举报", forState: UIControlState.Normal)
                                 self.reportbtn.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
                             }
@@ -334,7 +336,24 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     }
 
     
-    
+    func reportClick()
+    {
+        if(self.isjb)
+        {
+            self.successNotice("他人已举报")
+        }else
+        {
+            var alertView = UIAlertView()
+            alertView.title = "系统提示"
+            alertView.message = "您确定要举报吗？"
+            alertView.addButtonWithTitle("取消")
+            alertView.addButtonWithTitle("确定")
+            alertView.cancelButtonIndex=0
+            alertView.delegate=self;
+            alertView.show()
+        }
+
+    }
     
     
     /*
@@ -441,18 +460,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     
     @IBOutlet weak var reportbtn: UIButton!
         
-    @IBAction func report(sender: UIButton) {
-        
-        var alertView = UIAlertView()
-        alertView.title = "系统提示"
-        alertView.message = "您确定要举报吗？"
-        alertView.addButtonWithTitle("取消")
-        alertView.addButtonWithTitle("确定")
-        alertView.cancelButtonIndex=0
-        alertView.delegate=self;
-        alertView.show()
-    }
-        
+    
     func alertView(alertView:UIAlertView, clickedButtonAtIndex buttonIndex: Int){
         if(buttonIndex==alertView.cancelButtonIndex){
             print("点击了取消")
@@ -481,6 +489,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                         //                if let JSON = response.result.value {
                         //                    print("JSON: \(JSON)")
                         //                }
+                        self.isjb=true;
+                         self.reportbtn.hidden=false
                         self.reportbtn.setTitle("已举报", forState: UIControlState.Normal)
                         self.reportbtn.enabled=false
                         
@@ -595,6 +605,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                     //                if let JSON = response.result.value {
                     //                    print("JSON: \(JSON)")
                     //                }
+                    self.isjb=true;
                     self.reportbtn.setTitle("已举报", forState: UIControlState.Normal)
                     self.reportbtn.enabled=false
                     

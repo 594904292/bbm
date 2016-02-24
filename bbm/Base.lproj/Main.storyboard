@@ -1351,7 +1351,7 @@
                             </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="CnF-uC-C6I" secondAttribute="trailing" constant="-20" id="acM-ZT-W8A"/>
                             <constraint firstItem="CnF-uC-C6I" firstAttribute="top" secondItem="dHU-tT-oHw" secondAttribute="bottom" constant="20" id="lmb-Ea-S1X">
-                                <variation key="widthClass=compact" constant="0.0"/>
+                                <variation key="widthClass=compact" constant="5"/>
                             </constraint>
                             <constraint firstItem="CnF-uC-C6I" firstAttribute="leading" secondItem="xd0-bq-Zgs" secondAttribute="leadingMargin" constant="-20" id="zuV-OE-GMk"/>
                         </constraints>
@@ -1703,13 +1703,13 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7G6-VX-WrQ">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="举报">
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="--">
                                     <color key="titleColor" red="1" green="0.2597297368264464" blue="0.10122044186150536" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="report:" destination="NlL-Dy-ANS" eventType="touchUpInside" id="tMh-aU-9aK"/>
-                                </connections>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="340" y="74" width="40" height="36"/>
+                                </variation>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jN4-1Y-jRJ">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -1752,7 +1752,7 @@
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="jN4-1Y-jRJ" firstAttribute="top" secondItem="Vqa-b6-tHw" secondAttribute="bottom" constant="109" id="GmV-1G-a0f">
-                                <variation key="widthClass=compact" constant="100"/>
+                                <variation key="widthClass=compact" constant="140"/>
                             </constraint>
                             <constraint firstItem="ruJ-PK-TcP" firstAttribute="top" secondItem="35R-iY-TG2" secondAttribute="bottom" constant="100" id="J0h-q7-wJb">
                                 <variation key="widthClass=compact" constant="50"/>
@@ -1800,7 +1800,7 @@
                                 <variation key="widthClass=compact" constant="10"/>
                             </constraint>
                             <constraint firstItem="7G6-VX-WrQ" firstAttribute="top" secondItem="Vqa-b6-tHw" secondAttribute="bottom" constant="6" id="tCN-Id-ceV">
-                                <variation key="widthClass=compact" constant="140"/>
+                                <variation key="widthClass=compact" constant="10"/>
                             </constraint>
                             <constraint firstItem="i0j-KB-KIo" firstAttribute="leading" secondItem="HJn-qu-V1p" secondAttribute="leadingMargin" constant="6" id="umg-XO-IBa">
                                 <variation key="widthClass=compact" constant="10"/>
