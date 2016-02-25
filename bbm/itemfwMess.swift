@@ -1,5 +1,5 @@
 //
-//  itemMess.swift
+//  itemfwMess.swift
 //  bbm
 //
 //  Created by ericsong on 15/10/15.
@@ -8,11 +8,12 @@
 
 import UIKit
 
-class itemMess: NSObject {
+class itemfwMess: NSObject {
     var userid: String = ""
     var username: String = ""
     var time: String = ""
     var address: String = ""
+    var fwname: String = ""
     var content: String = ""
     var community: String = ""
     var lng: String = ""
@@ -24,19 +25,24 @@ class itemMess: NSObject {
     var visnum: String = ""
     var plnum: String = ""
     
+    var headface: String = ""
+    var telphone: String = ""
+    var zannum: String = ""
+    var tags: String = ""
     
     var name:String
-    {
+        {
         get{
             return username;
         }
     }
     
-    init(userid:String,vname: String,vtime: String,vaddress: String,vcontent: String,vcommunity:String,vlng:String,vlat:String,vguid:String,vinfocatagory:String,vphoto:String,status:String,visnum:String,plnum:String) {
+    init(userid:String,vname: String,vtime: String,vaddress: String,fwname:String,vcontent: String,vcommunity:String,vlng:String,vlat:String,vguid:String,vinfocatagory:String,vphoto:String,status:String,visnum:String,plnum:String,headface:String,telphone:String,zannum:String,tags:String) {
         self.userid=userid
         self.username = vname
         self.time = vtime
         self.address = vaddress
+         self.fwname = fwname
         self.content = vcontent
         self.community = vcommunity
         self.lng = vlng
@@ -47,6 +53,11 @@ class itemMess: NSObject {
         self.status=status
         self.visnum = visnum
         self.plnum = plnum
+        
+        self.headface = headface
+        self.telphone = telphone
+        self.zannum = zannum
+        self.tags = tags
     }
     
 }
