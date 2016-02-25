@@ -14,6 +14,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     var limit:Int = 10
    
     var items:[itemMess]=[]
+    var fwitems:[itemfwMess]=[]
      @IBOutlet weak var _tableView: UITableView!
     func NewMessage(string:String){
         if(selectedSegmentval==0)
@@ -49,7 +50,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         
       
         self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "添加", style: UIBarButtonItemStyle.Done, target: self, action: "addClick")
-        
+        //segment1.frame = CGRectMake(0,20,250,250);
         
               // weak var weakSelf = self as OneViewController
        // (UIApplication.sharedApplication().delegate as! AppDelegate).apnsdelegate = self
@@ -89,19 +90,19 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         self._tableView.reloadData()
         if(selectedSegmentval==0)
         {
-        
+        self.items.removeAll()
             querydata(0)
         }else if(selectedSegmentval==1)
         {
-            
+            self.items.removeAll()
             querydata(1)
         }else if(selectedSegmentval==2)
         {
-            
+            self.items.removeAll()
             querydata(2)
         }else if(selectedSegmentval==3)
         {
-            
+            self.fwitems.removeAll()
             querydata(3)
         }
     }
@@ -198,165 +199,260 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     
         func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
         {
-            return self.items.count;
+            if(self.selectedSegmentval==3)
+            {
+                return self.fwitems.count;
+            }else
+            {
+                return self.items.count;
+            }
         }
     
         func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             
-            var ppp:String = (items[indexPath.row] as itemMess).photo;
-            if ppp.characters.count > 0
+           // var infocatagory:String = (fwitems[indexPath.row] as itemfwMess).infocatagory
+            NSLog(String(self.selectedSegmentval))
+            
+            if self.selectedSegmentval==3
             {
-                let cellId="mycell"
-                var cell:InfopicTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as! InfopicTableViewCell?
+                let cellId="mycell3"
+                var cell:fwTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as! fwTableViewCell?
                 if(cell == nil)
                 {
-                    cell = InfopicTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
+                    cell = fwTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
                 }
+                var ifm:itemfwMess = fwitems[indexPath.row] as itemfwMess;
                 
-                cell?.senduser.text=(items[indexPath.row] as itemMess).username
-                cell?.message.text=(items[indexPath.row] as itemMess).content
-                cell?.sendtime.text=(items[indexPath.row] as itemMess).time
-                cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
-                if ((items[indexPath.row] as itemMess).infocatagory == "0")
-                {
-                    cell?.catagory.text="求"
-                    
-                }else if ((items[indexPath.row] as itemMess).infocatagory == "1")
-                {
-                    cell?.catagory.text="寻"
-                }else if ((items[indexPath.row] as itemMess).infocatagory == "2")
-                {
-                    cell?.catagory.text="转"
-                }else if ((items[indexPath.row] as itemMess).infocatagory == "3")
-                {
-                    cell?.catagory.text="帮"
-                }
-                if ((items[indexPath.row] as itemMess).status == "0")
-                {
-                    cell?.status.text="求助中"
-                    cell?.status.textColor = UIColor.redColor()
-                    
-                }else if ((items[indexPath.row] as itemMess).status == "1")
-                {
-                    cell?.status.text="解决中"
-                    cell?.status.textColor = UIColor.redColor()
-                    
-                }else if ((items[indexPath.row] as itemMess).status == "2")
-                {
-                    cell?.status.text="已解决"
-                    cell?.status.textColor = UIColor.greenColor()
-                    
-                }
-
+                cell?.senduser.text=(fwitems[indexPath.row] as itemfwMess).username
+                cell?.usertag.text=(fwitems[indexPath.row] as itemfwMess).tags
                 
-               if((items[indexPath.row] as itemMess).photo.isKindOfClass(NSNull))
+                if (fwitems[indexPath.row] as itemfwMess).fwname == "帮帮忙"
                 {
-                    cell?.icon.image=UIImage(named: "icon")
-
+                    cell?.title.text=(fwitems[indexPath.row] as itemfwMess).content
                 }else
                 {
-                    var head:String!
-                    
-                    if ppp.characters.count > 0
+                    cell?.title.text=(fwitems[indexPath.row] as itemfwMess).fwname
+                }
+                
+                cell?.zan.titleLabel?.text="0";
+                
+                cell?.tel.tag = indexPath.row
+                cell?.tel.addTarget(self,action:Selector("teltapped:"),forControlEvents:.TouchUpInside)
+                
+                var head:String = "http://www.bbxiaoqu.com/uploads/"+(fwitems[indexPath.row] as itemfwMess).headface
+                Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
+                    if let d = data as? NSData!
                     {
-                        if((ppp.rangeOfString(",") ) != nil)
-                        {
-                            var myArray = ppp.componentsSeparatedByString(",")
-                            var headname = myArray[0] as String
-                            head = "http://www.bbxiaoqu.com/uploads/"+headname
-                            
-                             NSLog("-1--\(head)")
-                        }else
-                        {
-                            head = "http://www.bbxiaoqu.com/uploads/"+ppp
-                             NSLog("-2--\(head)")
-                        }
-                        
-                        NSLog("\((items[indexPath.row] as itemMess).photo)")
-                       
-                        Alamofire.request(.GET, head!).response { (_, _, data, _) -> Void in
-                            if let d = data as? NSData!
-                            {
-                                 cell?.icon.image=UIImage(data: d)
-                            }
-                        }
-                    }else
-                    {
-                        cell?.icon.image=UIImage(named: "icon")
+                        cell?.headface.image=UIImage(data: d)
                     }
                 }
-                cell?.gz.text="关:"+(items[indexPath.row] as itemMess).visnum;
-                cell?.pl.text="评:"+(items[indexPath.row] as itemMess).plnum;
+
                 return cell!
+                
             }else
             {
-                let cellId="mycell1"
-                var cell:InfoTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as! InfoTableViewCell?
-                if(cell == nil)
+                var ppp:String = (items[indexPath.row] as itemMess).photo;
+                if ppp.characters.count > 0
                 {
-                    cell = InfoTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
-                }
-                cell?.senduser.text=(items[indexPath.row] as itemMess).username
-                cell?.Message.text=(items[indexPath.row] as itemMess).content
-                cell?.sendtime.text=(items[indexPath.row] as itemMess).time
-                cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
+                    let cellId="mycell1"
+                    var cell:InfopicTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as! InfopicTableViewCell?
+                    if(cell == nil)
+                    {
+                        cell = InfopicTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
+                    }
+                    
+                    cell?.senduser.text=(items[indexPath.row] as itemMess).username
+                    cell?.message.text=(items[indexPath.row] as itemMess).content
+                    cell?.sendtime.text=(items[indexPath.row] as itemMess).time
+                    cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
+                    if ((items[indexPath.row] as itemMess).infocatagory == "0")
+                    {
+                        cell?.catagory.text="求"
+                        
+                    }else if ((items[indexPath.row] as itemMess).infocatagory == "1")
+                    {
+                        cell?.catagory.text="寻"
+                    }else if ((items[indexPath.row] as itemMess).infocatagory == "2")
+                    {
+                        cell?.catagory.text="转"
+                    }else if ((items[indexPath.row] as itemMess).infocatagory == "3")
+                    {
+                        cell?.catagory.text="帮"
+                    }
+                    if ((items[indexPath.row] as itemMess).status == "0")
+                    {
+                        cell?.status.text="求助中"
+                        cell?.status.textColor = UIColor.redColor()
+                        
+                    }else if ((items[indexPath.row] as itemMess).status == "1")
+                    {
+                        cell?.status.text="解决中"
+                        cell?.status.textColor = UIColor.redColor()
+                        
+                    }else if ((items[indexPath.row] as itemMess).status == "2")
+                    {
+                        cell?.status.text="已解决"
+                        cell?.status.textColor = UIColor.greenColor()
+                        
+                    }
+
+                    
+                   if((items[indexPath.row] as itemMess).photo.isKindOfClass(NSNull))
+                    {
+                        cell?.icon.image=UIImage(named: "icon")
+
+                    }else
+                    {
+                        var head:String!
+                        
+                        if ppp.characters.count > 0
+                        {
+                            if((ppp.rangeOfString(",") ) != nil)
+                            {
+                                var myArray = ppp.componentsSeparatedByString(",")
+                                var headname = myArray[0] as String
+                                head = "http://www.bbxiaoqu.com/uploads/"+headname
+                                
+                                 NSLog("-1--\(head)")
+                            }else
+                            {
+                                head = "http://www.bbxiaoqu.com/uploads/"+ppp
+                                 NSLog("-2--\(head)")
+                            }
+                            
+                            NSLog("\((items[indexPath.row] as itemMess).photo)")
+                           
+                            Alamofire.request(.GET, head!).response { (_, _, data, _) -> Void in
+                                if let d = data as? NSData!
+                                {
+                                     cell?.icon.image=UIImage(data: d)
+                                }
+                            }
+                        }else
+                        {
+                            cell?.icon.image=UIImage(named: "icon")
+                        }
+                    }
+                    cell?.gz.text="关:"+(items[indexPath.row] as itemMess).visnum;
+                    cell?.pl.text="评:"+(items[indexPath.row] as itemMess).plnum;
+                    return cell!
+                }else
+                {
+                    let cellId="mycell2"
+                    var cell:InfoTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as! InfoTableViewCell?
+                    if(cell == nil)
+                    {
+                        cell = InfoTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
+                    }
+                    cell?.senduser.text=(items[indexPath.row] as itemMess).username
+                    cell?.Message.text=(items[indexPath.row] as itemMess).content
+                    cell?.sendtime.text=(items[indexPath.row] as itemMess).time
+                    cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
 
 
-                if ((items[indexPath.row] as itemMess).infocatagory == "0")
-                {
-                    cell?.catagory.text="求"
+                    if ((items[indexPath.row] as itemMess).infocatagory == "0")
+                    {
+                        cell?.catagory.text="求"
+                        
+                    }else if ((items[indexPath.row] as itemMess).infocatagory == "1")
+                    {
+                        cell?.catagory.text="寻"
+                    }else if ((items[indexPath.row] as itemMess).infocatagory == "2")
+                    {
+                        cell?.catagory.text="转"
+                    }else if ((items[indexPath.row] as itemMess).infocatagory == "3")
+                    {
+                        cell?.catagory.text="帮"
+                    }
                     
-                }else if ((items[indexPath.row] as itemMess).infocatagory == "1")
-                {
-                    cell?.catagory.text="寻"
-                }else if ((items[indexPath.row] as itemMess).infocatagory == "2")
-                {
-                    cell?.catagory.text="转"
-                }else if ((items[indexPath.row] as itemMess).infocatagory == "3")
-                {
-                    cell?.catagory.text="帮"
-                }
-                
-                if ((items[indexPath.row] as itemMess).status == "0")
-                {
-                    cell?.status.text="求助中"
-                    cell?.status.textColor = UIColor.redColor()
-                    
-                }else if ((items[indexPath.row] as itemMess).status == "1")
-                {
-                    cell?.status.text="解决中"
-                    cell?.status.textColor = UIColor.redColor()
-                    
-                }else if ((items[indexPath.row] as itemMess).status == "2")
-                {
-                    cell?.status.text="已解决"
-                    cell?.status.textColor = UIColor.greenColor()
-                    
-                }
+                    if ((items[indexPath.row] as itemMess).status == "0")
+                    {
+                        cell?.status.text="求助中"
+                        cell?.status.textColor = UIColor.redColor()
+                        
+                    }else if ((items[indexPath.row] as itemMess).status == "1")
+                    {
+                        cell?.status.text="解决中"
+                        cell?.status.textColor = UIColor.redColor()
+                        
+                    }else if ((items[indexPath.row] as itemMess).status == "2")
+                    {
+                        cell?.status.text="已解决"
+                        cell?.status.textColor = UIColor.greenColor()
+                        
+                    }
 
-                
-                cell?.gz.text="关:"+(items[indexPath.row] as itemMess).visnum;
-                cell?.pl.text="评:"+(items[indexPath.row] as itemMess).plnum;
-                return cell!
+                    
+                    cell?.gz.text="关:"+(items[indexPath.row] as itemMess).visnum;
+                    cell?.pl.text="评:"+(items[indexPath.row] as itemMess).plnum;
+                    return cell!
+                }
             }
         }
+    
+    var seltel:String = "";
+    func teltapped(button:UIButton){
+        //print(button.titleForState(.Normal))
+        var pos:Int = button.tag
+        seltel = (fwitems[pos] as itemfwMess).telphone;
+        
+        var alertView = UIAlertView()
+        alertView.title = "系统提示"
+        alertView.message = "您确定要呼叫吗？"
+        alertView.addButtonWithTitle("取消")
+        alertView.addButtonWithTitle("确定")
+        alertView.cancelButtonIndex=0
+        alertView.delegate=self;
+        alertView.show()
+
+    }
+    
+    
+    
+    func alertView(alertView:UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+        if(buttonIndex==alertView.cancelButtonIndex){
+            
+        }
+        else
+        {
+            var url1 = NSURL(string: "tel://"+seltel)
+            UIApplication.sharedApplication().openURL(url1!)
+        }
+    }
+
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         NSLog("select \(indexPath.row)")
         //NSLog("select \(items[indexPath.row])")
-        let aa:itemMess=items[indexPath.row] as itemMess;
+         if(self.selectedSegmentval==3)
+         {
+            let aa:itemfwMess=fwitems[indexPath.row] as itemfwMess;
+            let sb = UIStoryboard(name:"Main", bundle: nil)
+            let vc = sb.instantiateViewControllerWithIdentifier("contentviewController") as! ContentViewController
+            //创建导航控制器
+            //vc.message = aa.content;
+            vc.guid=aa.guid
+            vc.infoid=aa.guid
+            //设置根视图
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else
+         {
+            
+            
+            
+            let aa:itemMess=items[indexPath.row] as itemMess;
+            let sb = UIStoryboard(name:"Main", bundle: nil)
+            let vc = sb.instantiateViewControllerWithIdentifier("contentviewController") as! ContentViewController
+            //创建导航控制器
+            //vc.message = aa.content;
+            vc.guid=aa.guid
+            vc.infoid=aa.guid
+            //设置根视图
+            self.navigationController?.pushViewController(vc, animated: true)
+
         
-        let sb = UIStoryboard(name:"Main", bundle: nil)
-        let vc = sb.instantiateViewControllerWithIdentifier("contentviewController") as! ContentViewController
-                //创建导航控制器
-        //vc.message = aa.content;
-        vc.guid=aa.guid
-        vc.infoid=aa.guid
-       // let nvc=UINavigationController(rootViewController:vc);
-        //设置根视图
-      //  self.view.window!.rootViewController=nvc;
-        self.navigationController?.pushViewController(vc, animated: true)
+         }
 
     }
     
@@ -385,67 +481,137 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
 
         }else if(Category==3)
         {
-            url="http://www.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqufw&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://www.bbxiaoqu.com/getfwinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqufw&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         }
-       print("url: \(url)")
-        Alamofire.request(.GET, url, parameters: nil)
-            .responseJSON { response in
-                if(response.result.isSuccess)
-                {
+        if(Category==3)
+        {
+            print("url: \(url)")
+            Alamofire.request(.GET, url, parameters: nil)
+                .responseJSON { response in
+                    if(response.result.isSuccess)
+                    {
+                        
+                        
+                        if let jsonItem = response.result.value as? NSArray{
+                            for data in jsonItem{
+                                print("data: \(data)")
+                                let title:String = data.objectForKey("title") as! String;
 
-                    if let jsonItem = response.result.value as? NSArray{
-                        for data in jsonItem{
-                            //print("data: \(data)")
-                        
-                        let content:String = data.objectForKey("content") as! String;
-                        let senduserid:String = data.objectForKey("senduser") as! String;
-                        
-                        var sendnickname:String = "";
-                        if(data.objectForKey("username")!.isKindOfClass(NSNull))
-                        {
-                            sendnickname="";
-                        }else
-                        {
-                            sendnickname   = data.objectForKey("username") as! String;
+                                let content:String = data.objectForKey("content") as! String;
+                                let senduserid:String = data.objectForKey("senduser") as! String;
+                                
+                                var sendnickname:String = "";
+                                if(data.objectForKey("username")!.isKindOfClass(NSNull))
+                                {
+                                    sendnickname="";
+                                }else
+                                {
+                                    sendnickname   = data.objectForKey("username") as! String;
+                                    
+                                }
+                                let guid:String = data.objectForKey("guid") as! String;
+                                let sendtime:String = data.objectForKey("sendtime") as! String;
+                                let address:String = data.objectForKey("address") as! String;
+                                let lng:String = data.objectForKey("lng") as! String;
+                                let lat:String = data.objectForKey("lat") as! String;
+                                let photo:String = data.objectForKey("photo") as! String;
+                                var community:String = ""
+                                if(data.objectForKey("community")!.isKindOfClass(NSNull))
+                                {
+                                    community = "";
+                                }else
+                                {
+                                    community = data.objectForKey("community") as! String;
+                                    
+                                }
+                                let infocatagroy:String = data.objectForKey("infocatagroy") as! String;
+                                let status:String = data.objectForKey("status") as! String;
+                                let visit:String = data.objectForKey("visit") as! String;
+                                let plnum:String = data.objectForKey("plnum") as! String;
+                                
+                                let headface:String = data.objectForKey("headface") as! String;
+                                let telphone:String = data.objectForKey("telphone") as! String;
+                                let zannum:String = data.objectForKey("zannum") as! String;
+                                let tags:String = data.objectForKey("tags") as! String;
+                                
+                                let item_obj:itemfwMess = itemfwMess(userid: senduserid, vname: sendnickname, vtime: sendtime, vaddress: address,fwname:title,vcontent:content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, status: status, visnum: visit, plnum: plnum,headface:headface,telphone:telphone,zannum:zannum,tags:tags)
+                                self.fwitems.append(item_obj)
+                                
+                            }
+                            self._tableView.reloadData()
+                            self._tableView.doneRefresh()
                             
                         }
-                        let guid:String = data.objectForKey("guid") as! String;
-                        let sendtime:String = data.objectForKey("sendtime") as! String;
-                        let address:String = data.objectForKey("address") as! String;
-                        let lng:String = data.objectForKey("lng") as! String;
-                        let lat:String = data.objectForKey("lat") as! String;
-                        let photo:String = data.objectForKey("photo") as! String;
-                        var community:String = ""
-                         if(data.objectForKey("community")!.isKindOfClass(NSNull))
-                        {
-                            community = "";
-                        }else
-                        {
-                            community = data.objectForKey("community") as! String;
+                    }else
+                    {
+                        self.successNotice("网络请求错误")
+                        print("网络请求错误")
+                    }
+                    
+                    
+            }
+        
+        }else
+        {
+            print("url: \(url)")
+            Alamofire.request(.GET, url, parameters: nil)
+                .responseJSON { response in
+                    if(response.result.isSuccess)
+                    {
+                        
+                        
+                        if let jsonItem = response.result.value as? NSArray{
+                            for data in jsonItem{
+                                //print("data: \(data)")
                             
+                            let content:String = data.objectForKey("content") as! String;
+                            let senduserid:String = data.objectForKey("senduser") as! String;
+                            
+                            var sendnickname:String = "";
+                            if(data.objectForKey("username")!.isKindOfClass(NSNull))
+                            {
+                                sendnickname="";
+                            }else
+                            {
+                                sendnickname   = data.objectForKey("username") as! String;
+                                
+                            }
+                            let guid:String = data.objectForKey("guid") as! String;
+                            let sendtime:String = data.objectForKey("sendtime") as! String;
+                            let address:String = data.objectForKey("address") as! String;
+                            let lng:String = data.objectForKey("lng") as! String;
+                            let lat:String = data.objectForKey("lat") as! String;
+                            let photo:String = data.objectForKey("photo") as! String;
+                            var community:String = ""
+                             if(data.objectForKey("community")!.isKindOfClass(NSNull))
+                            {
+                                community = "";
+                            }else
+                            {
+                                community = data.objectForKey("community") as! String;
+                                
+                            }
+                             let infocatagroy:String = data.objectForKey("infocatagroy") as! String;
+                            let status:String = data.objectForKey("status") as! String;
+                            let visit:String = data.objectForKey("visit") as! String;
+                            let plnum:String = data.objectForKey("plnum") as! String;
+                            let item_obj:itemMess = itemMess(userid: senduserid, vname: sendnickname, vtime: sendtime, vaddress: address, vcontent: content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, status: status, visnum: visit, plnum: plnum)
+                             self.items.append(item_obj)
+
                         }
-                         let infocatagroy:String = data.objectForKey("infocatagroy") as! String;
-                        let status:String = data.objectForKey("status") as! String;
-                        let visit:String = data.objectForKey("visit") as! String;
-                        let plnum:String = data.objectForKey("plnum") as! String;
-                        let item_obj:itemMess = itemMess(userid: senduserid, vname: sendnickname, vtime: sendtime, vaddress: address, vcontent: content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, status: status, visnum: visit, plnum: plnum)
-                         self.items.append(item_obj)
+                        self._tableView.reloadData()
+                        self._tableView.doneRefresh()
 
                     }
-                    self._tableView.reloadData()
-                    self._tableView.doneRefresh()
+                    }else
+                    {
+                        self.successNotice("网络请求错误")
+                        print("网络请求错误")
+                    }
 
-                }
-                }else
-                {
-                    self.successNotice("网络请求错误")
-                    print("网络请求错误")
-                }
-                
-
-         }
-        
+             }
+        }
     }
     
     func delay(delay:Double, closure:()->()) {
@@ -495,20 +661,6 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 
                 
                 
-                //                    NSLog("\n name:%@\n  country:%@\n postalCode:%@\n ISOcountryCode:%@\n ocean:%@\n inlandWater:%@\n locality:%@\n subLocality:%@\n administrativeArea:%@\n subAdministrativeArea:%@\n thoroughfare:%@\n subThoroughfare:%@\n",
-                //                        p.name!,
-                //                        p.country!,
-                //                        p.postalCode!,
-                //                        p.ISOcountryCode!,//国家代码
-                //                        p.ocean!,//大洋
-                //                        p.inlandWater!,//
-                //                        p.administrativeArea!,
-                //                        p.subAdministrativeArea!,
-                //                        p.locality!,
-                //                        p.subLocality!,
-                //                        p.thoroughfare!,
-                //                        p.subThoroughfare!)
-                
                 let defaults = NSUserDefaults.standardUserDefaults();
                 defaults.setObject(p.country, forKey: "country");
                 defaults.setObject(p.locality, forKey: "province");//省直辖市
@@ -549,36 +701,10 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                         
                 }
                 
-                
-                //                    public var thoroughfare: String? { get } // street name, eg. Infinite Loop
-                //                    public var subThoroughfare: String? { get } // eg. 1
-                //                    public var locality: String? { get } // city, eg. Cupertino
-                //                    public var subLocality: String? { get } // neighborhood, common name, eg. Mission District
-                //                    public var administrativeArea: String? { get } // state, eg. CA
-                //                    public var subAdministrativeArea: String? { get } // county, eg. Santa Clara
-                //                    public var postalCode: String? { get } // zip code, eg. 95014
-                //                    public var ISOcountryCode: String? { get } // eg. US
-                //                    public var country: String? { get } // eg. United States
-                //                    public var inlandWater: String? { get } // eg. Lake Tahoe
-                //                    public var ocean: String? { get } // eg. Pacific Ocean
-                //                    public var areasOfInterest: [String]? { get } // eg. Golden Gate Park
-        })
+         })
         
         
-        //        label1.text = "经度：\(currLocation.coordinate.longitude)"
-        //        //获取纬度
-        //        label2.text = "纬度：\(currLocation.coordinate.latitude)"
-        //        //获取海拔
-        //        label3.text = "海拔：\(currLocation.altitude)"
-        //        //获取水平精度
-        //        label4.text = "水平精度：\(currLocation.horizontalAccuracy)"
-        //        //获取垂直精度
-        //        label5.text = "垂直精度：\(currLocation.verticalAccuracy)"
-        //        //获取方向
-        //        label6.text = "方向：\(currLocation.course)"
-        //        //获取速度
-        //        label7.text = "速度：\(currLocation.speed)"
-    }
+      }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
         print(error)

@@ -546,6 +546,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         {
             if(self.solutionid==(self.items[indexPath.row] as itempl).id)
             {
+                //cell?.plgoodbtn.titleLabel?.text="获最佳"
+                cell?.plgoodbtn.setTitle("最佳", forState: UIControlState.Normal)
                 cell?.plgoodbtn.enabled=false;
                 cell?.plgoodbtn.hidden=false
 
@@ -561,6 +563,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             let userid = defaults.objectForKey("userid") as! String;
             if(self.puserid == userid)
             {
+                cell?.plgoodbtn.titleLabel?.text="最佳"
                 cell?.plgoodbtn.userInteractionEnabled = true
                 cell?.plgoodbtn.tag = indexPath.row
                 cell?.plgoodbtn.addTarget(self,action:Selector("tapped:"),forControlEvents:.TouchUpInside)
@@ -602,16 +605,11 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                     print(response.data)     // server data
                     print(response.result)   // result of response serialization
                     print(response.result.value)
-                    //                if let JSON = response.result.value {
-                    //                    print("JSON: \(JSON)")
-                    //                }
-                    self.isjb=true;
-                    self.reportbtn.setTitle("已举报", forState: UIControlState.Normal)
-                    self.reportbtn.enabled=false
+                  
                     
                     
-                    self.successNotice("举报成功")
-                    print("举报成功")
+                    self.successNotice("已解决")
+                    print("已解决")
 
                     
                 }else
