@@ -285,6 +285,9 @@
 		49F3E7FC1C2A83650036F7C7 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3E7FB1C2A83650036F7C7 /* InfoTableViewCell.swift */; };
 		49F3E7FE1C2A83E80036F7C7 /* InfopicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3E7FD1C2A83E80036F7C7 /* InfopicTableViewCell.swift */; };
 		49F3E8001C2A89470036F7C7 /* DynamicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */; };
+		49F670411C7EA97F0026E8CE /* InfofwTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F670401C7EA97F0026E8CE /* InfofwTableViewCell.swift */; };
+		49F670481C7EB7740026E8CE /* fwTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F670471C7EB7740026E8CE /* fwTableViewCell.swift */; };
+		49F6704A1C7EBF220026E8CE /* itemfwMess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F670491C7EBF220026E8CE /* itemfwMess.swift */; };
 		49F6E9861C34D06C007E5B0F /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */; };
 		49F6E98D1C3A0DEC007E5B0F /* PicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E98C1C3A0DEC007E5B0F /* PicViewController.swift */; };
 		49F6E98F1C3A297B007E5B0F /* XiaoquTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */; };
@@ -826,6 +829,9 @@
 		49F3E7FB1C2A83650036F7C7 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
 		49F3E7FD1C2A83E80036F7C7 /* InfopicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfopicTableViewCell.swift; sourceTree = "<group>"; };
 		49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTableViewCell.swift; sourceTree = "<group>"; };
+		49F670401C7EA97F0026E8CE /* InfofwTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfofwTableViewCell.swift; sourceTree = "<group>"; };
+		49F670471C7EB7740026E8CE /* fwTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = fwTableViewCell.swift; sourceTree = "<group>"; };
+		49F670491C7EBF220026E8CE /* itemfwMess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = itemfwMess.swift; sourceTree = "<group>"; };
 		49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		49F6E98C1C3A0DEC007E5B0F /* PicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PicViewController.swift; sourceTree = "<group>"; };
 		49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoquTableViewCell.swift; sourceTree = "<group>"; };
@@ -2126,10 +2132,12 @@
 				49F3E7F91C2A66F90036F7C7 /* FriendsTableViewCell.swift */,
 				49F3E7FB1C2A83650036F7C7 /* InfoTableViewCell.swift */,
 				49F3E7FD1C2A83E80036F7C7 /* InfopicTableViewCell.swift */,
+				49F670401C7EA97F0026E8CE /* InfofwTableViewCell.swift */,
 				49F3E7FF1C2A89470036F7C7 /* DynamicTableViewCell.swift */,
 				49F6E9851C34D06C007E5B0F /* CollectionViewCell.swift */,
 				49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */,
 				49F6E9A61C3CD57F007E5B0F /* PlTableViewCell.swift */,
+				49F670471C7EB7740026E8CE /* fwTableViewCell.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -2150,6 +2158,7 @@
 				49380B0A1C310362008EF785 /* itemRecent.swift */,
 				49F6E9A41C3CBB24007E5B0F /* sqlitehelp.swift */,
 				4913986D1BC8F9F0007866C1 /* DbHelp.swift */,
+				49F670491C7EBF220026E8CE /* itemfwMess.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -2493,7 +2502,9 @@
 				49BAA40B1BD8AB8F003AD8B6 /* xiaoquItem.swift in Sources */,
 				49F3E7721C27EA720036F7C7 /* XMPPFileTransfer.m in Sources */,
 				49F3E78D1C27EA720036F7C7 /* XMPPRoomHybridStorage.m in Sources */,
+				49F670411C7EA97F0026E8CE /* InfofwTableViewCell.swift in Sources */,
 				49F3E7C61C27EA720036F7C7 /* XMPPAutoTime.m in Sources */,
+				49F670481C7EB7740026E8CE /* fwTableViewCell.swift in Sources */,
 				49F3E7631C27EA720036F7C7 /* XMPPXOAuth2Google.m in Sources */,
 				49F3E7741C27EA720036F7C7 /* XMPPOutgoingFileTransfer.m in Sources */,
 				49F6E9991C3A43FA007E5B0F /* XiaoquTableViewController.swift in Sources */,
@@ -2612,6 +2623,7 @@
 				497E7B7F1BCCFC2000BAEB2F /* MyInfoiewController.swift in Sources */,
 				49F3E78B1C27EA720036F7C7 /* XMPPRoomOccupantCoreDataStorageObject.m in Sources */,
 				49F3E7A31C27EA720036F7C7 /* NSXMLElement+XEP_0059.m in Sources */,
+				49F6704A1C7EBF220026E8CE /* itemfwMess.swift in Sources */,
 				49F3E76E1C27EA720036F7C7 /* XMPPPresence.m in Sources */,
 				49F3E7AC1C27EA720036F7C7 /* XMPPDateTimeProfiles.m in Sources */,
 				49F3E7801C27EA720036F7C7 /* XMPPRoster.m in Sources */,
