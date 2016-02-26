@@ -28,9 +28,13 @@ class DbHelp
         
         
         
-        let sql2:NSString = "create table  IF NOT EXISTS [messagegz] (_id integer primary key autoincrement, infoid varchar(50), userid varchar(50))";
-        db.execute(sql2  as String);
+        let sqlgz:NSString = "create table  IF NOT EXISTS [messagegz] (_id integer primary key autoincrement, infoid varchar(50), userid varchar(50))";
+        db.execute(sqlgz  as String);
         
+        
+        let sqlzan:NSString = "create table  IF NOT EXISTS [messagezan] (_id integer primary key autoincrement, infoid varchar(50), userid varchar(50))";
+        db.execute(sqlzan  as String);
+
         
         
         let sql3:NSString = "create table  IF NOT EXISTS [messagebm] (_id integer primary key autoincrement, infoid varchar(50), userid varchar(50))";

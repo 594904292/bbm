@@ -280,6 +280,44 @@ class sqlitehelp: NSObject {
         }
     }
     
+    
+    func addzan(infoid:String,userid:String)
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql = "insert into messagezan(infoid,userid) values('\(infoid )','\(userid)')"
+        print("sql: \(sql)")
+        //通过封装的方法执行sql
+        let result = db.execute(sql)
+        
+        print(result)
+        NSLog(sql)
+        
+    }
+    
+    func removezan(infoid:String,userid:String)->Bool
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="delete from messagezan where infoid='"+infoid+"' and userid='"+userid+"'";
+        let result = db.execute(sql)
+        return true
+    }
+    
+    func isexitzan(infoid:String,userid:String)->Bool
+    {
+        var db: SQLiteDB! = SQLiteDB.sharedInstance()
+        let sql="select * from messagezan where infoid='"+infoid+"' and userid='"+userid+"'";
+        //NSLog(sql)
+        let mess = db.query(sql)
+        if( mess.count>0)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+
 
     
 }
