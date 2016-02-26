@@ -233,8 +233,22 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 {
                     cell?.title.text=(fwitems[indexPath.row] as itemfwMess).fwname
                 }
+                 let defaults = NSUserDefaults.standardUserDefaults();
+                var sqlitehelpInstance1=sqlitehelp.shareInstance()
+                var userid = defaults.objectForKey("userid") as! String;
+                var guid:String=(fwitems[indexPath.row] as itemfwMess).guid;
                 
-                cell?.zan.titleLabel?.text="0";
+                var v:Bool=sqlitehelpInstance1.isexitzan(guid, userid: userid);
+                if(v)
+                {
+                    cell?.zan.setBackgroundImage(UIImage(named: "tab_sub_sos_sel"), forState: UIControlState.Normal)
+                }else
+                {
+                    cell?.zan.setBackgroundImage(UIImage(named: "tab_sub_sos"), forState: UIControlState.Normal)
+                }
+                cell?.zan.tag = indexPath.row
+                cell?.zan.setTitle((fwitems[indexPath.row] as itemfwMess).zannum, forState: UIControlState.Normal)
+                cell?.zan.addTarget(self,action:Selector("zantapped:"),forControlEvents:.TouchUpInside)
                 
                 cell?.tel.tag = indexPath.row
                 cell?.tel.addTarget(self,action:Selector("teltapped:"),forControlEvents:.TouchUpInside)
@@ -246,7 +260,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                         cell?.headface.image=UIImage(data: d)
                     }
                 }
-
+                NSLog(@"indexPath is = %i",indexPath.row);
                 return cell!
                 
             }else
@@ -381,8 +395,6 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                         cell?.status.textColor = UIColor.greenColor()
                         
                     }
-
-                    
                     cell?.gz.text="关:"+(items[indexPath.row] as itemMess).visnum;
                     cell?.pl.text="评:"+(items[indexPath.row] as itemMess).plnum;
                     return cell!
@@ -406,7 +418,36 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         alertView.show()
 
     }
-    
+    func zantapped(button:UIButton){
+        //判断
+        var pos:Int = button.tag
+        NSLog("indexPath is = %i",pos);
+        var zan:String = (fwitems[pos] as itemfwMess).zannum;
+        let defaults = NSUserDefaults.standardUserDefaults();
+        
+
+        var sqlitehelpInstance1=sqlitehelp.shareInstance()
+        var userid = defaults.objectForKey("userid") as! String;
+        var guid:String=(fwitems[pos] as itemfwMess).guid;
+        
+        var v:Bool=sqlitehelpInstance1.isexitzan(guid, userid: userid);
+        if(v)
+        {
+            var zann:Int = Int(zan)!
+            button.setTitle(String(zann-1), forState: UIControlState.Normal)
+            sqlitehelpInstance1.removezan(guid, userid: userid)
+            button.setBackgroundImage(UIImage(named: "tab_sub_sos"), forState: UIControlState.Normal)
+        }else
+        {
+            var zann:Int = Int(zan)!
+            button.setTitle(String(zann+1), forState: UIControlState.Normal)
+            
+            sqlitehelpInstance1.addzan(guid, userid: userid)
+            button.setBackgroundImage(UIImage(named: "tab_sub_sos_sel"), forState: UIControlState.Normal)
+        }
+        
+    }
+
     
     
     func alertView(alertView:UIAlertView, clickedButtonAtIndex buttonIndex: Int){

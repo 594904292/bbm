@@ -1378,9 +1378,9 @@
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miK-3z-st2">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                                    <state key="normal" title="0"/>
+                                                    <state key="normal" title="0" backgroundImage="tab_sub_sos"/>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="208" y="36" width="46" height="30"/>
+                                                        <rect key="frame" x="216" y="33" width="35" height="35"/>
                                                     </variation>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="dEu-Oi-YbF">
@@ -4084,6 +4084,7 @@
         <image name="logo" width="72" height="72"/>
         <image name="notice" width="47" height="43"/>
         <image name="sundy" width="220" height="220"/>
+        <image name="tab_sub_sos" width="48" height="48"/>
         <image name="tel" width="200" height="198"/>
     </resources>
 </document>
