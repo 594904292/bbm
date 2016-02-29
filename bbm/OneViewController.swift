@@ -50,10 +50,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         
       
         self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "添加", style: UIBarButtonItemStyle.Done, target: self, action: "addClick")
-        //segment1.frame = CGRectMake(0,20,250,250);
-        
-              // weak var weakSelf = self as OneViewController
-       // (UIApplication.sharedApplication().delegate as! AppDelegate).apnsdelegate = self
+ 
         _tableView!.delegate=self
         _tableView!.dataSource=self
   
@@ -85,26 +82,30 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     var selectedSegmentval:Int=0;
     @IBAction func segmentValueChange(sender: AnyObject) {
         NSLog("you Selected Index\(segment1.selectedSegmentIndex)")
-        selectedSegmentval=segment1.selectedSegmentIndex;
-         self.items.removeAll()
-        self._tableView.reloadData()
-        if(selectedSegmentval==0)
-        {
+        self.selectedSegmentval=segment1.selectedSegmentIndex;
+        
         self.items.removeAll()
+        self.fwitems.removeAll()
+        
+       
+        if(self.selectedSegmentval==0)
+        {
+            self.items.removeAll()
             querydata(0)
-        }else if(selectedSegmentval==1)
+        }else if(self.selectedSegmentval==1)
         {
             self.items.removeAll()
             querydata(1)
-        }else if(selectedSegmentval==2)
+        }else if(self.selectedSegmentval==2)
         {
             self.items.removeAll()
             querydata(2)
-        }else if(selectedSegmentval==3)
+        }else if(self.selectedSegmentval==3)
         {
             self.fwitems.removeAll()
             querydata(3)
         }
+         self._tableView.reloadData()
     }
     func backClick()
     {
@@ -133,35 +134,26 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
             self.start=0;
             if(self.selectedSegmentval==0)
             {
-                
                 self.querydata(0)
             }else if(self.selectedSegmentval==1)
             {
-                
                 self.querydata(1)
             }else if(self.selectedSegmentval==2)
             {
-                
                 self.querydata(2)
             }else if(self.selectedSegmentval==3)
             {
-                
                 self.querydata(3)
             }
-
             self._tableView.reloadData()
             self._tableView.headerView?.endRefreshing()
-            
         }
-        
     }
     
     func downPlullLoadData(){
         
         xwDelay(1) { () -> Void in
             self.start=self.limit;
-            
-            
             if(self.selectedSegmentval==0)
             {
                 
@@ -199,6 +191,9 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     
         func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
         {
+            NSLog("indexPath is = %i",self.selectedSegmentval);
+
+            
             if(self.selectedSegmentval==3)
             {
                 return self.fwitems.count;
@@ -209,11 +204,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         }
     
         func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-            
-           // var infocatagory:String = (fwitems[indexPath.row] as itemfwMess).infocatagory
-            NSLog(String(self.selectedSegmentval))
-            
-            if self.selectedSegmentval==3
+                       if self.selectedSegmentval==3
             {
                 let cellId="mycell3"
                 var cell:fwTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as! fwTableViewCell?
@@ -221,11 +212,11 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 {
                     cell = fwTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
                 }
+                //NSLog("fwitems count is = %i",fwitems.count);
+                //NSLog("indexPath is = %i",indexPath.row);
                 var ifm:itemfwMess = fwitems[indexPath.row] as itemfwMess;
-                
                 cell?.senduser.text=(fwitems[indexPath.row] as itemfwMess).username
                 cell?.usertag.text=(fwitems[indexPath.row] as itemfwMess).tags
-                
                 if (fwitems[indexPath.row] as itemfwMess).fwname == "帮帮忙"
                 {
                     cell?.title.text=(fwitems[indexPath.row] as itemfwMess).content
@@ -247,12 +238,12 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                     cell?.zan.setBackgroundImage(UIImage(named: "tab_sub_sos"), forState: UIControlState.Normal)
                 }
                 cell?.zan.tag = indexPath.row
+                //cell?.zan.setTitle(String(indexPath.row)+"__"+(fwitems[indexPath.row] as itemfwMess).zannum, forState: UIControlState.Normal)
                 cell?.zan.setTitle((fwitems[indexPath.row] as itemfwMess).zannum, forState: UIControlState.Normal)
                 cell?.zan.addTarget(self,action:Selector("zantapped:"),forControlEvents:.TouchUpInside)
                 
                 cell?.tel.tag = indexPath.row
                 cell?.tel.addTarget(self,action:Selector("teltapped:"),forControlEvents:.TouchUpInside)
-                
                 var head:String = "http://www.bbxiaoqu.com/uploads/"+(fwitems[indexPath.row] as itemfwMess).headface
                 Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
                     if let d = data as? NSData!
@@ -260,7 +251,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                         cell?.headface.image=UIImage(data: d)
                     }
                 }
-                NSLog(@"indexPath is = %i",indexPath.row);
+                NSLog("indexPath is = %i",indexPath.row);
                 return cell!
                 
             }else
@@ -535,49 +526,55 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                         
                         
                         if let jsonItem = response.result.value as? NSArray{
-                            for data in jsonItem{
-                                print("data: \(data)")
-                                let title:String = data.objectForKey("title") as! String;
+                            if(jsonItem.count>0)
+                            {
+                                for data in jsonItem{
+                                    print("data: \(data)")
+                                    let title:String = data.objectForKey("title") as! String;
 
-                                let content:String = data.objectForKey("content") as! String;
-                                let senduserid:String = data.objectForKey("senduser") as! String;
-                                
-                                var sendnickname:String = "";
-                                if(data.objectForKey("username")!.isKindOfClass(NSNull))
-                                {
-                                    sendnickname="";
-                                }else
-                                {
-                                    sendnickname   = data.objectForKey("username") as! String;
+                                    let content:String = data.objectForKey("content") as! String;
+                                    let senduserid:String = data.objectForKey("senduser") as! String;
+                                    
+                                    var sendnickname:String = "";
+                                    if(data.objectForKey("username")!.isKindOfClass(NSNull))
+                                    {
+                                        sendnickname="";
+                                    }else
+                                    {
+                                        sendnickname   = data.objectForKey("username") as! String;
+                                        
+                                    }
+                                    let guid:String = data.objectForKey("guid") as! String;
+                                    let sendtime:String = data.objectForKey("sendtime") as! String;
+                                    let address:String = data.objectForKey("address") as! String;
+                                    let lng:String = data.objectForKey("lng") as! String;
+                                    let lat:String = data.objectForKey("lat") as! String;
+                                    let photo:String = data.objectForKey("photo") as! String;
+                                    var community:String = ""
+                                    if(data.objectForKey("community")!.isKindOfClass(NSNull))
+                                    {
+                                        community = "";
+                                    }else
+                                    {
+                                        community = data.objectForKey("community") as! String;
+                                        
+                                    }
+                                    let infocatagroy:String = data.objectForKey("infocatagroy") as! String;
+                                    let status:String = data.objectForKey("status") as! String;
+                                    let visit:String = data.objectForKey("visit") as! String;
+                                    let plnum:String = data.objectForKey("plnum") as! String;
+                                    
+                                    let headface:String = data.objectForKey("headface") as! String;
+                                    let telphone:String = data.objectForKey("telphone") as! String;
+                                    let zannum:String = data.objectForKey("zannum") as! String;
+                                    let tags:String = data.objectForKey("tags") as! String;
+                                    
+                                    let item_obj:itemfwMess = itemfwMess(userid: senduserid, vname: sendnickname, vtime: sendtime, vaddress: address,fwname:title,vcontent:content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, status: status, visnum: visit, plnum: plnum,headface:headface,telphone:telphone,zannum:zannum,tags:tags)
+                                    self.fwitems.append(item_obj)
                                     
                                 }
-                                let guid:String = data.objectForKey("guid") as! String;
-                                let sendtime:String = data.objectForKey("sendtime") as! String;
-                                let address:String = data.objectForKey("address") as! String;
-                                let lng:String = data.objectForKey("lng") as! String;
-                                let lat:String = data.objectForKey("lat") as! String;
-                                let photo:String = data.objectForKey("photo") as! String;
-                                var community:String = ""
-                                if(data.objectForKey("community")!.isKindOfClass(NSNull))
-                                {
-                                    community = "";
-                                }else
-                                {
-                                    community = data.objectForKey("community") as! String;
-                                    
-                                }
-                                let infocatagroy:String = data.objectForKey("infocatagroy") as! String;
-                                let status:String = data.objectForKey("status") as! String;
-                                let visit:String = data.objectForKey("visit") as! String;
-                                let plnum:String = data.objectForKey("plnum") as! String;
-                                
-                                let headface:String = data.objectForKey("headface") as! String;
-                                let telphone:String = data.objectForKey("telphone") as! String;
-                                let zannum:String = data.objectForKey("zannum") as! String;
-                                let tags:String = data.objectForKey("tags") as! String;
-                                
-                                let item_obj:itemfwMess = itemfwMess(userid: senduserid, vname: sendnickname, vtime: sendtime, vaddress: address,fwname:title,vcontent:content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, status: status, visnum: visit, plnum: plnum,headface:headface,telphone:telphone,zannum:zannum,tags:tags)
-                                self.fwitems.append(item_obj)
+                            }else
+                            {
                                 
                             }
                             self._tableView.reloadData()

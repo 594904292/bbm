@@ -1370,7 +1370,8 @@
                                                             <exclude reference="rJf-Y4-QL3"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact">
+                                                    <variation key="widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="183" y="33" width="35" height="35"/>
                                                         <mask key="constraints">
                                                             <include reference="rJf-Y4-QL3"/>
                                                         </mask>
