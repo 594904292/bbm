@@ -211,13 +211,13 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     
     
     
-    
+     var sendView:UIView!;
     
     func setupSendPanel()
         
     {
         
-        let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-56,self.view.frame.size.width,56))
+        sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-56,self.view.frame.size.width,56))
         
         
         
@@ -249,19 +249,23 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         
         txtMsg.layer.cornerRadius = 10.0
         
-        txtMsg.returnKeyType = UIReturnKeyType.Send
-        
-        
+                
         
         //Set the delegate so you can respond to user input
         
+        //Set the delegate so you can respond to user input
         txtMsg.delegate=self
+        txtMsg.placeholder = "输入消息内容"
+        txtMsg.returnKeyType = UIReturnKeyType.Send
+        txtMsg.enablesReturnKeyAutomatically  = true
+
+        
         
         sendView.addSubview(txtMsg)
         
         
         
-        self.view.addSubview(sendView)
+        
         
         
         
@@ -286,6 +290,17 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         
         
         sendView.addSubview(sendButton)
+        
+        self.view.addSubview(sendView)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTouches:")
+        tapGestureRecognizer.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillShow:", name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
+
         
     }
     
@@ -472,6 +487,80 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         return Chats[row] as! MessageItem
         
     }
+    
+    
+    
+    func keyBoardWillShow(note:NSNotification)
+    {
+        
+        
+        let userInfo  = note.userInfo as! NSDictionary
+        var  keyBoardBounds = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        var keyBoardBoundsRect = self.view.convertRect(keyBoardBounds, toView:nil)
+        
+        var keyBaoardViewFrame = sendView.frame
+        var deltaY = keyBoardBounds.size.height
+        
+        let animations:(() -> Void) = {
+            
+            self.sendView.transform = CGAffineTransformMakeTranslation(0,-deltaY)
+        }
+        
+        if duration > 0 {
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            UIView.animateWithDuration(duration, delay: 0, options:options, animations: animations, completion: nil)
+            
+            
+        }else{
+            
+            animations()
+        }
+        
+        
+    }
+    
+    func keyBoardWillHide(note:NSNotification)
+    {
+        
+        let userInfo  = note.userInfo as! NSDictionary
+        
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        
+        let animations:(() -> Void) = {
+            
+            self.sendView.transform = CGAffineTransformIdentity
+            
+        }
+        
+        if duration > 0 {
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            UIView.animateWithDuration(duration, delay: 0, options:options, animations: animations, completion: nil)
+            
+            
+        }else{
+            
+            animations()
+        }
+        
+        
+        
+        
+    }
+    
+    func handleTouches(sender:UITapGestureRecognizer){
+        
+        if sender.locationInView(self.view).y < self.view.bounds.height - 250{
+            txtMsg.resignFirstResponder()
+            
+            
+        }
+         }
+
     
 }
 

@@ -366,27 +366,27 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     }
     */
     
+    var sendView:UIView!;
+   // var txtMsg:UITextField!
     func setupSendPanel1()
     {
-        let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-50,self.view.frame.size.width,50))
+        sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-50,self.view.frame.size.width,50))
         
         sendView.backgroundColor=UIColor.grayColor()
         sendView.alpha=0.9
         
         txtMsg = UITextField(frame:CGRectMake(7,10,225,36))
-        
         txtMsg.backgroundColor = UIColor.whiteColor()
-        
         txtMsg.textColor=UIColor.blackColor()
-        
         txtMsg.font=UIFont.boldSystemFontOfSize(12)
-        
-        
         txtMsg.layer.cornerRadius = 10.0
-        txtMsg.returnKeyType = UIReturnKeyType.Send
         
         //Set the delegate so you can respond to user input
         txtMsg.delegate=self
+        txtMsg.placeholder = "输入消息内容"
+        txtMsg.returnKeyType = UIReturnKeyType.Send
+        txtMsg.enablesReturnKeyAutomatically  = true
+        
         sendView.addSubview(txtMsg)
         
         self.view.addSubview(sendView)
@@ -402,6 +402,17 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         sendButton.setTitle("发送", forState:UIControlState.Normal)
         
         sendView.addSubview(sendButton)
+       
+       
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTouches:")
+        tapGestureRecognizer.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillShow:", name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
+        
     }
     
     func textFieldShouldReturn(textField:UITextField) -> Bool
@@ -415,6 +426,11 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     {
         var sender = txtMsg
         
+        if(sender.text?.characters.count==0)
+        {
+            self.successNotice("评论不能为空")
+            return;
+        }
         var date = NSDate()
         var timeFormatter = NSDateFormatter()
         timeFormatter.dateFormat = "yyy-MM-dd HH:mm:ss"
@@ -625,11 +641,81 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         
     }
     
-//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-//    {
-//        NSLog("select \(indexPath.row)")
-//    }
-//    
+    func keyBoardWillShow(note:NSNotification)
+    {
+        
+        
+        let userInfo  = note.userInfo as! NSDictionary
+        var  keyBoardBounds = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        var keyBoardBoundsRect = self.view.convertRect(keyBoardBounds, toView:nil)
+        
+        var keyBaoardViewFrame = sendView.frame
+        var deltaY = keyBoardBounds.size.height
+        
+        let animations:(() -> Void) = {
+            
+            self.sendView.transform = CGAffineTransformMakeTranslation(0,-deltaY)
+        }
+        
+        if duration > 0 {
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            UIView.animateWithDuration(duration, delay: 0, options:options, animations: animations, completion: nil)
+            
+            
+        }else{
+            
+            animations()
+        }
+        
+        
+    }
+    
+    func keyBoardWillHide(note:NSNotification)
+    {
+        
+        let userInfo  = note.userInfo as! NSDictionary
+        
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        
+        let animations:(() -> Void) = {
+            
+            self.sendView.transform = CGAffineTransformIdentity
+            
+        }
+        
+        if duration > 0 {
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            UIView.animateWithDuration(duration, delay: 0, options:options, animations: animations, completion: nil)
+            
+            
+        }else{
+            
+            animations()
+        }
+        
+        
+        
+        
+    }
+    
+    func handleTouches(sender:UITapGestureRecognizer){
+        
+        if sender.locationInView(self.view).y < self.view.bounds.height - 250{
+            txtMsg.resignFirstResponder()
+            
+            
+        }
+        
+        
+    }
+
+    
+
     
 }
 
