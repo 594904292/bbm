@@ -13,6 +13,8 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     var cat=0;
     @IBOutlet weak var content: UITextField!
     @IBOutlet weak var contenttip: UILabel!
+    
+    @IBOutlet weak var picdiv: UIView!
     var alertView:UIAlertView?
     var img = UIImage()
     var arr = [UIButton]()
@@ -50,19 +52,19 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         
         let bw:CGFloat = self.view.frame.width
         var index=0
-        var count = 6;
-        var rowCount=(count+2)/3;
+        let count = 6;
+        let rowCount=(count+2)/3;
         for(var i:Int=0;i<rowCount;i++)
         {
             for(var j:Int=0;j<3;j++)
             {
-                var button:UIButton = UIButton();
+                let button:UIButton = UIButton();
                 //设置按钮位置和大小
-                var x=CGFloat(100 * j);
-                var y=CGFloat((i+1)*100)+100;
-                var sw=bw/3;
-                button.frame=CGRectMake(x, y, sw-10, 98);
-                let strVal:String = String(j)
+                let x=CGFloat(100 * j);
+                let y=CGFloat((i+1)*100)+100;
+                let sw=bw/3;
+                button.frame=CGRectMake(x+5, y, sw-10, 98);
+                //let strVal:String = String(j)
                 
                 button.tag = index
                 //设置按钮文字
@@ -76,7 +78,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
             }
         }
         
-        var btn:UIButton = arr[mCurrent] as UIButton;
+        let btn:UIButton = arr[mCurrent] as UIButton;
 
         btn.setImage(UIImage(named:"ic_add_picture"), forState:UIControlState.Normal)
         btn.setTitle("添加", forState:UIControlState.Normal)
@@ -309,7 +311,6 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         {
             var address = "";
         }
-        
         
         var  dic:Dictionary<String,String> = ["content" : mess, "guid": guid]
         dic["title"]="";
