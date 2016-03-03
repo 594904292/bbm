@@ -119,7 +119,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     {
         NSLog("addClick");
         var sb = UIStoryboard(name:"Main", bundle: nil)
-        var vc = sb.instantiateViewControllerWithIdentifier("publishController") as! PublishViewController
+        var vc = sb.instantiateViewControllerWithIdentifier("publishfwController") as! PublishfwViewController
         vc.cat=3
         self.navigationController?.pushViewController(vc, animated: true)
         
@@ -224,7 +224,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 {
                     cell?.title.text=(fwitems[indexPath.row] as itemfwMess).fwname
                 }
-                 let defaults = NSUserDefaults.standardUserDefaults();
+                let defaults = NSUserDefaults.standardUserDefaults();
                 var sqlitehelpInstance1=sqlitehelp.shareInstance()
                 var userid = defaults.objectForKey("userid") as! String;
                 var guid:String=(fwitems[indexPath.row] as itemfwMess).guid;
@@ -461,7 +461,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
          {
             let aa:itemfwMess=fwitems[indexPath.row] as itemfwMess;
             let sb = UIStoryboard(name:"Main", bundle: nil)
-            let vc = sb.instantiateViewControllerWithIdentifier("contentviewController") as! ContentViewController
+            let vc = sb.instantiateViewControllerWithIdentifier("contentfwviewController") as! ContentfwViewController
             //创建导航控制器
             //vc.message = aa.content;
             vc.guid=aa.guid

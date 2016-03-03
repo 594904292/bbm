@@ -9,8 +9,10 @@
 import UIKit
 import Alamofire
 
-class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate {
+class PublishfwViewController: UIViewController,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate {
     var cat=0;
+    
+    @IBOutlet weak var titlename: UITextField!
     @IBOutlet weak var content: UITextField!
     @IBOutlet weak var contenttip: UILabel!
     
@@ -61,7 +63,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
                 let button:UIButton = UIButton();
                 //设置按钮位置和大小
                 let x=CGFloat(100 * j);
-                let y=CGFloat((i+1)*100)+100;
+                let y=CGFloat((i+1)*100)+140;
                 let sw=bw/3;
                 button.frame=CGRectMake(x+5, y, sw-10, 98);
                 //let strVal:String = String(j)
@@ -255,6 +257,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         
         
         let mess:String = content.text!
+        let title:String = titlename.text!
         var country:String = "";
         if(defaults.objectIsForcedForKey("country"))
         {
@@ -313,7 +316,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         }
         
         var  dic:Dictionary<String,String> = ["content" : mess, "guid": guid]
-        dic["title"]="";
+        dic["title"]=title;
         dic["congetn"] = mess;
         dic["senduser"] = userid as String;
         dic["lat"] = lat as String;
@@ -427,6 +430,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         var iconImageFileName=pos.stringByAppendingString(".jpg")
         //保存图片至沙盒
         //self.saveImage(img, newSize: CGSize(width: 256, height: 256), percent: 0.5, imageName: imgname)
+       //self.saveImage(img, newSize: CGSize(width: 256, height: 256), percent: 0.5,imageName: iconImageFileName)
         if(img.size.width>600)
         {
             var rate = 600/img.size.width;
@@ -437,10 +441,9 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         {
             var ww = img.size.width;
             var hh = img.size.height;
-             self.saveImage(img, newSize: CGSize(width: ww, height: hh), percent: 0.7,imageName: iconImageFileName)
+            self.saveImage(img, newSize: CGSize(width: ww, height: hh), percent: 0.7,imageName: iconImageFileName)
         }
-       
-        
+
         //let fullPath: String = NSHomeDirectory().stringByAppendingString("/").stringByAppendingString("Documents").stringByAppendingString("/").stringByAppendingString(pos).stringByAppendingString(".png")
        let fullPath = ((NSHomeDirectory() as NSString).stringByAppendingPathComponent("Documents") as NSString).stringByAppendingPathComponent(iconImageFileName)
         

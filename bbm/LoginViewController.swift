@@ -37,6 +37,28 @@ class LoginViewController: UIViewController {
         db = SQLiteDB.sharedInstance()
         let dbHelp = DbHelp()
         dbHelp.initdb()//生成表
+        
+        
+        var name:String=getuser();
+        self.login_username.text=name;
+    }
+    
+    
+    func getuser()->String{
+        let sql="select * from [user] limit 0,1";
+        NSLog(sql)
+        let row = db.query(sql)
+        if row.count > 0 {
+            
+            let item = row[0] as SQLRow
+            let nickname = item["userid"]!.asString()
+            
+            return nickname
+            
+        }else
+        {
+            return "";
+        }
     }
     //控件失去焦点
     @IBAction func usernameExit(sender: UITextField) {

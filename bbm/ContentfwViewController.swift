@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ContentViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate ,UICollectionViewDataSource,UICollectionViewDelegate{
+class ContentfwViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate ,UICollectionViewDataSource,UICollectionViewDelegate{
     
 
     var alertView:UIAlertView?
@@ -78,8 +78,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         let vc = sb.instantiateViewControllerWithIdentifier("picviewController") as! PicViewController
         //创建导航控制器
         //vc.message = aa.content;
-        vc.url = url
-        vc.pics = self.pics;
+        vc.url=url
         self.navigationController?.pushViewController(vc, animated: true)
         
         return
@@ -88,40 +87,32 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     @IBOutlet weak var gzbtn: UIButton!
     
     @IBAction func gzbtnaction(sender: UIButton) {
-        print("gzbtnaction")
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-            if(self.gzbtn.titleLabel?.text == "收藏")
-            {
-                
-                var sqlitehelpInstance1=sqlitehelp.shareInstance()
-                
-                let defaults = NSUserDefaults.standardUserDefaults();
-                var userid = defaults.objectForKey("userid") as! String;
-                sqlitehelpInstance1.addgz(self.guid, userid: userid)
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.gzbtn.setTitle("取消", forState: UIControlState.Normal)
-                    self.successNotice("收藏成功")
-                })
-            }else if(self.gzbtn.titleLabel?.text == "取消")
-            {
-                
-                var sqlitehelpInstance1=sqlitehelp.shareInstance()
-                
-                let defaults = NSUserDefaults.standardUserDefaults();
-                var userid = defaults.objectForKey("userid") as! String;
-                sqlitehelpInstance1.removegz(self.guid, userid: userid)
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.gzbtn.setTitle("收藏", forState: UIControlState.Normal)
-                    self.successNotice("取消收藏成功")
-                    
-                })
-                
-
-            }
+        if(gzbtn.titleLabel?.text == "收藏")
+        {
+            gzbtn.setTitle("取消", forState: UIControlState.Normal)
+            
+            var sqlitehelpInstance1=sqlitehelp.shareInstance()
+            
+            let defaults = NSUserDefaults.standardUserDefaults();
+            var userid = defaults.objectForKey("userid") as! String;
+            sqlitehelpInstance1.addgz(guid, userid: userid)
+            
+            
+            self.successNotice("收藏成功")
+            print("收藏成功")
+            
+        }else
+        {
+            gzbtn.setTitle("收藏", forState: UIControlState.Normal)
+            var sqlitehelpInstance1=sqlitehelp.shareInstance()
+            
+            let defaults = NSUserDefaults.standardUserDefaults();
+            var userid = defaults.objectForKey("userid") as! String;
+            sqlitehelpInstance1.removegz(guid, userid: userid)
+            
+            self.successNotice("取消收藏成功")
+            print("取消收藏成功")
         }
-        
     }
     @IBOutlet weak var _tableview: UITableView!
     @IBAction func runchat(sender: UIButton) {
@@ -140,7 +131,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     override func viewDidLoad() {
    
         super.viewDidLoad()
-        self.navigationItem.title="查看"
+        self.navigationItem.title="查看服务"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "举报", style: UIBarButtonItemStyle.Done, target: self, action: "reportClick")
         
