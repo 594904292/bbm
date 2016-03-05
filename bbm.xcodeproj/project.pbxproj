@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4913985B1BC8EA6C007866C1 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 491398591BC8EA6C007866C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4913986E1BC8F9F0007866C1 /* DbHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4913986D1BC8F9F0007866C1 /* DbHelp.swift */; };
 		491398701BC90985007866C1 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4913986F1BC90985007866C1 /* icon.png */; };
 		491398721BC90A8F007866C1 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491398711BC90A8F007866C1 /* ContentViewController.swift */; };
@@ -313,6 +312,9 @@
 		49FE1DC61BD0F0BA009B81D9 /* SimMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DC51BD0F0BA009B81D9 /* SimMessageItem.swift */; };
 		49FE1DC81BD0F2D8009B81D9 /* SimChatDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DC71BD0F2D8009B81D9 /* SimChatDataSource.swift */; };
 		49FE1DCA1BD0F634009B81D9 /* SimTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DC91BD0F634009B81D9 /* SimTableViewCell.swift */; };
+		9C709A991C887C170019B91A /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 491398641BC8EAA4007866C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9C709A9B1C8A656A0019B91A /* ContentfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */; };
+		9C709A9D1C8A65870019B91A /* PublishfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -365,16 +367,23 @@
 			remoteGlobalIDString = 494435411BB3E20D004EAECB;
 			remoteInfo = bbm;
 		};
+		9C709A901C887B220019B91A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 49C655DB1BC6819D00C6EF7F /* Alamofire.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F8111E3219A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		49C655F11BC681D100C6EF7F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4913985B1BC8EA6C007866C1 /* Alamofire.framework in Embed Frameworks */,
+				9C709A991C887C170019B91A /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,7 +391,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		491398591BC8EA6C007866C1 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Alamofire.framework; path = "/Users/ericsong/Library/Developer/Xcode/DerivedData/bbm-dozhfaaqzeoeflfgcmrprvfvrnmp/Build/Products/Debug-iphoneos/Alamofire.framework"; sourceTree = "<absolute>"; };
 		4913986D1BC8F9F0007866C1 /* DbHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DbHelp.swift; sourceTree = "<group>"; };
 		4913986F1BC90985007866C1 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = "全局/icon.png"; sourceTree = "<group>"; };
 		491398711BC90A8F007866C1 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
@@ -857,6 +865,8 @@
 		49FE1DC51BD0F0BA009B81D9 /* SimMessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimMessageItem.swift; sourceTree = "<group>"; };
 		49FE1DC71BD0F2D8009B81D9 /* SimChatDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimChatDataSource.swift; sourceTree = "<group>"; };
 		49FE1DC91BD0F634009B81D9 /* SimTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimTableViewCell.swift; sourceTree = "<group>"; };
+		9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentfwViewController.swift; sourceTree = "<group>"; };
+		9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishfwViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -946,7 +956,6 @@
 				4987D16A1BD498A700980199 /* SystemConfiguration.framework */,
 				4987D1681BD4989D00980199 /* OpenGLES.framework */,
 				4987D1661BD4989400980199 /* QuartzCore.framework */,
-				491398591BC8EA6C007866C1 /* Alamofire.framework */,
 				494435C51BB52FFE004EAECB /* data.db */,
 				494435B71BB5271D004EAECB /* libsqlite3.0.tbd */,
 				494435BF1BB52DA2004EAECB /* Bridging-Header.h */,
@@ -988,6 +997,7 @@
 				49BAA4121BDA1B4E003AD8B6 /* RegisterViewController.swift */,
 				49F6E9A21C3BA3DD007E5B0F /* CHWMarqueeView.swift */,
 				494435751BB3E6A1004EAECB /* HomeViewController.swift */,
+				9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */,
 				497E9AE81BB8D4CC00653FB4 /* OneViewController.swift */,
 				497E9AEA1BB8D4F100653FB4 /* TwoViewController.swift */,
 				497E9AEC1BB8D53E00653FB4 /* ThreeViewController.swift */,
@@ -1005,6 +1015,7 @@
 				491398711BC90A8F007866C1 /* ContentViewController.swift */,
 				498701881C192951006361F8 /* MainViewController.swift */,
 				49F6E99B1C3B855C007E5B0F /* SwiftNotice.swift */,
+				9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */,
 				49F3E5401C27C9380036F7C7 /* XMPPManager.swift */,
 				49F3E5421C27E10B0036F7C7 /* WXMessage.swift */,
 				49F3E7E91C291EF60036F7C7 /* RecentTableViewController.swift */,
@@ -2192,6 +2203,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9C709A911C887B220019B91A /* PBXTargetDependency */,
 			);
 			name = bbm;
 			productName = bbm;
@@ -2601,6 +2613,7 @@
 				49F6E99C1C3B855C007E5B0F /* SwiftNotice.swift in Sources */,
 				4913986E1BC8F9F0007866C1 /* DbHelp.swift in Sources */,
 				49F3E7BD1C27EA720036F7C7 /* XMPPPresence+XEP_0172.m in Sources */,
+				9C709A9B1C8A656A0019B91A /* ContentfwViewController.swift in Sources */,
 				4987018B1C1962AD006361F8 /* itemDaymic.swift in Sources */,
 				49F3E7681C27EA720036F7C7 /* XMPPElement.m in Sources */,
 				49F3E7BF1C27EA720036F7C7 /* XMPPMessageDeliveryReceipts.m in Sources */,
@@ -2638,6 +2651,7 @@
 				4987FF621C17C113006361F8 /* XWRefreshAutoNormalFooter.swift in Sources */,
 				49F3E7E01C27EA730036F7C7 /* DDDispatchQueueLogFormatter.m in Sources */,
 				49F3E7AE1C27EA720036F7C7 /* XMPPSoftwareVersion.m in Sources */,
+				9C709A9D1C8A65870019B91A /* PublishfwViewController.swift in Sources */,
 				49F3E7A91C27EA720036F7C7 /* XMPPMessage+XEP_0066.m in Sources */,
 				49F3E7851C27EA720036F7C7 /* XMPPIQ+LastActivity.m in Sources */,
 			);
@@ -2671,6 +2685,11 @@
 			isa = PBXTargetDependency;
 			target = 494435411BB3E20D004EAECB /* bbm */;
 			targetProxy = 494435621BB3E20D004EAECB /* PBXContainerItemProxy */;
+		};
+		9C709A911C887B220019B91A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Alamofire iOS";
+			targetProxy = 9C709A901C887B220019B91A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2779,7 +2798,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: ni ha (GAX7B99CPF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2806,7 +2826,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2583a3f5-8802-425d-b94a-fc4ef20789ba";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
@@ -2817,7 +2837,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: ni ha (GAX7B99CPF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2844,7 +2865,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2583a3f5-8802-425d-b94a-fc4ef20789ba";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
