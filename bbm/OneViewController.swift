@@ -29,12 +29,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         {
             
             querydata(2)
-        }else if(selectedSegmentval==3)
-        {
-            
-            querydata(3)
         }
-
         
 
     }
@@ -100,10 +95,6 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         {
             self.items.removeAll()
             querydata(2)
-        }else if(self.selectedSegmentval==3)
-        {
-            self.fwitems.removeAll()
-            querydata(3)
         }
          self._tableView.reloadData()
     }
@@ -141,9 +132,6 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
             }else if(self.selectedSegmentval==2)
             {
                 self.querydata(2)
-            }else if(self.selectedSegmentval==3)
-            {
-                self.querydata(3)
             }
             self._tableView.reloadData()
             self._tableView.headerView?.endRefreshing()
@@ -166,12 +154,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
             {
                 
                 self.querydata(2)
-            }else if(self.selectedSegmentval==3)
-            {
-                
-                self.querydata(3)
             }
-
             self._tableView.reloadData()
             self._tableView.footerView?.endRefreshing()
         }
@@ -204,58 +187,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         }
     
         func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-                       if self.selectedSegmentval==3
-            {
-                let cellId="mycell3"
-                var cell:fwTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as! fwTableViewCell?
-                if(cell == nil)
-                {
-                    cell = fwTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
-                }
-                //NSLog("fwitems count is = %i",fwitems.count);
-                //NSLog("indexPath is = %i",indexPath.row);
-                var ifm:itemfwMess = fwitems[indexPath.row] as itemfwMess;
-                cell?.senduser.text=(fwitems[indexPath.row] as itemfwMess).username
-                cell?.usertag.text=(fwitems[indexPath.row] as itemfwMess).tags
-                if (fwitems[indexPath.row] as itemfwMess).fwname == "帮帮忙"
-                {
-                    cell?.title.text=(fwitems[indexPath.row] as itemfwMess).content
-                }else
-                {
-                    cell?.title.text=(fwitems[indexPath.row] as itemfwMess).fwname
-                }
-                let defaults = NSUserDefaults.standardUserDefaults();
-                var sqlitehelpInstance1=sqlitehelp.shareInstance()
-                var userid = defaults.objectForKey("userid") as! String;
-                var guid:String=(fwitems[indexPath.row] as itemfwMess).guid;
-                
-                var v:Bool=sqlitehelpInstance1.isexitzan(guid, userid: userid);
-                if(v)
-                {
-                    cell?.zan.setBackgroundImage(UIImage(named: "tab_sub_sos_sel"), forState: UIControlState.Normal)
-                }else
-                {
-                    cell?.zan.setBackgroundImage(UIImage(named: "tab_sub_sos"), forState: UIControlState.Normal)
-                }
-                cell?.zan.tag = indexPath.row
-                //cell?.zan.setTitle(String(indexPath.row)+"__"+(fwitems[indexPath.row] as itemfwMess).zannum, forState: UIControlState.Normal)
-                cell?.zan.setTitle((fwitems[indexPath.row] as itemfwMess).zannum, forState: UIControlState.Normal)
-                cell?.zan.addTarget(self,action:Selector("zantapped:"),forControlEvents:.TouchUpInside)
-                
-                cell?.tel.tag = indexPath.row
-                cell?.tel.addTarget(self,action:Selector("teltapped:"),forControlEvents:.TouchUpInside)
-                var head:String = "http://api.bbxiaoqu.com/uploads/"+(fwitems[indexPath.row] as itemfwMess).headface
-                Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
-                    if let d = data as? NSData!
-                    {
-                        cell?.headface.image=UIImage(data: d)
-                    }
-                }
-                NSLog("indexPath is = %i",indexPath.row);
-                return cell!
-                
-            }else
-            {
+            
                 var ppp:String = (items[indexPath.row] as itemMess).photo;
                 if ppp.characters.count > 0
                 {
@@ -390,7 +322,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                     cell?.pl.text="评:"+(items[indexPath.row] as itemMess).plnum;
                     return cell!
                 }
-            }
+            
         }
     
     var seltel:String = "";
@@ -457,20 +389,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     {
         NSLog("select \(indexPath.row)")
         //NSLog("select \(items[indexPath.row])")
-         if(self.selectedSegmentval==3)
-         {
-            let aa:itemfwMess=fwitems[indexPath.row] as itemfwMess;
-            let sb = UIStoryboard(name:"Main", bundle: nil)
-            let vc = sb.instantiateViewControllerWithIdentifier("contentfwviewController") as! ContentfwViewController
-            //创建导航控制器
-            //vc.message = aa.content;
-            vc.guid=aa.guid
-            vc.infoid=aa.guid
-            //设置根视图
-            self.navigationController?.pushViewController(vc, animated: true)
-        }else
-         {
-            
+        
             
             
             let aa:itemMess=items[indexPath.row] as itemMess;
@@ -484,7 +403,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
             self.navigationController?.pushViewController(vc, animated: true)
 
         
-         }
+        
 
     }
     
@@ -497,101 +416,22 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         var url:String="";
         let defaults = NSUserDefaults.standardUserDefaults();
         let userid = defaults.objectForKey("userid") as! String;
-        
+        let lat = defaults.objectForKey("lat") as! String;
+        let lng = defaults.objectForKey("lng") as! String;
         if(Category==0)
         {
-            url="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&status=0&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&latitude=").stringByAppendingString(lat).stringByAppendingString("&longitude=").stringByAppendingString(lng).stringByAppendingString("&rang=xiaoqu&status=0&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         
         }else if(Category==1)
         {
-            url="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&latitude=").stringByAppendingString(lat).stringByAppendingString("&longitude=").stringByAppendingString(lng).stringByAppendingString("&rang=xiaoqu&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         }else if(Category==2)
         {
-            url="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=self&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
-
-        }else if(Category==3)
-        {
-            url="http://api.bbxiaoqu.com/getfwinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqufw&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&latitude=").stringByAppendingString(lat).stringByAppendingString("&longitude=").stringByAppendingString(lng).stringByAppendingString("&rang=self&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         }
-        if(Category==3)
-        {
-            print("url: \(url)")
-            Alamofire.request(.GET, url, parameters: nil)
-                .responseJSON { response in
-                    if(response.result.isSuccess)
-                    {
-                        
-                        
-                        if let jsonItem = response.result.value as? NSArray{
-                            if(jsonItem.count>0)
-                            {
-                                for data in jsonItem{
-                                    print("data: \(data)")
-                                    let title:String = data.objectForKey("title") as! String;
-
-                                    let content:String = data.objectForKey("content") as! String;
-                                    let senduserid:String = data.objectForKey("senduser") as! String;
-                                    
-                                    var sendnickname:String = "";
-                                    if(data.objectForKey("username")!.isKindOfClass(NSNull))
-                                    {
-                                        sendnickname="";
-                                    }else
-                                    {
-                                        sendnickname   = data.objectForKey("username") as! String;
-                                        
-                                    }
-                                    let guid:String = data.objectForKey("guid") as! String;
-                                    let sendtime:String = data.objectForKey("sendtime") as! String;
-                                    let address:String = data.objectForKey("address") as! String;
-                                    let lng:String = data.objectForKey("lng") as! String;
-                                    let lat:String = data.objectForKey("lat") as! String;
-                                    let photo:String = data.objectForKey("photo") as! String;
-                                    var community:String = ""
-                                    if(data.objectForKey("community")!.isKindOfClass(NSNull))
-                                    {
-                                        community = "";
-                                    }else
-                                    {
-                                        community = data.objectForKey("community") as! String;
-                                        
-                                    }
-                                    let infocatagroy:String = data.objectForKey("infocatagroy") as! String;
-                                    let status:String = data.objectForKey("status") as! String;
-                                    let visit:String = data.objectForKey("visit") as! String;
-                                    let plnum:String = data.objectForKey("plnum") as! String;
-                                    
-                                    let headface:String = data.objectForKey("headface") as! String;
-                                    let telphone:String = data.objectForKey("telphone") as! String;
-                                    let zannum:String = data.objectForKey("zannum") as! String;
-                                    let tags:String = data.objectForKey("tags") as! String;
-                                    
-                                    let item_obj:itemfwMess = itemfwMess(userid: senduserid, vname: sendnickname, vtime: sendtime, vaddress: address,fwname:title,vcontent:content, vcommunity: community, vlng: lng, vlat: lat, vguid: guid, vinfocatagory: infocatagroy, vphoto: photo, status: status, visnum: visit, plnum: plnum,headface:headface,telphone:telphone,zannum:zannum,tags:tags)
-                                    self.fwitems.append(item_obj)
-                                    
-                                }
-                            }else
-                            {
-                                
-                            }
-                            self._tableView.reloadData()
-                            self._tableView.doneRefresh()
-                            
-                        }
-                    }else
-                    {
-                        self.successNotice("网络请求错误")
-                        print("网络请求错误")
-                    }
-                    
-                    
-            }
-        
-        }else
-        {
             print("url: \(url)")
             Alamofire.request(.GET, url, parameters: nil)
                 .responseJSON { response in
@@ -649,7 +489,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                     }
 
              }
-        }
+        
     }
     
     func delay(delay:Double, closure:()->()) {
@@ -661,6 +501,10 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
             dispatch_get_main_queue(), closure)
     }
     
+    
+    
+    
+    //////////////////////////////
     //定位改变执行，可以得到新位置、旧位置
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //获取最新的坐标

@@ -446,7 +446,6 @@
                                     <segment title="待解决"/>
                                     <segment title="全部"/>
                                     <segment title="我的"/>
-                                    <segment title="服务"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentValueChange:" destination="vsk-3M-qi4" eventType="valueChanged" id="yDp-af-6TP"/>
@@ -682,84 +681,6 @@
                                             <outlet property="sendtime" destination="4Sf-lJ-NYr" id="fwm-PV-Dsc"/>
                                             <outlet property="senduser" destination="Nlx-kd-e6I" id="ELp-ex-qYs"/>
                                             <outlet property="status" destination="ffK-IE-MuV" id="3Hc-cd-LD5"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" tag="102" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="mycell3" rowHeight="102" id="8Lj-bY-AAv" customClass="fwTableViewCell" customModule="bbm" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="232" width="320" height="102"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Lj-bY-AAv" id="R0T-x3-EPi">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="101"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="jZ6-90-Vzt">
-                                                    <rect key="frame" x="26" y="13" width="72" height="75"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="72" id="3C1-Iw-Qhf"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MoV-id-TMX">
-                                                    <rect key="frame" x="106" y="5" width="157" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0l-mo-ID6">
-                                                    <rect key="frame" x="106" y="20" width="125" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="miK-3z-st2">
-                                                    <rect key="frame" x="216" y="25" width="35" height="35"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="35" id="3PL-CA-1hd"/>
-                                                    </constraints>
-                                                    <state key="normal" title="0" backgroundImage="tab_sub_sos"/>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1M9-Ft-MCS">
-                                                    <rect key="frame" x="259" y="25" width="35" height="35"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="35" id="rJf-Y4-QL3"/>
-                                                    </constraints>
-                                                    <state key="normal" image="tel"/>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="krR-4I-tW2">
-                                                    <rect key="frame" x="106" y="55" width="214" height="44"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="jZ6-90-Vzt" firstAttribute="leading" secondItem="R0T-x3-EPi" secondAttribute="leadingMargin" constant="18" id="12x-fH-K2D"/>
-                                                <constraint firstItem="MoV-id-TMX" firstAttribute="leading" secondItem="jZ6-90-Vzt" secondAttribute="trailing" constant="8" symbolic="YES" id="91e-oS-XFi"/>
-                                                <constraint firstItem="1M9-Ft-MCS" firstAttribute="leading" secondItem="M0l-mo-ID6" secondAttribute="trailing" constant="28" id="Lvj-zI-8Sj"/>
-                                                <constraint firstItem="M0l-mo-ID6" firstAttribute="top" secondItem="R0T-x3-EPi" secondAttribute="topMargin" constant="12" id="OQ7-KM-Ibb"/>
-                                                <constraint firstItem="jZ6-90-Vzt" firstAttribute="centerY" secondItem="R0T-x3-EPi" secondAttribute="centerY" id="OfR-Ub-Yj9"/>
-                                                <constraint firstItem="miK-3z-st2" firstAttribute="top" secondItem="R0T-x3-EPi" secondAttribute="topMargin" constant="17" id="RE6-v3-ebw"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="1M9-Ft-MCS" secondAttribute="trailing" constant="18" id="RFZ-aI-MHW"/>
-                                                <constraint firstItem="1M9-Ft-MCS" firstAttribute="top" secondItem="MoV-id-TMX" secondAttribute="bottom" constant="3" id="Ub6-Jx-9ST"/>
-                                                <constraint firstItem="1M9-Ft-MCS" firstAttribute="leading" secondItem="miK-3z-st2" secondAttribute="trailing" constant="8" symbolic="YES" id="VKR-wN-Vwa"/>
-                                                <constraint firstItem="1M9-Ft-MCS" firstAttribute="top" secondItem="R0T-x3-EPi" secondAttribute="topMargin" constant="17" id="X7D-Kk-evK"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="krR-4I-tW2" secondAttribute="trailing" constant="-8" id="aq9-nS-4Xf"/>
-                                                <constraint firstItem="jZ6-90-Vzt" firstAttribute="bottom" secondItem="krR-4I-tW2" secondAttribute="bottom" constant="-11" id="bJd-Ik-mqP"/>
-                                                <constraint firstItem="M0l-mo-ID6" firstAttribute="leading" secondItem="krR-4I-tW2" secondAttribute="leading" id="gGb-86-tlX"/>
-                                                <constraint firstItem="jZ6-90-Vzt" firstAttribute="top" secondItem="R0T-x3-EPi" secondAttribute="topMargin" constant="5" id="hc6-kB-PAg"/>
-                                                <constraint firstItem="MoV-id-TMX" firstAttribute="leading" secondItem="M0l-mo-ID6" secondAttribute="leading" id="iAu-pO-96e"/>
-                                                <constraint firstItem="miK-3z-st2" firstAttribute="centerY" secondItem="jZ6-90-Vzt" secondAttribute="centerY" constant="-8" id="oau-ug-OUh"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="MoV-id-TMX" secondAttribute="trailing" constant="49" id="rfU-hN-VAv"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="1M9-Ft-MCS" secondAttribute="bottom" constant="33" id="uES-cc-Q5m"/>
-                                                <constraint firstItem="M0l-mo-ID6" firstAttribute="centerY" secondItem="miK-3z-st2" secondAttribute="centerY" constant="-12" id="xDo-SK-vUD"/>
-                                                <constraint firstItem="krR-4I-tW2" firstAttribute="top" secondItem="M0l-mo-ID6" secondAttribute="bottom" constant="14" id="zJP-Tt-bWx"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="headface" destination="jZ6-90-Vzt" id="T5V-Vz-cme"/>
-                                            <outlet property="senduser" destination="MoV-id-TMX" id="DOw-cg-pjJ"/>
-                                            <outlet property="tel" destination="1M9-Ft-MCS" id="ejq-nf-wPg"/>
-                                            <outlet property="title" destination="krR-4I-tW2" id="Pqc-K2-byL"/>
-                                            <outlet property="usertag" destination="M0l-mo-ID6" id="CgX-cp-77B"/>
-                                            <outlet property="zan" destination="miK-3z-st2" id="tYs-TF-oUM"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -2492,7 +2413,5 @@
         <image name="logo" width="36" height="36"/>
         <image name="notice" width="47" height="43"/>
         <image name="sundy" width="220" height="220"/>
-        <image name="tab_sub_sos" width="48" height="48"/>
-        <image name="tel" width="200" height="198"/>
     </resources>
 </document>
