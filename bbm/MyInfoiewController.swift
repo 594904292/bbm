@@ -95,7 +95,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
         dic["community_id"] = xiaoquid;
         dic["community_lat"] = xiaoqulat;
         dic["community_lng"] = xiaoqulng;
-        Alamofire.request(.POST, "http://www.bbxiaoqu.com/saveuserinfo.php", parameters: dic)
+        Alamofire.request(.POST, "http://api.bbxiaoqu.com/saveuserinfo.php", parameters: dic)
             .responseJSON { response in
                 print(response.request)  // original URL request
                 print(response.response) // URL response
@@ -165,7 +165,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
     
     func loaduserinfo(userid:String)
     {
-         var url_str:String = "http://www.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
+         var url_str:String = "http://api.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
          Alamofire.request(.POST,url_str, parameters:nil)
             .responseJSON { response in
                 //                print(response.request)  // original URL request
@@ -282,7 +282,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                         
                         //if(headfaceurl.isKindOfClass(NSNull))
                          //{
-                            let url="http://www.bbxiaoqu.com/uploads/"+headfaceurl;
+                            let url="http://api.bbxiaoqu.com/uploads/"+headfaceurl;
                         Alamofire.request(.GET, url).response { (_, _, data, _) -> Void in
                             if let d = data as? NSData!
                             {
@@ -336,7 +336,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
             /** 设置上传图片的URL和参数 */
             let defaults = NSUserDefaults.standardUserDefaults();
             let user_id = defaults.stringForKey("userid")
-            let url = "http://www.bbxiaoqu.com/upload.php"
+            let url = "http://api.bbxiaoqu.com/upload.php"
             let request = NSMutableURLRequest(URL: NSURL(string:url)!)
             
             /** 设定上传方法为Post */

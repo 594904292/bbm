@@ -109,7 +109,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         /** 设置上传图片的URL和参数 */
         let defaults = NSUserDefaults.standardUserDefaults();
         let user_id = defaults.stringForKey("userid")
-        let url = "http://www.bbxiaoqu.com/upload.php?user=\(user_id!)"
+        let url = "http://api.bbxiaoqu.com/upload.php?user=\(user_id!)"
         let request = NSMutableURLRequest(URL: NSURL(string:url)!)
         
         /** 设定上传方法为Post */
@@ -182,7 +182,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
             NSLog("add")
             
             let mess:String = content.text!
-            Alamofire.request(.POST, "http://www.bbxiaoqu.com/words/isbadword.php", parameters:["mess" : mess])
+            Alamofire.request(.POST, "http://api.bbxiaoqu.com/words/isbadword.php", parameters:["mess" : mess])
                 .responseJSON { response in
                     if(response.result.isSuccess)
                     {
@@ -341,7 +341,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         dic["radius"] = "-1";
         dic["speed"] = "-1";
         
-        Alamofire.request(.POST, "http://www.bbxiaoqu.com/send_test.php", parameters: dic)
+        Alamofire.request(.POST, "http://api.bbxiaoqu.com/send_test.php", parameters: dic)
             .responseJSON { response in
                 print(response.request)  // original URL request
                 print(response.response) // URL response

@@ -50,7 +50,7 @@ class SimTableViewCell:UITableViewCell
         {
             
             let logo =  self.msgItem.logo
-            let logou = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(logo);
+            let logou = "http://api.bbxiaoqu.com/uploads/".stringByAppendingString(logo);
             Alamofire.request(.GET, logou).response { (_, _, data, _) -> Void in
                 if let d = data as? NSData!
                 {

@@ -72,7 +72,7 @@ class SettingViewController: UIViewController,UINavigationControllerDelegate {
             var strNowTime = timeFormatter.stringFromDate(date) as String
             let mess:String = content.text!
             var  dic:Dictionary<String,String> = ["content" : mess, "userid": userid, "addtime": strNowTime]
-            Alamofire.request(.POST, "http://www.bbxiaoqu.com/savesuggest.php", parameters: dic)
+            Alamofire.request(.POST, "http://api.bbxiaoqu.com/savesuggest.php", parameters: dic)
                 .responseJSON { response in
                     print(response.request)  // original URL request
                     print(response.response) // URL response

@@ -49,7 +49,7 @@ class XiaoquTableViewController: UITableViewController ,UINavigationControllerDe
         let lng = defaults.objectForKey("lng") as! String;
         
         
-        var url_str:String = "http://www.bbxiaoqu.com/getxiaoqu.php?latitude=".stringByAppendingString(lat).stringByAppendingString("&longitude=").stringByAppendingString(lng)
+        var url_str:String = "http://api.bbxiaoqu.com/getxiaoqu.php?latitude=".stringByAppendingString(lat).stringByAppendingString("&longitude=").stringByAppendingString(lng)
         Alamofire.request(.GET, url_str, parameters: nil)
             
             .responseJSON { response in

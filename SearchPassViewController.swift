@@ -54,7 +54,7 @@ class SearchPassViewController: UIViewController {
 
         let tel:String = self.telphone.text as String!
         let  dic:Dictionary<String,String> = ["_telphone" : tel]
-        Alamofire.request(.POST, "http://www.bbxiaoqu.com/getauthcode.php?show=true", parameters: dic)
+        Alamofire.request(.POST, "http://api.bbxiaoqu.com/getauthcode.php?show=true", parameters: dic)
             .responseJSON { response in
                 print(response.request)  // original URL request
                 print(response.response) // URL response

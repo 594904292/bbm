@@ -44,7 +44,7 @@ class FriendsTableViewController: UITableViewController {
         
         let defaults = NSUserDefaults.standardUserDefaults();
         let userid = defaults.objectForKey("userid") as! String;
-        let url:String="http://www.bbxiaoqu.com/getfriends.php?mid1=".stringByAppendingString(userid);
+        let url:String="http://api.bbxiaoqu.com/getfriends.php?mid1=".stringByAppendingString(userid);
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in
@@ -108,7 +108,7 @@ class FriendsTableViewController: UITableViewController {
         
         var avatar:String = (self.items[indexPath.row] as Friends).avatar;
         
-        var head = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(avatar)
+        var head = "http://api.bbxiaoqu.com/uploads/".stringByAppendingString(avatar)
          Alamofire.request(.GET, head).response {
                  (_, _, data, _) -> Void in
                 if let d = data as? NSData!

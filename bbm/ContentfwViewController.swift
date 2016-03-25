@@ -154,7 +154,7 @@ class ContentfwViewController: UIViewController,UINavigationControllerDelegate,U
     
     func loadinfo(guid:String)
     {
-        var url_str:String = "http://www.bbxiaoqu.com/getinfo.php?guid=".stringByAppendingString(guid)
+        var url_str:String = "http://api.bbxiaoqu.com/getinfo.php?guid=".stringByAppendingString(guid)
         Alamofire.request(.GET,url_str, parameters:nil)
             .responseJSON {response in
                 if(response.result.isSuccess)
@@ -210,7 +210,7 @@ class ContentfwViewController: UIViewController,UINavigationControllerDelegate,U
                     {
                          for i in 1...self.photoArr.count{ //loading the images
                             let picname:String = self.photoArr[i-1]
-                             var imgurl = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(picname)
+                             var imgurl = "http://api.bbxiaoqu.com/uploads/".stringByAppendingString(picname)
                             self.pics.append(imgurl)
                             
                         }
@@ -249,7 +249,7 @@ class ContentfwViewController: UIViewController,UINavigationControllerDelegate,U
 
     func loadheadface(userid:String,headname:String)
     {
-        var myhead:String="http://www.bbxiaoqu.com/uploads/".stringByAppendingString(headface)
+        var myhead:String="http://api.bbxiaoqu.com/uploads/".stringByAppendingString(headface)
         Alamofire.request(.GET, myhead).response { (_, _, data, _) -> Void in
             if let d = data as? NSData!
             {
@@ -264,7 +264,7 @@ class ContentfwViewController: UIViewController,UINavigationControllerDelegate,U
         func loaddiscuzzBody(infoid:String)
         {
     
-            let url_str:String = "http://www.bbxiaoqu.com/getdiscuzz.php?infoid=".stringByAppendingString(infoid)
+            let url_str:String = "http://api.bbxiaoqu.com/getdiscuzz.php?infoid=".stringByAppendingString(infoid)
             Alamofire.request(.GET,url_str, parameters:nil)
     
                 .responseJSON { response in
@@ -450,7 +450,7 @@ class ContentfwViewController: UIViewController,UINavigationControllerDelegate,U
         
         
         let  dic:Dictionary<String,String> = ["_infoid" : infoid,"_sendtime" : strNowTime,"_puserid" : puserid,"_puser" : puser,"_touserid" : senduserid,"_touser" : senduser,"_message" : sender.text!]
-        var url_str:String = "http://www.bbxiaoqu.com/discuzz.php";
+        var url_str:String = "http://api.bbxiaoqu.com/discuzz.php";
         Alamofire.request(.POST,url_str, parameters:dic)
             .responseString{ response in
                 if(response.result.isSuccess)
@@ -492,7 +492,7 @@ class ContentfwViewController: UIViewController,UINavigationControllerDelegate,U
             var strNowTime = timeFormatter.stringFromDate(date) as String
             
             var  dic:Dictionary<String,String> = ["guid" : guid, "userid": userid, "addtime": strNowTime]
-            Alamofire.request(.POST, "http://www.bbxiaoqu.com/savereport.php", parameters: dic)
+            Alamofire.request(.POST, "http://api.bbxiaoqu.com/savereport.php", parameters: dic)
                 .responseJSON { response in
                     if(response.result.isSuccess)
                     {
@@ -548,7 +548,7 @@ class ContentfwViewController: UIViewController,UINavigationControllerDelegate,U
         cell?.plcontent?.numberOfLines=0
         cell?.plcontent?.text=(self.items[indexPath.row] as itempl).content
         var picname:String = (self.items[indexPath.row] as itempl).headface;
-        var myhead:String="http://www.bbxiaoqu.com/uploads/".stringByAppendingString(picname)
+        var myhead:String="http://api.bbxiaoqu.com/uploads/".stringByAppendingString(picname)
         Alamofire.request(.GET, myhead).response {
             (_, _, data, _) -> Void in
             if let d = data as? NSData!
@@ -611,7 +611,7 @@ class ContentfwViewController: UIViewController,UINavigationControllerDelegate,U
          dic["_solutionuserid"] = (self.items[pos] as itempl).userid
         dic["_solutiontime"] = strNowTime
         
-        Alamofire.request(.POST, "http://www.bbxiaoqu.com/solution.php", parameters: dic)
+        Alamofire.request(.POST, "http://api.bbxiaoqu.com/solution.php", parameters: dic)
             .responseJSON { response in
                 if(response.result.isSuccess)
                 {

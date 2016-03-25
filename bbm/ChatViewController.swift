@@ -74,7 +74,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         
     {
         
-        Alamofire.request(.GET, "http://www.bbxiaoqu.com/getuserinfo.php?userid="+userid, parameters: nil)
+        Alamofire.request(.GET, "http://api.bbxiaoqu.com/getuserinfo.php?userid="+userid, parameters: nil)
             .responseJSON { response in
                 if(response.result.isSuccess)
                 {
@@ -262,7 +262,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         }
         sqlitehelp.shareInstance().updatefriendlastinfo(from, lastuserid: myself, lastinfo: sendcontent, lasttime: strNowTime)
         let  dic:Dictionary<String,String> = ["_catatory" : "chat","_senduserid" : myself,"_sendnickname" : myselfname,"_sednusericon" : myselfheadface,"_touserid" : from,"_tonickname" : fromname,"_tousericon" : fromheadface,"_gudi":guid,"_message":sendcontent,"_channelid":""]
-        var url_str:String = "http://www.bbxiaoqu.com/chat.php";
+        var url_str:String = "http://api.bbxiaoqu.com/chat.php";
         Alamofire.request(.POST,url_str, parameters:dic)
             .responseString{ response in
                 if(response.result.isSuccess)

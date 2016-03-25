@@ -134,7 +134,7 @@ class RecentTableViewController: UITableViewController {
 
         var avatar:String = (self.items[indexPath.row] as itemRecent).usericon
         
-        var head = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(avatar)
+        var head = "http://api.bbxiaoqu.com/uploads/".stringByAppendingString(avatar)
         
         Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
             if let d = data as? NSData!

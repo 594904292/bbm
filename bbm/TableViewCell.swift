@@ -45,7 +45,7 @@ class TableViewCell:UITableViewCell
         {
              let thisUser =  self.msgItem.user
             var picname:String = thisUser.avatar
-             let logo = "http://www.bbxiaoqu.com/uploads/".stringByAppendingString(picname);
+             let logo = "http://api.bbxiaoqu.com/uploads/".stringByAppendingString(picname);
             Alamofire.request(.GET, logo).response { (_, _, data, _) -> Void in
                 if let d = data as? NSData!
                 {

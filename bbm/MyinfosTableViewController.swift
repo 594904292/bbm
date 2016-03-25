@@ -130,12 +130,12 @@ class MyinfosTableViewController: UITableViewController {
                     {
                         var myArray = ppp.componentsSeparatedByString(",")
                         var headname = myArray[0] as String
-                        head = "http://www.bbxiaoqu.com/uploads/"+headname
+                        head = "http://api.bbxiaoqu.com/uploads/"+headname
                         
                         NSLog("-1--\(head)")
                     }else
                     {
-                        head = "http://www.bbxiaoqu.com/uploads/"+ppp
+                        head = "http://api.bbxiaoqu.com/uploads/"+ppp
                         NSLog("-2--\(head)")
                     }
                     
@@ -218,7 +218,7 @@ class MyinfosTableViewController: UITableViewController {
         
         let defaults = NSUserDefaults.standardUserDefaults();
         let user_id = defaults.stringForKey("userid")
-         var url:String="http://www.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(user_id!).stringByAppendingString("&rang=self&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+         var url:String="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(user_id!).stringByAppendingString("&rang=self&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in

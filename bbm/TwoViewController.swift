@@ -159,7 +159,7 @@ class TwoViewController: UIViewController,CLLocationManagerDelegate {
                     let _token = defaults.objectForKey("token") as! NSString;
                     //更新下地理位置
                     
-                    Alamofire.request(.POST, "http://www.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
+                    Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
                         .responseJSON { response in
                             print(response.request)  // original URL request
                             print(response.response) // URL response
@@ -173,7 +173,7 @@ class TwoViewController: UIViewController,CLLocationManagerDelegate {
 
                     
                     
-                    Alamofire.request(.POST, "http://www.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
+                    Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
                         .responseJSON { response in
                                             print(response.request)  // original URL request
                                             print(response.response) // URL response

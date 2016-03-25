@@ -128,12 +128,12 @@ class GzInfosTableViewController: UITableViewController {
                     {
                         var myArray = ppp.componentsSeparatedByString(",")
                         var headname = myArray[0] as String
-                        head = "http://www.bbxiaoqu.com/uploads/"+headname
+                        head = "http://api.bbxiaoqu.com/uploads/"+headname
                         
                         NSLog("-1--\(head)")
                     }else
                     {
-                        head = "http://www.bbxiaoqu.com/uploads/"+ppp
+                        head = "http://api.bbxiaoqu.com/uploads/"+ppp
                         NSLog("-2--\(head)")
                     }
                     
@@ -226,7 +226,7 @@ class GzInfosTableViewController: UITableViewController {
             print("无收藏信息")
             return;
         }
-        var url:String="http://www.bbxiaoqu.com/getgzinfo.php?guid=".stringByAppendingString(guids);
+        var url:String="http://api.bbxiaoqu.com/getgzinfo.php?guid=".stringByAppendingString(guids);
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in

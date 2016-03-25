@@ -125,7 +125,7 @@ class LoginViewController: UIViewController {
             self.alertView!.show()
             return;
         }
-      Alamofire.request(.POST, "http://www.bbxiaoqu.com/login.php", parameters:["_userid" : username])
+      Alamofire.request(.POST, "http://api.bbxiaoqu.com/login.php", parameters:["_userid" : username])
             .responseJSON { response in
                 if(response.result.isSuccess)
                 {

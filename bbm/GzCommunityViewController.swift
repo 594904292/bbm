@@ -124,7 +124,7 @@ class GzCommunityViewController: UIViewController ,UINavigationControllerDelegat
         
         let defaults = NSUserDefaults.standardUserDefaults();
         let userid = defaults.objectForKey("userid") as! String;
-        var url_str:String = "http://www.bbxiaoqu.com/getgzxiaoqu.php?userid=".stringByAppendingString(userid)        //
+        var url_str:String = "http://api.bbxiaoqu.com/getgzxiaoqu.php?userid=".stringByAppendingString(userid)        //
         Alamofire.request(.GET, url_str, parameters: nil)
             .responseJSON { response in
                 if(response.result.isSuccess)

@@ -44,7 +44,7 @@ class RegisterViewController: UIViewController {
     @IBAction func getauthoncode(sender: UIButton) {
         let tel:String = self.telphone_edit.text as String!
         let  dic:Dictionary<String,String> = ["_telphone" : tel]
-        Alamofire.request(.POST, "http://www.bbxiaoqu.com/getauthcode.php", parameters: dic)
+        Alamofire.request(.POST, "http://api.bbxiaoqu.com/getauthcode.php", parameters: dic)
             .responseJSON { response in
                 print(response.request)  // original URL request
                 print(response.response) // URL response
@@ -63,7 +63,7 @@ class RegisterViewController: UIViewController {
         let password:String = self.password_edit.text as String!
         let authcode:String = self.authoncode.text as String!
         let  dic:Dictionary<String,String> = ["_userid" : tel,"_telphone" : tel,"_password" : password,"_authoncode" : authcode]
-        Alamofire.request(.POST, "http://www.bbxiaoqu.com/save.php", parameters: dic)
+        Alamofire.request(.POST, "http://api.bbxiaoqu.com/save.php", parameters: dic)
             .responseJSON { response in
                 print(response.request)  // original URL request
                 print(response.response) // URL response

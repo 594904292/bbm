@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
 //    func loadusername(userid:String) -> String
 //    {
 //        var username="";
-//        var url_str:String = "http://www.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
+//        var url_str:String = "http://api.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
 //        Alamofire.request(.POST,url_str, parameters:nil)
 //            .responseJSON { response in
 //                print(response.result.value)
@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
 //    func loadheadface(userid:String) -> String
 //    {
 //        var headfaceurl="";
-//        var url_str:String = "http://www.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
+//        var url_str:String = "http://api.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
 //        Alamofire.request(.POST,url_str, parameters:nil)
 //            .responseJSON { response in
 //                print(response.result.value)

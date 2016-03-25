@@ -104,10 +104,10 @@ class GzInfoViewController: UIViewController,UINavigationControllerDelegate,UIAc
             {
                 var myArray = ppp.componentsSeparatedByString(",")
                 var headname = myArray[0] as String
-                head = "http://www.bbxiaoqu.com/uploads/"+headname
+                head = "http://api.bbxiaoqu.com/uploads/"+headname
             }else
             {
-                head = "http://www.bbxiaoqu.com/uploads/"+ppp
+                head = "http://api.bbxiaoqu.com/uploads/"+ppp
             }
             
             NSLog("\((items[indexPath.row] as itemMess).photo)")
@@ -135,7 +135,7 @@ class GzInfoViewController: UIViewController,UINavigationControllerDelegate,UIAc
     func SaveRemoteData()
     {
         var guid:String="";
-        Alamofire.request(.GET, "http://www.bbxiaoqu.com/getlastinfo.php", parameters: nil)
+        Alamofire.request(.GET, "http://api.bbxiaoqu.com/getlastinfo.php", parameters: nil)
             .responseJSON { response in
                 if(response.result.isSuccess)
                 {

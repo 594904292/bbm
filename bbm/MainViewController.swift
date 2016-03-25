@@ -9,39 +9,23 @@
 import UIKit
 import Alamofire
 
-class MainViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,BMKLocationServiceDelegate {
+class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServiceDelegate {
 
-    @IBAction func gonggaobtn(sender: UIButton) {
-        
-        var urlstr:String="http://www.bbxiaoqu.com/wap/gonggao.php?id=".stringByAppendingString(ggid)
-        var url=NSURL(string: urlstr)
-        UIApplication.sharedApplication().openURL(url!)
-    }
-    @IBAction func cansos(sender: UIButton) {
-        var sb = UIStoryboard(name:"Main", bundle: nil)
-        var vc = sb.instantiateViewControllerWithIdentifier("tabone") as! OneViewController
-       self.navigationController?.pushViewController(vc, animated: true)
-
-    }
-    
-    @IBAction func sos(sender: UIButton) {
-        var sb = UIStoryboard(name:"Main", bundle: nil)
-        var vc = sb.instantiateViewControllerWithIdentifier("publishController") as! PublishViewController
-        vc.cat=0;
-        self.navigationController?.pushViewController(vc, animated: true)
-
-    }
-    var items:[itemDaymic]=[]
+       var items:[itemDaymic]=[]
      var ggid:String = "";
     
+    @IBOutlet weak var galleryScrollView: UIScrollView!
+    @IBOutlet weak var galleryPageControl: UIPageControl!
     
     @IBOutlet weak var ggview: UIView!
     
-    @IBOutlet weak var _tableview: UITableView!
+
     //定位管理器
     //let locationManager:CLLocationManager = CLLocationManager()
     var locService:BMKLocationService!
     var marquee: CHWMarqueeView?
+    var timer:NSTimer!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,15 +37,13 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         
         
        self.view.userInteractionEnabled=true
+        pictureGallery();
         
         showgg()
-        
-        _tableview!.delegate=self
-        _tableview!.dataSource=self
-
+      
         self.automaticallyAdjustsScrollViewInsets = false
         
-        querydata()
+        
         self.appDelegate().connect()
         
 
@@ -78,6 +60,29 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
        
      }
     
+    
+    
+    @IBAction func gonggaobtn(sender: UIButton) {
+        
+        var urlstr:String="http://api.bbxiaoqu.com/wap/gonggao.php?id=".stringByAppendingString(ggid)
+        var url=NSURL(string: urlstr)
+        UIApplication.sharedApplication().openURL(url!)
+    }
+    @IBAction func cansos(sender: UIButton) {
+        var sb = UIStoryboard(name:"Main", bundle: nil)
+        var vc = sb.instantiateViewControllerWithIdentifier("tabone") as! OneViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+    @IBAction func sos(sender: UIButton) {
+        var sb = UIStoryboard(name:"Main", bundle: nil)
+        var vc = sb.instantiateViewControllerWithIdentifier("publishController") as! PublishViewController
+        vc.cat=0;
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+
     //处理方向变更信息
     func didUpdateUserHeading(userLocation: BMKUserLocation!) {
         if(userLocation.location != nil)
@@ -126,70 +131,13 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
 
     
     
-    //MARK: 加载数据
-    func upPullLoadData(){
-        //延迟执行 模拟网络延迟，实际开发中去掉
-        xwDelay(1) { () -> Void in
-            self.querydata()
-            self._tableview.reloadData()
-            self._tableview.headerView?.endRefreshing()
-        }
-    }
-    
-    func downPlullLoadData(){
-        xwDelay(1) { () -> Void in
-            self.querydata()
-            self._tableview.reloadData()
-            self._tableview.footerView?.endRefreshing()
-        }
-     }
-    
-
-    
-    func querydata()
-    {
-        let defaults = NSUserDefaults.standardUserDefaults();
-        let userid = defaults.objectForKey("userid") as! String;
-        let url:String="http://www.bbxiaoqu.com/getdynamics.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&start=0&limit=20");
-        print("url: \(url)")
-        Alamofire.request(.GET, url, parameters: nil)
-            .responseJSON { response in
-                if(response.result.isSuccess)
-                {
-                if let jsonItem = response.result.value as? NSArray{
-                    for data in jsonItem{
-                        print("data: \(data)")
-                        let id:String = data.objectForKey("id") as! String;
-                        let userid:String = data.objectForKey("userid") as! String;
-                        let username:String = data.objectForKey("username") as! String;
-                        let actionname:String = data.objectForKey("actionname") as! String;
-                        let actiontime:String = data.objectForKey("actiontime") as! String;
-                        let guid:String = data.objectForKey("guid") as! String;
-                        let messdesc:String = data.objectForKey("messdesc") as! String;
-                       
-                        let item_obj:itemDaymic = itemDaymic(id: id, userid: userid, username: username, actionname: actionname, actiontime: actiontime, guid: guid, messdesc: messdesc)
-                        self.items.append(item_obj)
-                        
-                    }
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self._tableview.reloadData();
-                        self._tableview.doneRefresh();
-                    })
-                }
-                }else
-                {
-                    self.successNotice("网络请求错误")
-                    print("网络请求错误")
-                }
-        }
-        
-    }
-
+  
+  
     
     func showpage()
     {
         print("showggpage")
-        var urlstr:String="http://www.bbxiaoqu.com/wap/gonggao.php?id=".stringByAppendingString(ggid)
+        var urlstr:String="http://api.bbxiaoqu.com/wap/gonggao.php?id=".stringByAppendingString(ggid)
         var url=NSURL(string: urlstr)
         UIApplication.sharedApplication().openURL(url!)
 
@@ -197,7 +145,7 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     func showgg()
     {
-        var url:String="http://www.bbxiaoqu.com/gonggao.php"
+        var url:String="http://api.bbxiaoqu.com/gonggao.php"
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { response in
@@ -277,102 +225,71 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return self.items.count;
-    }
-    
-    
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-        
-    {
-        
-        
-        
-        let cellId = "daymiccell"
-        
-        //无需强制转换
-        
-        var cell:DynamicTableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellId) as! DynamicTableViewCell
-        
-        if(cell == nil)
+    var pics:[String]=["banner1","banner2","banner3","banner4"]
+    func pictureGallery(){   //实现图片滚动播放；
+        //image width
+        let imageW:CGFloat = self.galleryScrollView.frame.size.width;//获取ScrollView的宽作为图片的宽；
+        let imageH:CGFloat = self.galleryScrollView.frame.size.height;//获取ScrollView的高作为图片的高；
+        var imageY:CGFloat = 0;//图片的Y坐标就在ScrollView的顶端；
+        var totalCount:NSInteger = 4//轮播的图片数量；
+        for index in 0..<totalCount{
+            var imageView:UIImageView = UIImageView();
+            let imageX:CGFloat = CGFloat(index) * imageW;
+            imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);//设置图片的大小，注意Image和ScrollView的关系，其实几张图片是按顺序从左向右依次放置在ScrollView中的，但
+//            
+//            let nsdq = NSData(contentsOfURL:NSURL(string: self.pics[index])!)
+//            
+//            if(nsdq != nil)
+//            {
+//                
+//                var img = UIImage(data: nsdq!);
+//                
+//                imageView.image = img;
+//                imageView.contentMode=UIViewContentMode.ScaleAspectFit
+//            }
+            //let name:String = String(format: "gallery%d", index+1);
+            imageView.image = UIImage(named:  self.pics[index]);
             
-        {
-            
-            cell = DynamicTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
-            
+            self.galleryScrollView.showsHorizontalScrollIndicator = false;//不设置水平滚动条；
+            self.galleryScrollView.addSubview(imageView);//把图片加入到ScrollView中去，实现轮播的效果；
         }
         
-        
-        cell?.name.text=(self.items[indexPath.row] as itemDaymic).username
-        
-        
-        cell?.time.text=(self.items[indexPath.row] as itemDaymic).actiontime
-        
-      
-        //lable3?.w
-         //var label = UILabel(frame: CGRectMake(0,0,ScreenWidth,0))
-        //var viewBounds:CGRect = UIScreen.mainScreen().applicationFrame
-       // lable3?.frame = CGRectMake(0,0,viewBounds.width/2,0);
-        cell?.info?.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        cell?.info?.numberOfLines=0
-        
-        
-        if((self.items[indexPath.row] as itemDaymic).actionname=="join")
-        {
-            
-            cell?.tag1?.image = UIImage(named: "dynamic_info_left")
-            cell?.tag2?.image = UIImage(named: "dynamic_info_icon")
-            cell?.info?.text="加入了小区"
-
-        }else if((self.items[indexPath.row] as itemDaymic).actionname=="publish")
-        {
-            cell?.tag1?.image = UIImage(named: "dynamic_join_left")
-            cell?.tag2?.image = UIImage(named: "dynamic_join_icon")
-           
-            cell?.info?.text=(self.items[indexPath.row] as itemDaymic).messdesc
-
-        }else if((self.items[indexPath.row] as itemDaymic).actionname=="solution")
-        {
-            
-            cell?.tag1?.image = UIImage(named: "dynamic_name_left")
-            cell?.tag2?.image = UIImage(named: "dynamic_name_icon")
-            cell?.info?.text="获得一个雷锋称号"
-
-        }
-        
-        return cell!
-        
-        
+        //需要非常注意的是：ScrollView控件一定要设置contentSize;包括长和宽；
+        let contentW:CGFloat = imageW * CGFloat(totalCount);//这里的宽度就是所有的图片宽度之和；
+        self.galleryScrollView.contentSize = CGSizeMake(contentW, 0);
+        self.galleryScrollView.pagingEnabled = true;
+        self.galleryScrollView.delegate = self;
+        self.galleryPageControl.numberOfPages = totalCount;//下面的页码提示器；
+        self.addTimer()
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
-    {
-        NSLog("select \(indexPath.row)")
-        if((self.items[indexPath.row] as itemDaymic).actionname=="publish")
-        {
-            var guid:String = (self.items[indexPath.row] as itemDaymic).guid
-            
-            let sb = UIStoryboard(name:"Main", bundle: nil)
-            let vc = sb.instantiateViewControllerWithIdentifier("contentviewController") as! ContentViewController
-            //创建导航控制器
-            //vc.message = aa.content;
-            vc.guid=guid
-            vc.infoid=guid
-            // let nvc=UINavigationController(rootViewController:vc);
-            //设置根视图
-            //  self.view.window!.rootViewController=nvc;
-            self.navigationController?.pushViewController(vc, animated: true)
+    func nextImage(sender:AnyObject!){//图片轮播；
+        var page:Int = self.galleryPageControl.currentPage;
+        if(page == 4){   //循环；
+            page = 0;
+        }else{
+            page++;
         }
-       
+        let x:CGFloat = CGFloat(page) * self.galleryScrollView.frame.size.width;
+        self.galleryScrollView.contentOffset = CGPointMake(x, 0);//注意：contentOffset就是设置ScrollView的偏移；
     }
-    
 
 
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        //这里的代码是在ScrollView滚动后执行的操作，并不是执行ScrollView的代码；
+        //这里只是为了设置下面的页码提示器；该操作是在图片滚动之后操作的；
+        let scrollviewW:CGFloat = galleryScrollView.frame.size.width;
+        let x:CGFloat = galleryScrollView.contentOffset.x;
+        let page:Int = (Int)((x + scrollviewW / 2) / scrollviewW);
+        self.galleryPageControl.currentPage = page;
+        
+    }
+
+    func addTimer(){   //图片轮播的定时器；
+                self.timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "nextImage:", userInfo: nil, repeats: true);
+           }
+        
     /*
     // MARK: - Navigation
 
@@ -453,7 +370,7 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
 //                let _token = defaults.objectForKey("token") as! NSString;
 //                //更新下地理位置
 //                
-//                Alamofire.request(.POST, "http://www.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
+//                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
 //                    .responseJSON { response in
 //                        print(response.request)  // original URL request
 //                        print(response.response) // URL response
@@ -467,7 +384,7 @@ class MainViewController: UIViewController,UITableViewDataSource,UITableViewDele
 //                
 //                
 //                
-//                Alamofire.request(.POST, "http://www.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
+//                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
 //                    .responseJSON { response in
 //                        print(response.request)  // original URL request
 //                        print(response.response) // URL response

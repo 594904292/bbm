@@ -244,7 +244,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 
                 cell?.tel.tag = indexPath.row
                 cell?.tel.addTarget(self,action:Selector("teltapped:"),forControlEvents:.TouchUpInside)
-                var head:String = "http://www.bbxiaoqu.com/uploads/"+(fwitems[indexPath.row] as itemfwMess).headface
+                var head:String = "http://api.bbxiaoqu.com/uploads/"+(fwitems[indexPath.row] as itemfwMess).headface
                 Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
                     if let d = data as? NSData!
                     {
@@ -316,12 +316,12 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                             {
                                 var myArray = ppp.componentsSeparatedByString(",")
                                 var headname = myArray[0] as String
-                                head = "http://www.bbxiaoqu.com/uploads/"+headname
+                                head = "http://api.bbxiaoqu.com/uploads/"+headname
                                 
                                  NSLog("-1--\(head)")
                             }else
                             {
-                                head = "http://www.bbxiaoqu.com/uploads/"+ppp
+                                head = "http://api.bbxiaoqu.com/uploads/"+ppp
                                  NSLog("-2--\(head)")
                             }
                             
@@ -500,20 +500,20 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         
         if(Category==0)
         {
-            url="http://www.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&status=0&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&status=0&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         
         }else if(Category==1)
         {
-            url="http://www.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqu&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         }else if(Category==2)
         {
-            url="http://www.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=self&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://api.bbxiaoqu.com/getinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=self&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         }else if(Category==3)
         {
-            url="http://www.bbxiaoqu.com/getfwinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqufw&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
+            url="http://api.bbxiaoqu.com/getfwinfos.php?userid=".stringByAppendingString(userid).stringByAppendingString("&rang=xiaoqufw&status=1&start=").stringByAppendingString(String(self.start)).stringByAppendingString("&limit=").stringByAppendingString(String(self.limit));
 
         }
         if(Category==3)
@@ -714,7 +714,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 let _token = defaults.objectForKey("token") as! NSString;
                 //更新下地理位置
                 
-                Alamofire.request(.POST, "http://www.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
+                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
                     .responseJSON { response in
                         print(response.request)  // original URL request
                         print(response.response) // URL response
@@ -728,7 +728,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                 
                 
                 
-                Alamofire.request(.POST, "http://www.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
+                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
                     .responseJSON { response in
                         print(response.request)  // original URL request
                         print(response.response) // URL response

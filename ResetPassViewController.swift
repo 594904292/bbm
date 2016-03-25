@@ -39,7 +39,7 @@ class ResetPassViewController: UIViewController {
         }
         
         let  dic:Dictionary<String,String> = ["_telphone" : telphone,"_password" : pass1.text!]
-        Alamofire.request(.POST, "http://www.bbxiaoqu.com/resetpass.php", parameters: dic)
+        Alamofire.request(.POST, "http://api.bbxiaoqu.com/resetpass.php", parameters: dic)
             .responseJSON { response in
                 print(response.request)  // original URL request
                 print(response.response) // URL response
