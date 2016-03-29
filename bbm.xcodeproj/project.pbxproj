@@ -312,6 +312,9 @@
 		49FE1DC61BD0F0BA009B81D9 /* SimMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DC51BD0F0BA009B81D9 /* SimMessageItem.swift */; };
 		49FE1DC81BD0F2D8009B81D9 /* SimChatDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DC71BD0F2D8009B81D9 /* SimChatDataSource.swift */; };
 		49FE1DCA1BD0F634009B81D9 /* SimTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DC91BD0F634009B81D9 /* SimTableViewCell.swift */; };
+		80578F651CAA4EC80000F891 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F641CAA4EC80000F891 /* TopViewController.swift */; };
+		80578F671CAA57530000F891 /* TopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F661CAA57530000F891 /* TopTableViewCell.swift */; };
+		80578F691CAA66470000F891 /* itemTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F681CAA66470000F891 /* itemTop.swift */; };
 		9C709A991C887C170019B91A /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 491398641BC8EAA4007866C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C709A9B1C8A656A0019B91A /* ContentfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */; };
 		9C709A9D1C8A65870019B91A /* PublishfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */; };
@@ -865,6 +868,9 @@
 		49FE1DC51BD0F0BA009B81D9 /* SimMessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimMessageItem.swift; sourceTree = "<group>"; };
 		49FE1DC71BD0F2D8009B81D9 /* SimChatDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimChatDataSource.swift; sourceTree = "<group>"; };
 		49FE1DC91BD0F634009B81D9 /* SimTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimTableViewCell.swift; sourceTree = "<group>"; };
+		80578F641CAA4EC80000F891 /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
+		80578F661CAA57530000F891 /* TopTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTableViewCell.swift; sourceTree = "<group>"; };
+		80578F681CAA66470000F891 /* itemTop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = itemTop.swift; sourceTree = "<group>"; };
 		9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentfwViewController.swift; sourceTree = "<group>"; };
 		9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishfwViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1025,6 +1031,7 @@
 				49F3E7F11C293A370036F7C7 /* GzInfosTableViewController.swift */,
 				49F6E98C1C3A0DEC007E5B0F /* PicViewController.swift */,
 				49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */,
+				80578F641CAA4EC80000F891 /* TopViewController.swift */,
 			);
 			path = bbm;
 			sourceTree = "<group>";
@@ -2149,6 +2156,7 @@
 				49F6E98E1C3A297B007E5B0F /* XiaoquTableViewCell.swift */,
 				49F6E9A61C3CD57F007E5B0F /* PlTableViewCell.swift */,
 				49F670471C7EB7740026E8CE /* fwTableViewCell.swift */,
+				80578F661CAA57530000F891 /* TopTableViewCell.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -2170,6 +2178,7 @@
 				49F6E9A41C3CBB24007E5B0F /* sqlitehelp.swift */,
 				4913986D1BC8F9F0007866C1 /* DbHelp.swift */,
 				49F670491C7EBF220026E8CE /* itemfwMess.swift */,
+				80578F681CAA66470000F891 /* itemTop.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -2599,6 +2608,7 @@
 				49F3E7EC1C291F220036F7C7 /* FriendsTableViewController.swift in Sources */,
 				49F3E7A21C27EA720036F7C7 /* XMPPvCardTempTel.m in Sources */,
 				49F3E7A61C27EA720036F7C7 /* XMPPPubSub.m in Sources */,
+				80578F671CAA57530000F891 /* TopTableViewCell.swift in Sources */,
 				49F3E7861C27EA720036F7C7 /* XMPPLastActivity.m in Sources */,
 				49F3E7881C27EA720036F7C7 /* XMPPRoom.xcdatamodeld in Sources */,
 				49F3E7981C27EA720036F7C7 /* XMPPvCardCoreDataStorage.m in Sources */,
@@ -2633,6 +2643,7 @@
 				49FE1DBC1BD0AD11009B81D9 /* UserInfo.swift in Sources */,
 				49F3E7AF1C27EA720036F7C7 /* XMPPTransports.m in Sources */,
 				49F3E76D1C27EA720036F7C7 /* XMPPParser.m in Sources */,
+				80578F691CAA66470000F891 /* itemTop.swift in Sources */,
 				497E7B7F1BCCFC2000BAEB2F /* MyInfoiewController.swift in Sources */,
 				49F3E78B1C27EA720036F7C7 /* XMPPRoomOccupantCoreDataStorageObject.m in Sources */,
 				49F3E7A31C27EA720036F7C7 /* NSXMLElement+XEP_0059.m in Sources */,
@@ -2650,6 +2661,7 @@
 				4987FF651C17C113006361F8 /* XWRefreshGifHeader.swift in Sources */,
 				4987FF621C17C113006361F8 /* XWRefreshAutoNormalFooter.swift in Sources */,
 				49F3E7E01C27EA730036F7C7 /* DDDispatchQueueLogFormatter.m in Sources */,
+				80578F651CAA4EC80000F891 /* TopViewController.swift in Sources */,
 				49F3E7AE1C27EA720036F7C7 /* XMPPSoftwareVersion.m in Sources */,
 				9C709A9D1C8A65870019B91A /* PublishfwViewController.swift in Sources */,
 				49F3E7A91C27EA720036F7C7 /* XMPPMessage+XEP_0066.m in Sources */,
