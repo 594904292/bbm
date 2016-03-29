@@ -154,10 +154,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         loadinfo(guid);
         
         setupSendPanel1()
-
-        // querydata()
-        
-    }
+  }
     
     
     
@@ -652,8 +649,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     
     func keyBoardWillShow(note:NSNotification)
     {
-        
-        
         let userInfo  = note.userInfo as! NSDictionary
         var  keyBoardBounds = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue

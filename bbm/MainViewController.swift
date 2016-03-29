@@ -83,6 +83,16 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         
     }
 
+    
+    @IBAction func top(sender: UIButton) {
+        var sb = UIStoryboard(name:"Main", bundle: nil)
+        var vc = sb.instantiateViewControllerWithIdentifier("topviewController") as! TopViewController
+       
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+
     //处理方向变更信息
     func didUpdateUserHeading(userLocation: BMKUserLocation!) {
         if(userLocation.location != nil)

@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+
 class OneViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,ApnsDelegate ,UINavigationControllerDelegate{
 
     var start:Int = 0
@@ -110,8 +111,8 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     {
         NSLog("addClick");
         var sb = UIStoryboard(name:"Main", bundle: nil)
-        var vc = sb.instantiateViewControllerWithIdentifier("publishfwController") as! PublishfwViewController
-        vc.cat=3
+        var vc = sb.instantiateViewControllerWithIdentifier("publishController") as! PublishViewController
+        vc.cat=0
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -408,8 +409,15 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     }
     
     
-    
-    
+//    func getDistance(lat1:Double ,lat2:Double ,lon1:Double ,lon2:Double )->Double{
+//        var R:Double = 6371;
+//        
+//    //两点间距离 km，如果想要米的话，结果*1000就可以了
+//        var math:Math= new; Math();
+//        var d:Double =  Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1)*Math.cos(lat2) * Math.cos(lon2-lon1))*R;
+//    
+//        return d*1000;
+//    }
     
     func querydata(Category:Int)
     {
@@ -456,10 +464,64 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                                 
                             }
                             let guid:String = data.objectForKey("guid") as! String;
-                            let sendtime:String = data.objectForKey("sendtime") as! String;
-                            let address:String = data.objectForKey("address") as! String;
+                            let sendtime:String;
+                            var temptime:String=data.objectForKey("sendtime") as! String;
+                              if(temptime.containsString("2016-03-28"))
+                              {
+                                sendtime = temptime.subStringFrom(11)
+                                
+                              }else
+                              {
+                                
+                                sendtime = (temptime as NSString).substringWithRange(NSRange(location: 0,length: 10))
+                              }
+                                
+                                
+                                
+                            //let address:String = data.objectForKey("address") as! String;
+                                
                             let lng:String = data.objectForKey("lng") as! String;
                             let lat:String = data.objectForKey("lat") as! String;
+                                
+                                
+                            var lat_1=(lat as NSString).doubleValue;
+                            var lng_1=(lng as NSString).doubleValue;
+                                
+                            let defaults = NSUserDefaults.standardUserDefaults();
+                            let userid = defaults.objectForKey("userid") as! String;
+                            let mylat = defaults.objectForKey("lat") as! String;
+                            let mylng = defaults.objectForKey("lng") as! String;
+                                
+                                
+                            var lat_2=(mylat as NSString).doubleValue;
+                            var lng_2=(mylng as NSString).doubleValue;
+                            var address:String="";
+     
+                                if(false)
+                                {
+                                    var currentLocation:CLLocation = CLLocation(latitude:lat_1,longitude:lng_1);
+                                    var targetLocation:CLLocation = CLLocation(latitude:lat_2,longitude:lng_2);
+                                        
+                                        
+                                    var distance:CLLocationDistance=currentLocation.distanceFromLocation(targetLocation);
+                                     address = ("\(distance)米");
+                                }else
+                                {
+                                    var p1:BMKMapPoint = BMKMapPointForCoordinate(CLLocationCoordinate2D(latitude: lat_1, longitude: lng_1))
+                                    var p2:BMKMapPoint = BMKMapPointForCoordinate(CLLocationCoordinate2D(latitude: lat_2, longitude: lng_2))
+                                    //var a2:BMKMapPoint = CLLocationCoordinate2D(latitude: lat_2, longitude: lng_2)
+                                    
+                                     var distance:CLLocationDistance = BMKMetersBetweenMapPoints(p1, p2);
+                                    
+                                    
+                                    var one:UInt16 = UInt16(distance)
+                                      address = ("\(one)米");
+                                }
+                                
+                                
+                                
+                                
+                                
                             let photo:String = data.objectForKey("photo") as! String;
                             var community:String = ""
                              if(data.objectForKey("community")!.isKindOfClass(NSNull))
