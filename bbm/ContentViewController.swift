@@ -128,12 +128,22 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         let defaults = NSUserDefaults.standardUserDefaults();
         senduserid = defaults.objectForKey("userid") as! String;
         let sb = UIStoryboard(name:"Main", bundle: nil)
-        let vc = sb.instantiateViewControllerWithIdentifier("chatviewController") as! ChatViewController
-        //创建导航控制器
-        vc.from=puserid
-        vc.myself=senduserid;
-        self.navigationController?.pushViewController(vc, animated: true)
+        if(puserid==senduserid)
+        {
+            let vc = sb.instantiateViewControllerWithIdentifier("bmuserviewcontroller") as! BmUserViewController
+            //创建导航控制器
+            vc.guid=self.guid;
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else
+        {
+            let vc = sb.instantiateViewControllerWithIdentifier("chatviewController") as! ChatViewController
+            //创建导航控制器
+            vc.from=puserid
+            vc.myself=senduserid;
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
 
+        
     }
     
     
@@ -223,7 +233,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                      }
                     //
                     var sqlitehelpInstance1=sqlitehelp.shareInstance()
-                    
                     let defaults = NSUserDefaults.standardUserDefaults();
                     var userid = defaults.objectForKey("userid") as! String;
                     if(sqlitehelpInstance1.isexitgz(self.guid, userid: userid))
@@ -311,15 +320,10 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                                 self._tableview.doneRefresh();
                                 }
                             })
-
-                            
-                            
     
                         }
                         
-                        
-                        //NSLog("\(self.Chats.count)")
-                        self._tableview.reloadData();
+                         self._tableview.reloadData();
     
                     }
             }else
@@ -502,15 +506,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                 .responseJSON { response in
                     if(response.result.isSuccess)
                     {
-
-                        print(response.request)  // original URL request
-                        print(response.response) // URL response
-                        print(response.data)     // server data
-                        print(response.result)   // result of response serialization
-                        print(response.result.value)
-                        //                if let JSON = response.result.value {
-                        //                    print("JSON: \(JSON)")
-                        //                }
                         self.isjb=true;
                          self.reportbtn.hidden=false
                         self.reportbtn.setTitle("已举报", forState: UIControlState.Normal)
@@ -569,7 +564,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             if(self.solutionid==(self.items[indexPath.row] as itempl).id)
             {
                 //cell?.plgoodbtn.titleLabel?.text="获最佳"
-                cell?.plgoodbtn.setTitle("最佳", forState: UIControlState.Normal)
+                cell?.plgoodbtn.setTitle("获最佳", forState: UIControlState.Normal)
                 cell?.plgoodbtn.enabled=false;
                 cell?.plgoodbtn.hidden=false
 

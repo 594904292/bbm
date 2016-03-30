@@ -14,17 +14,20 @@ class TopViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     var items:[itemTop]=[]
 
     
+    @IBOutlet weak var topnum: UILabel!
+    @IBOutlet weak var topnumdesc: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        self.navigationItem.title="top"
+        self.navigationItem.title="排行榜"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         
         _tableview.delegate=self
         _tableview.dataSource=self
-        
+        loadrate();
         querydata();
     }
 
@@ -33,6 +36,35 @@ class TopViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         // Dispose of any resources that can be recreated.
     }
     
+    func backClick()
+    {
+        NSLog("back");
+        self.navigationController?.popViewControllerAnimated(true)
+        
+    }
+    func loadrate()
+    {
+        var url:String="http://api.bbxiaoqu.com/myrank.php?userid=888";
+        print("url: \(url)")
+        Alamofire.request(.GET, url, parameters: nil)
+            .response { (request, response, data, error) in
+//            print(request)
+//            print(response)
+//            print(data)
+//            print(error)
+                let tn:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
+                print(tn)
+                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+               
+                    
+                self.topnum.text=tn as String
+
+                self.topnumdesc.text="你排名是第".stringByAppendingString(tn as String).stringByAppendingString("位")
+                 });
+        }
+        
+        
+    }
     
     
     func querydata()
