@@ -11,8 +11,9 @@ import Alamofire
 
 class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate {
     var cat=0;
-    @IBOutlet weak var content: UITextField!
+    //@IBOutlet weak var content: UITextField!
     @IBOutlet weak var contenttip: UILabel!
+    @IBOutlet weak var content: UITextView!
     
     @IBOutlet weak var picdiv: UIView!
     var alertView:UIAlertView?
@@ -42,11 +43,11 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         if(cat==0)
         {
              self.navigationItem.title="求帮助"
-            content.placeholder="请输入你的求助信息"
+            //content.placeholder="请输入你的求助信息"
         }else if(cat==3)
         {
              self.navigationItem.title="能帮助"
-            content.placeholder="请输入你的能帮助信息"
+            //content.placeholder="请输入你的能帮助信息"
         }
 
         

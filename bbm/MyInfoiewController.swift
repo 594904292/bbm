@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , UIPickerViewDelegate, UIPickerViewDataSource,ChangeWordDelegate,UIImagePickerControllerDelegate,UIActionSheetDelegate{
+class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , UIPickerViewDelegate, UIPickerViewDataSource,UIImagePickerControllerDelegate,UIActionSheetDelegate{
     
     var fullPath:String = "";
     var xiaoquid:String = "";
@@ -19,7 +19,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
     @IBOutlet weak var headface: UIImageView!
     @IBOutlet weak var nickname: UITextField!
     @IBOutlet weak var age: UITextField!
-    @IBOutlet weak var xiaoqu: UITextField!
+    //@IBOutlet weak var xiaoqu: UITextField!
     @IBOutlet weak var tel: UITextField!
     @IBOutlet weak var sex: UIPickerView!
     
@@ -27,7 +27,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
     @IBAction func controlTouchdown(sender: UIControl) {
         nickname.resignFirstResponder()
         age.resignFirstResponder()
-        xiaoqu.resignFirstResponder()
+        //xiaoqu.resignFirstResponder()
         tel.resignFirstResponder()
         sex.resignFirstResponder()
     }
@@ -49,14 +49,14 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
     }
     
     
-    func changeWord(controller:XiaoquTableViewController,xqname:String,xqid:String,xqlat:String,xqlng:String){
-        //qzLabel!.text = string
-        xiaoqu.text=xqname
-        xiaoquid=xqid;
-        xiaoquname=xqname;
-        xiaoqulat=xqlat;
-        xiaoqulng=xqlng;
-    }
+//    func changeWord(controller:XiaoquTableViewController,xqname:String,xqid:String,xqlat:String,xqlng:String){
+//        //qzLabel!.text = string
+//        xiaoqu.text=xqname
+//        xiaoquid=xqid;
+//        xiaoquname=xqname;
+//        xiaoqulat=xqlat;
+//        xiaoqulng=xqlng;
+//    }
     
     
     @IBAction func savemyinfo(sender: UIButton) {
@@ -105,17 +105,17 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
         }
     }
     
-    @IBAction func selectxq(sender: UIButton) {
-        print("xiaoqu")
-        var sb = UIStoryboard(name:"Main", bundle: nil)
-        var vc = sb.instantiateViewControllerWithIdentifier("xiaoqutableviewcontroller") as! XiaoquTableViewController
-        vc.delegate=self;
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    @IBAction func selectxq(sender: UIButton) {
+//        print("xiaoqu")
+//        var sb = UIStoryboard(name:"Main", bundle: nil)
+//        var vc = sb.instantiateViewControllerWithIdentifier("xiaoqutableviewcontroller") as! XiaoquTableViewController
+//        vc.delegate=self;
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
     
     var selsexpicker:String="男";
     var arr = [String]()
-     var xiaoqudl : xiaoquDelegate?
+    //var xiaoqudl : xiaoquDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         arr = ["男","女"]
@@ -187,39 +187,39 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                         let telphone:String = JSON[0].objectForKey("telphone") as! String;
                         let headfaceurl:String = JSON[0].objectForKey("headface") as! String;
                         let username:String = JSON[0].objectForKey("username") as! String;
-                        var community:String;
-                        if(JSON[0].objectForKey("community")!.isKindOfClass(NSNull))
-                        {
-                            community="";
-                        }else
-                        {
-                            community = JSON[0].objectForKey("community") as! String;
-                        }
-                        var community_id:String;
-                        if(JSON[0].objectForKey("community_id")!.isKindOfClass(NSNull))
-                        {
-                            community_id="";
-                        }else
-                        {
-                            community_id = JSON[0].objectForKey("community_id") as! String;
-                        }
-                        
-                        var community_lat:String;
-                        if(JSON[0].objectForKey("community_lat")!.isKindOfClass(NSNull))
-                        {
-                            community_lat="";
-                        }else
-                        {
-                            community_lat = JSON[0].objectForKey("community_lat") as! String;
-                        }
-                        var community_lng:String;
-                        if(JSON[0].objectForKey("community_lng")!.isKindOfClass(NSNull))
-                        {
-                            community_lng="";
-                        }else
-                        {
-                            community_lng = JSON[0].objectForKey("community_lng") as! String;
-                        }
+//                        var community:String;
+//                        if(JSON[0].objectForKey("community")!.isKindOfClass(NSNull))
+//                        {
+//                            community="";
+//                        }else
+//                        {
+//                            community = JSON[0].objectForKey("community") as! String;
+//                        }
+//                        var community_id:String;
+//                        if(JSON[0].objectForKey("community_id")!.isKindOfClass(NSNull))
+//                        {
+//                            community_id="";
+//                        }else
+//                        {
+//                            community_id = JSON[0].objectForKey("community_id") as! String;
+//                        }
+//                        
+//                        var community_lat:String;
+//                        if(JSON[0].objectForKey("community_lat")!.isKindOfClass(NSNull))
+//                        {
+//                            community_lat="";
+//                        }else
+//                        {
+//                            community_lat = JSON[0].objectForKey("community_lat") as! String;
+//                        }
+//                        var community_lng:String;
+//                        if(JSON[0].objectForKey("community_lng")!.isKindOfClass(NSNull))
+//                        {
+//                            community_lng="";
+//                        }else
+//                        {
+//                            community_lng = JSON[0].objectForKey("community_lng") as! String;
+//                        }
                         
                         var age:String;
                         if(JSON[0].objectForKey("age")!.isKindOfClass(NSNull))
@@ -240,14 +240,14 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                         }
                         
                         
-                        self.xiaoquid=community_id;
-                        self.xiaoquname=community;
-                        self.xiaoqulat=community_lat;
-                        self.xiaoqulng=community_lng;
+//                        self.xiaoquid=community_id;
+//                        self.xiaoquname=community;
+//                        self.xiaoqulat=community_lat;
+//                        self.xiaoqulng=community_lng;
                         
                         self.nickname.text=username;
                         self.tel.text=telphone;
-                        self.xiaoqu.text=community;
+                        //self.xiaoqu.text=community;
                         self.age.text=age;
                         
                         //print("JSON1: \(self.sex?.selectedRowInComponent(0))")
@@ -260,14 +260,14 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                         }
                         
                         
-                        self.xiaoquid=community_id;
-                        self.xiaoquname=community;
-                        self.xiaoqulat=community_lat;
-                        self.xiaoqulng=community_lng;
+//                        self.xiaoquid=community_id;
+//                        self.xiaoquname=community;
+//                        self.xiaoqulat=community_lat;
+//                        self.xiaoqulng=community_lng;
                         
                         self.nickname.text=username;
                         self.tel.text=telphone;
-                        self.xiaoqu.text=community;
+                        //self.xiaoqu.text=community;
                         self.age.text=age;
                         
                         //print("JSON1: \(self.sex?.selectedRowInComponent(0))")

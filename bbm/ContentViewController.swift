@@ -115,14 +115,11 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.gzbtn.setTitle("收藏", forState: UIControlState.Normal)
                     self.successNotice("取消收藏成功")
-                    
                 })
-                
-
             }
         }
-        
     }
+    
     @IBOutlet weak var _tableview: UITableView!
     @IBAction func runchat(sender: UIButton) {
         let defaults = NSUserDefaults.standardUserDefaults();
@@ -136,14 +133,17 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             self.navigationController?.pushViewController(vc, animated: true)
         }else
         {
-            let vc = sb.instantiateViewControllerWithIdentifier("chatviewController") as! ChatViewController
+//            let vc = sb.instantiateViewControllerWithIdentifier("chatviewController") as! ChatViewController
+//            //创建导航控制器
+//            vc.from=puserid
+//            vc.myself=senduserid;
+//            self.navigationController?.pushViewController(vc, animated: true)
+            
+            let vc = sb.instantiateViewControllerWithIdentifier("userinfoviewcontroller") as! UserInfoViewController
             //创建导航控制器
-            vc.from=puserid
-            vc.myself=senduserid;
+            vc.userid=self.puserid;
             self.navigationController?.pushViewController(vc, animated: true)
         }
-
-        
     }
     
     
@@ -163,10 +163,23 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         collectionView.backgroundColor = UIColor.whiteColor()
         loadinfo(guid);
         
+        self.headimgview!.userInteractionEnabled = true
+        self.headimgview.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("showuser")))
+        //self.marquee!.userInteractionEnabled = true
+        //self.marquee!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("showpage")))
+        
         setupSendPanel1()
   }
     
-    
+    func showuser()
+    {
+        let sb = UIStoryboard(name:"Main", bundle: nil)
+        let vc = sb.instantiateViewControllerWithIdentifier("userinfoviewcontroller") as! UserInfoViewController
+        //创建导航控制器
+        vc.userid=self.puserid;
+        self.navigationController?.pushViewController(vc, animated: true)
+
+    }
     
     func loadinfo(guid:String)
     {
@@ -278,31 +291,20 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     
         func loaddiscuzzBody(infoid:String)
         {
-    
             let url_str:String = "http://api.bbxiaoqu.com/getdiscuzz.php?infoid=".stringByAppendingString(infoid)
             Alamofire.request(.GET,url_str, parameters:nil)
-    
                 .responseJSON { response in
-                    
-                    if(response.result.isSuccess)
+                     if(response.result.isSuccess)
                     {
                     if let JSON = response.result.value as? NSArray {
-    
                         print("JSON1: \(JSON.count)")
-    
-                        if(JSON.count==0)
-    
-                        {
-    
-                        }else
+                        if(JSON.count>0)
                         {
                             for data in JSON{
                                 let id:String = data.objectForKey("id") as! String;
                                 let headface:String = data.objectForKey("headface") as! String;
                                 let sendtime:String = data.objectForKey("sendtime") as! String;
                                 let message:String = data.objectForKey("message") as! String;
-                                //let puid:String = data.objectForKey("touserid") as! String;
-                                //let pname:String = data.objectForKey("touser") as! String;
                                 let uid:String = data.objectForKey("senduserid") as! String;
                                 let username:String = data.objectForKey("senduser") as! String;
                                 let item_obj:itempl = itempl(id: id, userid: uid, username: username, headafce: headface, actiontime: sendtime, content: message)
@@ -312,7 +314,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                                 if(self.items.count==0)
                                 {
                                     self._tableview.hidden=true
-                                    //self._tableview.vi
                                 }else
                                 {
                                     self._tableview.hidden=false
@@ -322,27 +323,22 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                             })
     
                         }
-                        
-                         self._tableview.reloadData();
-    
+                          self._tableview.reloadData();
                     }
             }else
             {
                 self.successNotice("网络请求错误")
                 print("网络请求错误")
             }
-            }
-    
         }
     
+    }
+    
 
-    
-    
     func backClick()
     {
         NSLog("back");
          self.navigationController?.popViewControllerAnimated(true)
-        
     }
 
     
@@ -362,7 +358,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             alertView.delegate=self;
             alertView.show()
         }
-
     }
     
     
@@ -381,10 +376,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     func setupSendPanel1()
     {
         sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-50,self.view.frame.size.width,50))
-        
         sendView.backgroundColor=UIColor.grayColor()
         sendView.alpha=0.9
-        
         txtMsg = UITextField(frame:CGRectMake(7,10,225,36))
         txtMsg.backgroundColor = UIColor.whiteColor()
         txtMsg.textColor=UIColor.blackColor()
@@ -396,18 +389,13 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         txtMsg.placeholder = "输入消息内容"
         txtMsg.returnKeyType = UIReturnKeyType.Send
         txtMsg.enablesReturnKeyAutomatically  = true
-        
         sendView.addSubview(txtMsg)
         
         self.view.addSubview(sendView)
-        
-        
+
         let sendButton = UIButton(frame:CGRectMake(235,10,77,36))
-        
         sendButton.backgroundColor=UIColor.lightGrayColor()
-        
         sendButton.addTarget(self, action:Selector("sendMessage") ,forControlEvents:UIControlEvents.TouchUpInside)
-        
         sendButton.layer.cornerRadius=6.0
         sendButton.setTitle("发送", forState:UIControlState.Normal)
         
@@ -617,14 +605,12 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                 if(response.result.isSuccess)
                 {
                     
-                    print(response.request)  // original URL request
-                    print(response.response) // URL response
-                    print(response.data)     // server data
-                    print(response.result)   // result of response serialization
-                    print(response.result.value)
+//                    print(response.request)  // original URL request
+//                    print(response.response) // URL response
+//                    print(response.data)     // server data
+//                    print(response.result)   // result of response serialization
+//                    print(response.result.value)
                   
-                    
-                    
                     self.successNotice("已解决")
                     print("已解决")
 

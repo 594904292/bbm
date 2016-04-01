@@ -246,18 +246,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
             var imageView:UIImageView = UIImageView();
             let imageX:CGFloat = CGFloat(index) * imageW;
             imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);//设置图片的大小，注意Image和ScrollView的关系，其实几张图片是按顺序从左向右依次放置在ScrollView中的，但
-//            
-//            let nsdq = NSData(contentsOfURL:NSURL(string: self.pics[index])!)
-//            
-//            if(nsdq != nil)
-//            {
-//                
-//                var img = UIImage(data: nsdq!);
-//                
-//                imageView.image = img;
-//                imageView.contentMode=UIViewContentMode.ScaleAspectFit
-//            }
-            //let name:String = String(format: "gallery%d", index+1);
+
             imageView.image = UIImage(named:  self.pics[index]);
             
             self.galleryScrollView.showsHorizontalScrollIndicator = false;//不设置水平滚动条；
@@ -297,8 +286,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
     }
 
     func addTimer(){   //图片轮播的定时器；
-                self.timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "nextImage:", userInfo: nil, repeats: true);
-           }
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "nextImage:", userInfo: nil, repeats: true);
+    }
         
     /*
     // MARK: - Navigation
