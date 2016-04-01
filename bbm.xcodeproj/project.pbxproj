@@ -312,9 +312,16 @@
 		49FE1DC61BD0F0BA009B81D9 /* SimMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DC51BD0F0BA009B81D9 /* SimMessageItem.swift */; };
 		49FE1DC81BD0F2D8009B81D9 /* SimChatDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DC71BD0F2D8009B81D9 /* SimChatDataSource.swift */; };
 		49FE1DCA1BD0F634009B81D9 /* SimTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE1DC91BD0F634009B81D9 /* SimTableViewCell.swift */; };
+		80249C6F1CABA2DC00DF58A0 /* BmUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80249C6E1CABA2DC00DF58A0 /* BmUserViewController.swift */; };
+		80249C771CABC83700DF58A0 /* BmuserUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80249C761CABC83700DF58A0 /* BmuserUITableViewCell.swift */; };
+		80249C791CABCA0200DF58A0 /* ItemBm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80249C781CABCA0200DF58A0 /* ItemBm.swift */; };
+		80249C7B1CAD257F00DF58A0 /* EvaluateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80249C7A1CAD257F00DF58A0 /* EvaluateTableViewCell.swift */; };
+		80249C7D1CAD259D00DF58A0 /* ItemEvaluate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80249C7C1CAD259D00DF58A0 /* ItemEvaluate.swift */; };
+		80249C811CAE205D00DF58A0 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80249C801CAE205D00DF58A0 /* UserInfoViewController.swift */; };
 		80578F651CAA4EC80000F891 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F641CAA4EC80000F891 /* TopViewController.swift */; };
 		80578F671CAA57530000F891 /* TopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F661CAA57530000F891 /* TopTableViewCell.swift */; };
 		80578F691CAA66470000F891 /* itemTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F681CAA66470000F891 /* itemTop.swift */; };
+		80578F6B1CAB75C10000F891 /* RatingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F6A1CAB75C10000F891 /* RatingBar.swift */; };
 		9C709A991C887C170019B91A /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 491398641BC8EAA4007866C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C709A9B1C8A656A0019B91A /* ContentfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */; };
 		9C709A9D1C8A65870019B91A /* PublishfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */; };
@@ -868,9 +875,16 @@
 		49FE1DC51BD0F0BA009B81D9 /* SimMessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimMessageItem.swift; sourceTree = "<group>"; };
 		49FE1DC71BD0F2D8009B81D9 /* SimChatDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimChatDataSource.swift; sourceTree = "<group>"; };
 		49FE1DC91BD0F634009B81D9 /* SimTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimTableViewCell.swift; sourceTree = "<group>"; };
+		80249C6E1CABA2DC00DF58A0 /* BmUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BmUserViewController.swift; sourceTree = "<group>"; };
+		80249C761CABC83700DF58A0 /* BmuserUITableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BmuserUITableViewCell.swift; sourceTree = "<group>"; };
+		80249C781CABCA0200DF58A0 /* ItemBm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemBm.swift; sourceTree = "<group>"; };
+		80249C7A1CAD257F00DF58A0 /* EvaluateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvaluateTableViewCell.swift; sourceTree = "<group>"; };
+		80249C7C1CAD259D00DF58A0 /* ItemEvaluate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemEvaluate.swift; sourceTree = "<group>"; };
+		80249C801CAE205D00DF58A0 /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		80578F641CAA4EC80000F891 /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		80578F661CAA57530000F891 /* TopTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTableViewCell.swift; sourceTree = "<group>"; };
 		80578F681CAA66470000F891 /* itemTop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = itemTop.swift; sourceTree = "<group>"; };
+		80578F6A1CAB75C10000F891 /* RatingBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingBar.swift; sourceTree = "<group>"; };
 		9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentfwViewController.swift; sourceTree = "<group>"; };
 		9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishfwViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1032,6 +1046,9 @@
 				49F6E98C1C3A0DEC007E5B0F /* PicViewController.swift */,
 				49F6E9981C3A43FA007E5B0F /* XiaoquTableViewController.swift */,
 				80578F641CAA4EC80000F891 /* TopViewController.swift */,
+				80578F6A1CAB75C10000F891 /* RatingBar.swift */,
+				80249C6E1CABA2DC00DF58A0 /* BmUserViewController.swift */,
+				80249C801CAE205D00DF58A0 /* UserInfoViewController.swift */,
 			);
 			path = bbm;
 			sourceTree = "<group>";
@@ -2157,6 +2174,8 @@
 				49F6E9A61C3CD57F007E5B0F /* PlTableViewCell.swift */,
 				49F670471C7EB7740026E8CE /* fwTableViewCell.swift */,
 				80578F661CAA57530000F891 /* TopTableViewCell.swift */,
+				80249C761CABC83700DF58A0 /* BmuserUITableViewCell.swift */,
+				80249C7A1CAD257F00DF58A0 /* EvaluateTableViewCell.swift */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -2179,6 +2198,8 @@
 				4913986D1BC8F9F0007866C1 /* DbHelp.swift */,
 				49F670491C7EBF220026E8CE /* itemfwMess.swift */,
 				80578F681CAA66470000F891 /* itemTop.swift */,
+				80249C781CABCA0200DF58A0 /* ItemBm.swift */,
+				80249C7C1CAD259D00DF58A0 /* ItemEvaluate.swift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -2475,11 +2496,13 @@
 				49F3E76C1C27EA720036F7C7 /* XMPPModule.m in Sources */,
 				49F3E7711C27EA720036F7C7 /* XMPPCoreDataStorage.m in Sources */,
 				49F3E76B1C27EA720036F7C7 /* XMPPMessage.m in Sources */,
+				80249C6F1CABA2DC00DF58A0 /* BmUserViewController.swift in Sources */,
 				49F3E7C71C27EA720036F7C7 /* XMPPTime.m in Sources */,
 				49FE1DC81BD0F2D8009B81D9 /* SimChatDataSource.swift in Sources */,
 				49F3E7F21C293A370036F7C7 /* GzInfosTableViewController.swift in Sources */,
 				49F3E7F01C291F9E0036F7C7 /* SettingViewController.swift in Sources */,
 				498701861C17EDF5006361F8 /* ChatDelegate.swift in Sources */,
+				80249C7B1CAD257F00DF58A0 /* EvaluateTableViewCell.swift in Sources */,
 				49F3E76F1C27EA720036F7C7 /* XMPPStream.m in Sources */,
 				49F3E7641C27EA720036F7C7 /* NSData+XMPP.m in Sources */,
 				49F3E7F81C2A5EEE0036F7C7 /* RecentTableViewCell.swift in Sources */,
@@ -2496,15 +2519,18 @@
 				49F3E7C31C27EA720036F7C7 /* XMPPStreamManagement.m in Sources */,
 				49F3E7D61C27EA730036F7C7 /* XMPPSRVResolver.m in Sources */,
 				49FE1DAB1BD0A112009B81D9 /* ChatDataSource.swift in Sources */,
+				80249C791CABCA0200DF58A0 /* ItemBm.swift in Sources */,
 				49F3E7DA1C27EA730036F7C7 /* DDAbstractDatabaseLogger.m in Sources */,
 				49F3E7791C27EA720036F7C7 /* XMPPResourceCoreDataStorageObject.m in Sources */,
 				49FE1DA41BD0A082009B81D9 /* TableViewCell.swift in Sources */,
 				49F3E7FC1C2A83650036F7C7 /* InfoTableViewCell.swift in Sources */,
 				49F3E77C1C27EA720036F7C7 /* XMPPUserCoreDataStorageObject.m in Sources */,
+				80249C771CABC83700DF58A0 /* BmuserUITableViewCell.swift in Sources */,
 				49380B0B1C310362008EF785 /* itemRecent.swift in Sources */,
 				49F3E8001C2A89470036F7C7 /* DynamicTableViewCell.swift in Sources */,
 				49F3E75D1C27EA720036F7C7 /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				4987FF611C17C113006361F8 /* XWRefreshAutoFooter.swift in Sources */,
+				80249C7D1CAD259D00DF58A0 /* ItemEvaluate.swift in Sources */,
 				49F3E7731C27EA720036F7C7 /* XMPPIncomingFileTransfer.m in Sources */,
 				49F3E7B01C27EA720036F7C7 /* NSString+XEP_0106.m in Sources */,
 				49F3E7871C27EA720036F7C7 /* XMPPPrivacy.m in Sources */,
@@ -2571,6 +2597,7 @@
 				49BAA3FD1BD4BF3C003AD8B6 /* AddXiaoquViewController.swift in Sources */,
 				49FE1DA91BD0A0E2009B81D9 /* MessageItem.swift in Sources */,
 				49F3E53F1C2401FB0036F7C7 /* itempl.swift in Sources */,
+				80578F6B1CAB75C10000F891 /* RatingBar.swift in Sources */,
 				497E9AE91BB8D4CC00653FB4 /* OneViewController.swift in Sources */,
 				49F3E7AD1C27EA720036F7C7 /* XMPPMessage+XEP_0085.m in Sources */,
 				49F6E9A71C3CD57F007E5B0F /* PlTableViewCell.swift in Sources */,
@@ -2652,6 +2679,7 @@
 				49F3E7AC1C27EA720036F7C7 /* XMPPDateTimeProfiles.m in Sources */,
 				49F3E7801C27EA720036F7C7 /* XMPPRoster.m in Sources */,
 				49F3E7941C27EA720036F7C7 /* XMPPMUC.m in Sources */,
+				80249C811CAE205D00DF58A0 /* UserInfoViewController.swift in Sources */,
 				49F3E7E11C27EA730036F7C7 /* DDMultiFormatter.m in Sources */,
 				49F3E77B1C27EA720036F7C7 /* XMPPRosterCoreDataStorage.m in Sources */,
 				4987FF691C17C113006361F8 /* UIScrollViewExtension-XW.swift in Sources */,
