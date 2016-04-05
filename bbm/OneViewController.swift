@@ -514,7 +514,7 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                                      var distance:CLLocationDistance = BMKMetersBetweenMapPoints(p1, p2);
                                     
                                     
-                                    var one:UInt16 = UInt16(distance)
+                                    var one:UInt32 = UInt32(distance)
                                       address = ("\(one)米");
                                 }
                                 
