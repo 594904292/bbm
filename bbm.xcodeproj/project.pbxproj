@@ -322,6 +322,7 @@
 		80578F671CAA57530000F891 /* TopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F661CAA57530000F891 /* TopTableViewCell.swift */; };
 		80578F691CAA66470000F891 /* itemTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F681CAA66470000F891 /* itemTop.swift */; };
 		80578F6B1CAB75C10000F891 /* RatingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F6A1CAB75C10000F891 /* RatingBar.swift */; };
+		80E24C491CB38A3D001FFFF7 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80E24C481CB38A3C001FFFF7 /* Bugly.framework */; };
 		9C709A991C887C170019B91A /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 491398641BC8EAA4007866C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C709A9B1C8A656A0019B91A /* ContentfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */; };
 		9C709A9D1C8A65870019B91A /* PublishfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */; };
@@ -885,6 +886,7 @@
 		80578F661CAA57530000F891 /* TopTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTableViewCell.swift; sourceTree = "<group>"; };
 		80578F681CAA66470000F891 /* itemTop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = itemTop.swift; sourceTree = "<group>"; };
 		80578F6A1CAB75C10000F891 /* RatingBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingBar.swift; sourceTree = "<group>"; };
+		80E24C481CB38A3C001FFFF7 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentfwViewController.swift; sourceTree = "<group>"; };
 		9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishfwViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -906,6 +908,7 @@
 				4987D19B1BD4A86600980199 /* SystemConfiguration.framework in Frameworks */,
 				4987D19A1BD4A85F00980199 /* OpenGLES.framework in Frameworks */,
 				4987D1991BD4A85200980199 /* QuartzCore.framework in Frameworks */,
+				80E24C491CB38A3D001FFFF7 /* Bugly.framework in Frameworks */,
 				4987D1981BD4A84A00980199 /* CoreLocation.framework in Frameworks */,
 				4987D1911BD4A81B00980199 /* BaiduMapAPI_Base.framework in Frameworks */,
 				4987D1921BD4A81B00980199 /* BaiduMapAPI_Cloud.framework in Frameworks */,
@@ -1171,6 +1174,7 @@
 		4996C0581BC8E38600A35FC7 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				80E24C481CB38A3C001FFFF7 /* Bugly.framework */,
 				4987FF4B1C17C113006361F8 /* XWSwiftRefresh */,
 				4987D1571BD4970F00980199 /* BaiduMapSDK */,
 				497E7B601BCB630700BAEB2F /* ZLSwifthRefresh */,
