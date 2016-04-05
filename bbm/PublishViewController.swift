@@ -77,6 +77,28 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
                 let tapGR = UITapGestureRecognizer(target: self, action: "goImagesel")
                 imageView.addGestureRecognizer(tapGR)
                 
+                
+                
+                
+                //添加边框
+                
+                var layer:CALayer = imageView.layer
+                layer.borderColor=UIColor.whiteColor().CGColor
+                layer.borderWidth = 5.0;
+                
+                //添加四个边阴影
+                imageView.layer.shadowColor = UIColor.blackColor().CGColor
+                imageView.layer.shadowOffset = CGSizeMake(0, 0);
+                imageView.layer.shadowOpacity = 0.5;
+                 imageView.layer.shadowRadius = 10.0;
+                imageView.hidden=true
+                
+                //添加四个边阴影
+//                imageView.layer.shadowColor = UIColor.blackColor().CGColor
+//                imageView.layer.shadowOffset = CGSizeMake(4, 4);
+//                imageView.layer.shadowOpacity = 0.5;
+//                imageView.layer.shadowRadius = 2.0;
+                
                 //设置按钮文字
                 //button.setTitle("按钮", forState:UIControlState.Normal)
                 //button.addTarget(self, action: "goImagesel", forControlEvents: UIControlEvents.TouchUpInside)
@@ -91,6 +113,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         let btn:UIImageView = arr[mCurrent] as UIImageView;
         btn.image=UIImage(named: "ic_add_picture")
         btn.userInteractionEnabled = true
+        btn.hidden=false
         //btn.setImage(UIImage(named:"ic_add_picture"), forState:UIControlState.Normal)
        // btn.setTitle("添加", forState:UIControlState.Normal)
         //btn.enabled=true
@@ -439,6 +462,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         //btn.setImage(img, forState:UIControlState.Normal)
         //btn.enabled=false;
         btn.image=img
+        btn.hidden=false;
         let pos:String = String(mCurrent)
         var iconImageFileName=pos.stringByAppendingString(".jpg")
         //保存图片至沙盒
@@ -477,6 +501,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
             addbtn.image=UIImage(named: "ic_add_picture")
             /////设置允许交互属性
             addbtn.userInteractionEnabled = true
+            addbtn.hidden=false
             
         }
 

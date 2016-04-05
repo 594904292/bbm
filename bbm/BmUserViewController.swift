@@ -98,6 +98,17 @@ class BmUserViewController: UIViewController,UITableViewDataSource,UITableViewDe
         {
             cell = BmuserUITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
         }
+        
+        var avatar:String = (items[indexPath.row] as ItemBm).headface;
+        
+        var head = "http://api.bbxiaoqu.com/uploads/".stringByAppendingString(avatar)
+        
+        Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
+            if let d = data as? NSData!
+            {
+                cell?.headface.image=UIImage(data: d)
+            }
+        }
         cell?.username.text=(items[indexPath.row] as ItemBm).username
         cell?.telphone.text=(items[indexPath.row] as ItemBm).telphone
         if(self.isbm)
@@ -131,6 +142,13 @@ class BmUserViewController: UIViewController,UITableViewDataSource,UITableViewDe
     {
         NSLog("select \(indexPath.row)")
         //NSLog("select \(items[indexPath.row])")
+        
+        
+        let sb = UIStoryboard(name:"Main", bundle: nil)
+        let vc = sb.instantiateViewControllerWithIdentifier("userinfoviewcontroller") as! UserInfoViewController
+        //创建导航控制器
+        vc.userid=(items[indexPath.row] as ItemBm).userid
+        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     
