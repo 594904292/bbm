@@ -18,7 +18,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     @IBOutlet weak var picdiv: UIView!
     var alertView:UIAlertView?
     var img = UIImage()
-    var arr = [UIButton]()
+    var arr = [UIImageView]()
     var mCurrent:Int = 0;
     var imgarr = [String]()
     
@@ -59,33 +59,45 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         {
             for(var j:Int=0;j<3;j++)
             {
-                let button:UIButton = UIButton();
+                let imageView:UIImageView = UIImageView();
                 //设置按钮位置和大小
                 let x=CGFloat(100 * j);
                 let y=CGFloat((i+1)*100)+content.frame.height+contenttip.frame.height;
                 let sw=bw/3;
-                button.frame=CGRectMake(x+5, y, sw-10, 98);
-                //let strVal:String = String(j)
                 
-                button.tag = index
+                imageView.frame=CGRectMake(x+5, y, sw-10, 98);
+                //let strVal:String = String(j)
+                //imageView.image=UIImage(named: "ic_add_picture")
+                imageView.tag = index
+                
+                /////设置允许交互属性
+                
+                
+                /////添加tapGuestureRecognizer手势
+                let tapGR = UITapGestureRecognizer(target: self, action: "goImagesel")
+                imageView.addGestureRecognizer(tapGR)
+                
                 //设置按钮文字
                 //button.setTitle("按钮", forState:UIControlState.Normal)
-                button.addTarget(self, action: "goImagesel", forControlEvents: UIControlEvents.TouchUpInside)
-                button.enabled=false;
-                arr.append(button)
+                //button.addTarget(self, action: "goImagesel", forControlEvents: UIControlEvents.TouchUpInside)
+                //button.enabled=false;
+                arr.append(imageView)
                 
-                self.view.addSubview(button);
+                self.view.addSubview(imageView);
                 index++
             }
         }
         
-        let btn:UIButton = arr[mCurrent] as UIButton;
-
-        btn.setImage(UIImage(named:"ic_add_picture"), forState:UIControlState.Normal)
-        btn.setTitle("添加", forState:UIControlState.Normal)
-        btn.enabled=true
+        let btn:UIImageView = arr[mCurrent] as UIImageView;
+        btn.image=UIImage(named: "ic_add_picture")
+        btn.userInteractionEnabled = true
+        //btn.setImage(UIImage(named:"ic_add_picture"), forState:UIControlState.Normal)
+       // btn.setTitle("添加", forState:UIControlState.Normal)
+        //btn.enabled=true
         
     }
+    
+    
 //var images=["movie_home","icon_cinema","start_top250","msg_new"]
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -421,9 +433,12 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     {
         //获取照片的原图
         img = info[UIImagePickerControllerEditedImage] as! UIImage
-         let btn:UIButton = arr[mCurrent] as UIButton;
-        btn.setImage(img, forState:UIControlState.Normal)
-        btn.enabled=false;
+        let btn:UIImageView = arr[mCurrent] as UIImageView;
+        /////设置允许交互属性
+        btn.userInteractionEnabled = false
+        //btn.setImage(img, forState:UIControlState.Normal)
+        //btn.enabled=false;
+        btn.image=img
         let pos:String = String(mCurrent)
         var iconImageFileName=pos.stringByAppendingString(".jpg")
         //保存图片至沙盒
@@ -455,10 +470,13 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         if(mCurrent<5)
         {
             mCurrent=mCurrent+1;
-            let addbtn:UIButton = arr[mCurrent] as UIButton;
-            addbtn.setTitle("添加", forState:UIControlState.Normal)
-            addbtn.enabled=true
-            addbtn.setImage(UIImage(named:"ic_add_picture"), forState:UIControlState.Normal)
+            let addbtn:UIImageView = arr[mCurrent] as UIImageView;
+           // addbtn.setTitle("添加", forState:UIControlState.Normal)
+            //addbtn.enabled=true
+            //addbtn.setImage(UIImage(named:"ic_add_picture"), forState:UIControlState.Normal)
+            addbtn.image=UIImage(named: "ic_add_picture")
+            /////设置允许交互属性
+            addbtn.userInteractionEnabled = true
             
         }
 
