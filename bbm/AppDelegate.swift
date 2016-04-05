@@ -153,9 +153,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
 //
 //        
 //    }
-
-   
-   
+    
+    
     
     //收到状态
     func xmppStream(sender: XMPPStream!, didReceivePresence presence: XMPPPresence!) {
@@ -272,7 +271,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-
+        //质量跟踪平台
+        Bugly.startWithAppId("900018226")
         
         mapManager = BMKMapManager() // 初始化 BMKMapManager
         // 如果要关注网络及授权验证事件，请设定generalDelegate参数

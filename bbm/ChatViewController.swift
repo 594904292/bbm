@@ -191,7 +191,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-56,self.view.frame.size.width,56))
         sendView.backgroundColor=UIColor.grayColor()
         sendView.alpha=0.9
-        txtMsg = UITextField(frame:CGRectMake(7,10,225,36))
+        txtMsg = UITextField(frame:CGRectMake(7,10,view.frame.size.width-91,36))
         txtMsg.backgroundColor = UIColor.whiteColor()
         txtMsg.textColor=UIColor.blackColor()
         txtMsg.font=UIFont.boldSystemFontOfSize(12)
@@ -202,7 +202,8 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         txtMsg.returnKeyType = UIReturnKeyType.Send
         txtMsg.enablesReturnKeyAutomatically  = true
        sendView.addSubview(txtMsg)
-        let sendButton = UIButton(frame:CGRectMake(235,10,77,36))
+        
+        let sendButton = UIButton(frame:CGRectMake(self.view.frame.size.width-77,10,77,36))
         sendButton.backgroundColor=UIColor.lightGrayColor()
         sendButton.addTarget(self, action:Selector("sendMessage") ,forControlEvents:UIControlEvents.TouchUpInside)
         sendButton.layer.cornerRadius=6.0
