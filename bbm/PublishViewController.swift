@@ -62,7 +62,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
                 let button:UIButton = UIButton();
                 //设置按钮位置和大小
                 let x=CGFloat(100 * j);
-                let y=CGFloat((i+1)*100)+100;
+                let y=CGFloat((i+1)*100)+content.frame.height+contenttip.frame.height;
                 let sw=bw/3;
                 button.frame=CGRectMake(x+5, y, sw-10, 98);
                 //let strVal:String = String(j)
