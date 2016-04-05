@@ -103,7 +103,6 @@ class LoginViewController: UIViewController {
         //let vc = sb.instantiateViewControllerWithIdentifier("registerController") as! RegisterViewController
         //self.presentViewController(vc, animated: true, completion: nil)
         
-        
         self.navigationItem.title=""
         let sb = UIStoryboard(name:"Main", bundle: nil)
         let vc = sb.instantiateViewControllerWithIdentifier("registerController") as! RegisterViewController
@@ -213,6 +212,8 @@ class LoginViewController: UIViewController {
                 defaults.setObject(telphone, forKey: "telphone");
                 defaults.setObject(headface, forKey: "headface");
             
+                 defaults.setObject("0", forKey: "lat");
+                defaults.setObject("0", forKey: "lng");
                 defaults.synchronize();
             
                 
