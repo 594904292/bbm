@@ -132,17 +132,26 @@ class UserInfoViewController: UIViewController ,UITableViewDataSource,UITableVie
                         let username:String = JSON[0].objectForKey("username") as! String;
                         self.username.text=username;
                         self.telphone.text=telphone;
-                         let headfaceurl:String = JSON[0].objectForKey("headface") as! String;
-                        let url="http://api.bbxiaoqu.com/uploads/"+headfaceurl;
-                        Alamofire.request(.GET, url).response { (_, _, data, _) -> Void in
-                            if let d = data as? NSData!
-                            {
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.headface?.image = UIImage(data: d)
-                                })
+                        let headfaceurl:String = JSON[0].objectForKey("headface") as! String;
+                        if(headfaceurl.characters.count>0)
+                        {
+                            let url="http://api.bbxiaoqu.com/uploads/"+headfaceurl;
+                            Alamofire.request(.GET, url).response { (_, _, data, _) -> Void in
+                                if let d = data as? NSData!
+                                {
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        self.headface?.image = UIImage(data: d)
+                                    })
+                                }
                             }
+                        }else
+                        {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                //self.headface?.image = UIImage(named: "logo"))
+                                
+                                self.headface?.image = UIImage(named: "logo")
+                            })
                         }
-                        //}
                     }
                     
                     
