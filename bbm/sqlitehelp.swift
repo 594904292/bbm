@@ -44,7 +44,7 @@ class sqlitehelp: NSObject {
     func addfriend(userid:String,nickname:String,usericon:String,lastuserid:String,lastnickname:String,lastinfo:String,lasttime:String,messnum:Int)
     {
         var db: SQLiteDB! = SQLiteDB.sharedInstance()
-        let sql = "insert into friend(userid,nickname,usericon,lastuserid,lastnickanme,lastinfo,lasttime,messnum) values('\(userid )','\(nickname)','\(usericon)','\(lastuserid)','\(lastnickname)','\(lastinfo)','\(lasttime)','\(messnum)')";
+        let sql = "insert into friend(userid,nickname,usericon,lastuserid,lastnickname,lastinfo,lasttime,messnum) values('\(userid )','\(nickname)','\(usericon)','\(lastuserid)','\(lastnickname)','\(lastinfo)','\(lasttime)','\(messnum)')";
         db.execute(sql)
         
     }

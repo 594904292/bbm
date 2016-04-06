@@ -121,7 +121,7 @@ class DbHelp
         
 
        
-         db.execute("create table if not exists friend(uid integer primary key,userid varchar(100),nickname varchar(100),usericon varchar(100),lastuserid varchar(100),lastnickname varchar(100),lastinfo varchar(100),lasttime varchar(100),messnu varchar(100))")
+         db.execute("create table if not exists friend(uid integer primary key,userid varchar(100),nickname varchar(100),usericon varchar(100),lastuserid varchar(100),lastnickname varchar(100),lastinfo varchar(100),lasttime varchar(100),messnum varchar(100))")
         
         
         
