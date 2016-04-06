@@ -54,17 +54,38 @@ class RecentTableViewController: UITableViewController {
             {
                 let item = mess[i] as SQLRow
                 let userid = item["userid"]!.asString()
-                let nickname = item["nickname"]!.asString()
-                let usericon = item["usericon"]!.asString()
+                //let nickname = item["nickname"]!.asString()
+                //let usericon = item["usericon"]!.asString()
+                
+                let usericon = sqlitehelp.shareInstance().loadheadface(userid)
+                let nickname = sqlitehelp.shareInstance().loadusername(userid)
+                
                 let lastinfo = item["lastinfo"]!.asString()
-                let lasttime = item["lasttime"]!.asString()
-                let messnu = item["messnu"]!.asString()
+                var lasttime = item["lasttime"]!.asString()
+               
+                
+                var date:NSDate = NSDate()
+                var formatter:NSDateFormatter = NSDateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd"
+                var dateString = formatter.stringFromDate(date)
+                
+                if(lasttime.containsString(dateString))
+                {
+                    lasttime = lasttime.subStringFrom(11)
+                    
+                }else
+                {
+                    
+                    lasttime = (lasttime as NSString).substringWithRange(NSRange(location: 0,length: 10))
+                }
+
+                let messnum = item["messnum"]!.asString()
                 var lastnickname = item["lastuserid"]!.asString()
                 if(loadusername(item["lastuserid"]!.asString()).characters.count>0)
                 {
                     lastnickname=loadusername(item["lastuserid"]!.asString())
                 }
-                let item_obj:itemRecent=itemRecent(userid: userid, username: nickname, usericon: usericon, lastinfo: lastinfo, lastchattimer: lasttime, messnum: messnu, lastnickname: lastnickname)
+                let item_obj:itemRecent=itemRecent(userid: userid, username: nickname, usericon: usericon, lastinfo: lastinfo, lastchattimer: lasttime, messnum: messnum, lastnickname: lastnickname)
                  self.items.append(item_obj)
             }
         }else
@@ -134,13 +155,20 @@ class RecentTableViewController: UITableViewController {
 
         var avatar:String = (self.items[indexPath.row] as itemRecent).usericon
         
-        var head = "http://api.bbxiaoqu.com/uploads/".stringByAppendingString(avatar)
-        
-        Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
-            if let d = data as? NSData!
-            {
-                cell?.lastuericon.image=UIImage(data: d)
+        if(avatar.characters.count>0)
+        {
+            var head = "http://api.bbxiaoqu.com/uploads/".stringByAppendingString(avatar)
+            
+            Alamofire.request(.GET, head).response { (_, _, data, _) -> Void in
+                if let d = data as? NSData!
+                {
+                    cell?.lastuericon.image=UIImage(data: d)
+                }
             }
+        }else
+        {
+            cell?.lastuericon.image=UIImage(named: "logo")
+
         }
 
         

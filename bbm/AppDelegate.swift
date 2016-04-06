@@ -351,6 +351,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
         self.apnsdelegate?.NewMessage("newmess")
     }
     
+//    //点击推送消息的按钮时
+//    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+//        print("identifier=\(identifier)")  //这里的identifier是按钮的identifier
+//        
+//        completionHandler()  //最后一定要调用这上方法
+//    }
+    
 //    // 设置XMPPStream
 //    func setupStream(){
 //        

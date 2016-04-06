@@ -42,6 +42,9 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         getData()
     }
     
+    
+    
+    
     //收到消息
     func newMsg(aMsg: WXMessage) {
         //对方正在输入

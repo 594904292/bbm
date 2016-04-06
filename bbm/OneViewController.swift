@@ -466,7 +466,17 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                             let guid:String = data.objectForKey("guid") as! String;
                             let sendtime:String;
                             var temptime:String=data.objectForKey("sendtime") as! String;
-                              if(temptime.containsString("2016-03-28"))
+                                
+                                
+                                
+                                //temptime	String	"2016-04-06 13:40:11"
+                                
+                                var date:NSDate = NSDate()
+                                var formatter:NSDateFormatter = NSDateFormatter()
+                                formatter.dateFormat = "yyyy-MM-dd"
+                                var dateString = formatter.stringFromDate(date)
+                                
+                              if(temptime.containsString(dateString))
                               {
                                 sendtime = temptime.subStringFrom(11)
                                 

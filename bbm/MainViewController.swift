@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServiceDelegate {
+class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServiceDelegate,XxDL{
 
        var items:[itemDaymic]=[]
      var ggid:String = "";
@@ -25,16 +25,56 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
     var locService:BMKLocationService!
     var marquee: CHWMarqueeView?
     var timer:NSTimer!
-
+    var imageView:BadgeView!;
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
         self.navigationItem.title="帮帮小区"
-        self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "设置", style: UIBarButtonItemStyle.Done, target: self, action: "SetClick")
-        self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "退出", style: UIBarButtonItemStyle.Done, target: self, action: "exitClick")
         
+        let button =   UIButton(type: .System)
+        button.frame = CGRectMake(0, 0, 65, 30)
+        button.setImage(UIImage(named:"back"), forState: .Normal)
+        button.setTitle("设置", forState: .Normal)
+        button.addTarget(self, action: "SetClick", forControlEvents: .TouchUpInside)
+        
+        let leftBarBtn = UIBarButtonItem(customView: button)
+        
+        let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+        spacer.width = -10;
+        
+        self.navigationItem.leftBarButtonItems = [spacer,leftBarBtn]
+        
+        
+        
+        imageView = BadgeView()
+        imageView.frame = CGRectMake(0, 0, 35, 25)
+        
+        imageView.backgroundColor=UIColor.redColor()
+        imageView.value=0;
+        if(imageView.value>0)
+        {
+            imageView.hidden=false
+        }else
+        {
+            imageView.hidden=true
+        }
+        //imageView.addTarget(self, action: "jumpchatlist", forControlEvents: .TouchUpInside)
+       //imageView.add
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"jumpchatlist")
+        tapGestureRecognizer.cancelsTouchesInView = false
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        let rightBarBtn = UIBarButtonItem(customView: imageView)
+        
+        self.navigationItem.rightBarButtonItems = [spacer,rightBarBtn]
+        
+        //self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "设置", style: UIBarButtonItemStyle.Done, target: self, action: "SetClick")
+        //self.navigationItem.rightBarButtonItem=UIBarButtonItem(title: "退出", style: UIBarButtonItemStyle.Done, target: self, action: "exitClick")
+        
+       // self.navigationItem.
         
        self.view.userInteractionEnabled=true
         pictureGallery();
@@ -57,10 +97,40 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         locService.delegate = self
         //启动LocationService
         locService.startUserLocationService()
+        
+        
+        
+        zdl().xxdl = self
+        
+        zdl().connect()
        
      }
     
+    //获取总代理
+    func zdl() -> AppDelegate {
+        return UIApplication.sharedApplication().delegate as! AppDelegate
+    }
+
     
+    func newMsg(aMsg: WXMessage) {
+        //对方正在输入
+        if aMsg.isComposing {
+            self.navigationItem.title = "对方正在输入。。。"
+        }else if (aMsg.body != "") {
+            
+             //print("aMsg.body: \(aMsg.body)")
+            //self.navigationItem.title="新消息"
+            imageView.value=imageView.value+1
+            if(imageView.value>0)
+            {
+                imageView.hidden=false
+            }else
+            {
+                imageView.hidden=true
+            }
+        }
+    }
+
     
     @IBAction func gonggaobtn(sender: UIButton) {
         
@@ -120,6 +190,35 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
             defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
             defaults.synchronize();
             locService.stopUserLocationService()
+            
+            
+            
+            let _userid = defaults.objectForKey("userid") as! NSString;
+            let _token = defaults.objectForKey("token") as! NSString;
+            
+            Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
+                                .responseJSON { response in
+                                    print(response.request)  // original URL request
+                                    print(response.response) // URL response
+                                    print(response.data)     // server data
+                                    print(response.result)   // result of response serialization
+                                    print(response.result.value)
+            
+            
+            }
+            
+            
+            
+            
+            Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(userLocation.location.coordinate.latitude),"_lng":String(userLocation.location.coordinate.longitude),"_os":"ios"])
+                                .responseJSON { response in
+                                    print(response.request)  // original URL request
+                                    print(response.response) // URL response
+                                    print(response.data)     // server data
+                                    print(response.result)   // result of response serialization
+                                    print(response.result.value)
+                                    
+            }
          }else{
             NSLog("userLocation.location is nil")
         }
@@ -188,6 +287,15 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         }
     }
     
+    func jumpchatlist()
+    {
+        
+        
+        var sb = UIStoryboard(name:"Main", bundle: nil)
+        var vc = sb.instantiateViewControllerWithIdentifier("recentviewcontroller") as! RecentTableViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+
+    }
     func SetClick()
     {
         NSLog("SetClick")
@@ -265,7 +373,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
     
     func nextImage(sender:AnyObject!){//图片轮播；
         var page:Int = self.galleryPageControl.currentPage;
-        if(page == 4){   //循环；
+        if(page == 3){   //循环；
             page = 0;
         }else{
             page++;
@@ -300,110 +408,4 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
     */
     
     
-    
-//    
-//    //定位改变执行，可以得到新位置、旧位置
-//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        //获取最新的坐标
-//        
-//        let currLocation:CLLocation = locations.last!
-//        print("经度：\(currLocation.coordinate.longitude)")
-//        print("纬度：\(currLocation.coordinate.latitude)")
-//        
-//        let defaults = NSUserDefaults.standardUserDefaults();
-//        defaults.setObject(String(currLocation.coordinate.latitude), forKey: "lat");
-//        defaults.setObject(String(currLocation.coordinate.longitude), forKey: "lng");
-//        defaults.synchronize();
-//        
-//        
-//        var geocoder:CLGeocoder=CLGeocoder();
-//        geocoder.reverseGeocodeLocation(currLocation,
-//            completionHandler: { (placemarks, error) -> Void in
-//                if error != nil {
-//                    return
-//                }
-//                let p:CLPlacemark = placemarks!.last!
-//                //NSLog(p.description)
-//                print("name：\(p.name)")
-//                print("country：\(p.country)")
-//                print("postalCode：\(p.postalCode)")
-//                print("locality：\(p.locality)")
-//                print("subLocality：\(p.subLocality)")
-//                
-//                print("thoroughfare：\(p.thoroughfare)")
-//                
-//                print("administrativeArea：\(p.administrativeArea)")
-//                print("subAdministrativeArea：\(p.subAdministrativeArea)")
-//                print("inlandWater：\(p.inlandWater)")
-//                
-//                print("areasOfInterest：\(p.areasOfInterest)")
-//                
-//                
-//                
-//                //                    NSLog("\n name:%@\n  country:%@\n postalCode:%@\n ISOcountryCode:%@\n ocean:%@\n inlandWater:%@\n locality:%@\n subLocality:%@\n administrativeArea:%@\n subAdministrativeArea:%@\n thoroughfare:%@\n subThoroughfare:%@\n",
-//                //                        p.name!,
-//                //                        p.country!,
-//                //                        p.postalCode!,
-//                //                        p.ISOcountryCode!,//国家代码
-//                //                        p.ocean!,//大洋
-//                //                        p.inlandWater!,//
-//                //                        p.administrativeArea!,
-//                //                        p.subAdministrativeArea!,
-//                //                        p.locality!,
-//                //                        p.subLocality!,
-//                //                        p.thoroughfare!,
-//                //                        p.subThoroughfare!)
-//                
-//                let defaults = NSUserDefaults.standardUserDefaults();
-//                defaults.setObject(p.country, forKey: "country");
-//                defaults.setObject(p.locality, forKey: "province");//省直辖市
-//                defaults.setObject(p.administrativeArea  , forKey: "city");//城市
-//                defaults.setObject(p.subAdministrativeArea  , forKey: "subadministrativearea");//城市
-//                defaults.setObject(p.subLocality  , forKey: "sublocality");//区县
-//                defaults.setObject(p.thoroughfare  , forKey: "thoroughfare");//街道
-//                defaults.setObject(p.name  , forKey: "address");
-//                defaults.synchronize();
-//                
-//                
-//                let _userid = defaults.objectForKey("userid") as! NSString;
-//                let _token = defaults.objectForKey("token") as! NSString;
-//                //更新下地理位置
-//                
-//                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
-//                    .responseJSON { response in
-//                        print(response.request)  // original URL request
-//                        print(response.response) // URL response
-//                        print(response.data)     // server data
-//                        print(response.result)   // result of response serialization
-//                        print(response.result.value)
-//                        
-//                        
-//                }
-//                
-//                
-//                
-//                
-//                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
-//                    .responseJSON { response in
-//                        print(response.request)  // original URL request
-//                        print(response.response) // URL response
-//                        print(response.data)     // server data
-//                        print(response.result)   // result of response serialization
-//                        print(response.result.value)
-//                        
-//                        
-//                }
-//                
-//                
-//   
-//        })
-//        
-//      
-//    }
-//    
-//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
-//        print(error)
-//    }
-    
-
 }
