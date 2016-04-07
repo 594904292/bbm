@@ -16,12 +16,37 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
     var xiaoquname:String = "";
     var xiaoqulat:String = "";
     var xiaoqulng:String = "";
+    var brithday:String="";
     @IBOutlet weak var headface: UIImageView!
     @IBOutlet weak var nickname: UITextField!
     @IBOutlet weak var age: UITextField!
     //@IBOutlet weak var xiaoqu: UITextField!
     @IBOutlet weak var tel: UITextField!
     @IBOutlet weak var sex: UIPickerView!
+    
+    @IBOutlet weak var brithdate: UIDatePicker!
+    
+    @IBAction func calcage(sender: UIDatePicker) {
+        //需要转换的字符串
+        //var dateString:NSString="2015-06-26";
+        //设置转换格式
+        var formatter:NSDateFormatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        
+        brithday = formatter.stringFromDate(sender.date)
+        
+        NSLog("now:\(brithday)")
+        
+        var todayDate: NSDate = NSDate()
+       // let second =todayDate.timeIntervalSinceDate(<#T##anotherDate: NSDate##NSDate#>)
+        let second = todayDate.timeIntervalSinceDate(sender.date)
+        let year=Int(second/(60*60*24*365))
+        NSLog("second:\(second)")
+        NSLog("year:\(year)")
+        age.text=String(year);
+        
+    }
     
     var img = UIImage()
     @IBAction func controlTouchdown(sender: UIControl) {
@@ -75,14 +100,22 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
         
           print("savemyinfo fullPath=\(fullPath)")
          print("savemyinfo fname=\(fname)")
+        
+        
+        var  dic:Dictionary<String,String> = ["userid" : userid]
+        
         if(fullPath.characters.count>0)
         {
             uploadImg(fullPath,filename: fname)
+            dic["headface"]=fname;
+        }else
+        {
+             dic["headface"]="";
         }
         
-        var  dic:Dictionary<String,String> = ["userid" : userid, "headface": fname]
         dic["username"]=nickname.text;
         dic["age"] = age.text;
+        dic["brithday"] = brithday;
         if(selsexpicker=="男")
         {
             dic["sex"] = "1"
@@ -102,6 +135,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                 print(response.data)     // server data
                 print(response.result)   // result of response serialization
                 print(response.result.value)
+                self.successNotice("更新成功")
         }
     }
     
@@ -239,25 +273,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                             usersex = JSON[0].objectForKey("sex") as! String;
                         }
                         
-                        
-//                        self.xiaoquid=community_id;
-//                        self.xiaoquname=community;
-//                        self.xiaoqulat=community_lat;
-//                        self.xiaoqulng=community_lng;
-                        
-                        self.nickname.text=username;
-                        self.tel.text=telphone;
-                        //self.xiaoqu.text=community;
-                        self.age.text=age;
-                        
-                        //print("JSON1: \(self.sex?.selectedRowInComponent(0))")
-                        if(usersex=="1")
-                        {//男
-                            self.sex.selectRow(0, inComponent: 0, animated: true)
-                        }else
-                        {//女
-                            self.sex.selectRow(1, inComponent: 0, animated: true)
-                        }
+                       
                         
                         
 //                        self.xiaoquid=community_id;
@@ -279,6 +295,49 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                             self.sex.selectRow(1, inComponent: 0, animated: true)
                         }
                         
+                        
+//                        self.xiaoquid=community_id;
+//                        self.xiaoquname=community;
+//                        self.xiaoqulat=community_lat;
+//                        self.xiaoqulng=community_lng;
+                        
+                        self.nickname.text=username;
+                        self.tel.text=telphone;
+                        //self.xiaoqu.text=community;
+                        self.age.text=age;
+                        
+                        //print("JSON1: \(self.sex?.selectedRowInComponent(0))")
+                        if(usersex=="1")
+                        {//男
+                            self.sex.selectRow(0, inComponent: 0, animated: true)
+                        }else
+                        {//女
+                            self.sex.selectRow(1, inComponent: 0, animated: true)
+                        }
+                        if(JSON[0].objectForKey("brithday")!.isKindOfClass(NSNull))
+                        {
+                            self.brithday="1970-01-01";
+                        }else
+                        {
+                            self.brithday = JSON[0].objectForKey("brithday") as! String;
+                            if(self.brithday.characters.count<10)
+                            {
+                            self.brithday="1970-01-01";
+                            }
+                        }
+
+                        
+                        //需要转换的字符串
+                        //var dateString:NSString="2015-06-26";
+                        //设置转换格式
+                        var formatter:NSDateFormatter = NSDateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd"
+                        
+                        var now = NSDate()
+                        now = formatter.dateFromString(self.brithday as String)!
+                        
+                        
+                        self.brithdate.setDate(now, animated: true)
                         
                         //if(headfaceurl.isKindOfClass(NSNull))
                          //{

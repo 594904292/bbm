@@ -269,7 +269,11 @@ class UserInfoViewController: UIViewController ,UITableViewDataSource,UITableVie
             cell = EvaluateTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
         }
         cell?.infouser.text=(items[indexPath.row] as ItemEvaluate).infouser
-        cell?.ratingbar.rating = 3
+        
+        
+        var f  =  CGFloat ( ( (items[indexPath.row] as ItemEvaluate).score as NSString).floatValue)
+        
+        cell?.ratingbar.rating = f
 
         cell?.eveluate.text=(items[indexPath.row] as ItemEvaluate).evalute
         cell?.addtime.text=(items[indexPath.row] as ItemEvaluate).addtime

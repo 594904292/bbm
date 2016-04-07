@@ -42,8 +42,6 @@ class RecentTableViewController: UITableViewController {
     // MARK: - Table view data source
     func querydata()
     {
-        //var db: SQLiteDB!
-        //db = SQLiteDB.sharedInstance()
         //let sql="select userid,nickname,usericon,lastinfo,lasttime,messnu,lastnickname　from friend";
         let sql="select * from friend ";
         NSLog(sql)
