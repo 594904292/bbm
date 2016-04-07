@@ -19,9 +19,10 @@ class TopTableViewCell: UITableViewCell {
     @IBOutlet weak var username: UILabel!
     
     
+    @IBOutlet weak var score: RatingBar!
    
     //@IBOutlet weak var rate: RatingBar!
-    @IBOutlet weak var score: UILabel!
+    //@IBOutlet weak var score: UILabel!
     @IBOutlet weak var nums: UILabel!
     
     
