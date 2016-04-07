@@ -33,18 +33,22 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         
         self.navigationItem.title="帮帮小区"
         
-        let button =   UIButton(type: .System)
-        button.frame = CGRectMake(0, 0, 65, 30)
-        button.setImage(UIImage(named:"back"), forState: .Normal)
-        button.setTitle("设置", forState: .Normal)
-        button.addTarget(self, action: "SetClick", forControlEvents: .TouchUpInside)
+//        let button =   UIButton(type: .System)
+//        button.frame = CGRectMake(0, 0, 35, 30)
+//        button.setImage(UIImage(named:"back"), forState: .Normal)
+//        button.setTitle("设置", forState: .Normal)
+//        button.addTarget(self, action: "SetClick", forControlEvents: .TouchUpInside)
+//        
+//        let leftBarBtn = UIBarButtonItem(customView: button)
+//        self.navigationItem.leftBarButtonItems = [leftBarBtn]
         
-        let leftBarBtn = UIBarButtonItem(customView: button)
+        
+         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "设置", style: UIBarButtonItemStyle.Done, target: self, action: "SetClick")
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
         spacer.width = -10;
         
-        self.navigationItem.leftBarButtonItems = [spacer,leftBarBtn]
+        
         
         
         

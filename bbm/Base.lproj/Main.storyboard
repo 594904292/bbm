@@ -1345,50 +1345,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Diu-zd-yf7">
-                                <rect key="frame" x="36" y="193" width="240" height="30"/>
+                                <rect key="frame" x="36" y="160" width="240" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="XdA-5y-knx"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <action selector="nicknameexit:" destination="75I-7J-FlC" eventType="editingDidEndOnExit" id="ZPv-AA-hto"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sGN-x0-gIe">
-                                <rect key="frame" x="36" y="243" width="240" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done"/>
-                                <connections>
-                                    <action selector="ageexit:" destination="75I-7J-FlC" eventType="editingDidEndOnExit" id="dxq-gE-vnQ"/>
-                                </connections>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TZP-zU-4hV">
-                                <rect key="frame" x="36" y="293" width="240" height="30"/>
+                                <rect key="frame" x="36" y="198" width="240" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Tgl-AG-rmh"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <action selector="telexit:" destination="75I-7J-FlC" eventType="editingDidEndOnExit" id="3kg-iO-Z8r"/>
                                 </connections>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a7k-eH-3z1">
-                                <rect key="frame" x="116" y="93" width="80" height="80"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRg-2V-27q">
+                                <rect key="frame" x="36" y="391" width="240" height="70"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="VZu-eP-KWE"/>
+                                    <constraint firstAttribute="height" constant="70" id="Loe-iF-9jl"/>
                                 </constraints>
-                            </imageView>
+                            </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b2c-AR-zEs">
-                                <rect key="frame" x="137" y="507" width="46" height="30"/>
+                                <rect key="frame" x="137" y="496" width="46" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="46" id="jWX-PB-deB"/>
+                                    <constraint firstAttribute="height" constant="30" id="GFO-3E-XCL"/>
+                                    <constraint firstAttribute="width" constant="46" id="jHi-8f-rug"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="保存"/>
                                 <connections>
                                     <action selector="savemyinfo:" destination="75I-7J-FlC" eventType="touchUpInside" id="iSt-GH-qZA"/>
                                 </connections>
                             </button>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="7cM-5s-4yK">
-                                <rect key="frame" x="36" y="331" width="240" height="71"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="71" id="WsZ-GR-6Xw"/>
-                                </constraints>
+                                <rect key="frame" x="36" y="307" width="240" height="71"/>
                                 <date key="date" timeIntervalSinceReferenceDate="481706888.88605303">
                                     <!--2016-04-07 07:28:08 +0000-->
                                 </date>
@@ -1396,35 +1393,45 @@
                                     <action selector="calcage:" destination="75I-7J-FlC" eventType="valueChanged" id="EFh-oF-7W0"/>
                                 </connections>
                             </datePicker>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRg-2V-27q">
-                                <rect key="frame" x="36" y="418" width="240" height="70"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="我是一个活雷锋" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OEx-6q-nac">
+                                <rect key="frame" x="36" y="236" width="240" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="xL5-wy-RYt"/>
+                                    <constraint firstAttribute="height" constant="60" id="mE1-HP-C4g"/>
                                 </constraints>
-                            </pickerView>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a7k-eH-3z1">
+                                <rect key="frame" x="135" y="90" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="eP6-BR-sxm"/>
+                                    <constraint firstAttribute="width" constant="50" id="uzD-G2-tkw"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="b2c-AR-zEs" firstAttribute="centerX" secondItem="Dcy-ZM-7ds" secondAttribute="centerX" id="8av-v5-RAs"/>
-                            <constraint firstItem="7cM-5s-4yK" firstAttribute="leading" secondItem="TZP-zU-4hV" secondAttribute="leading" id="FCC-sn-Ovz"/>
-                            <constraint firstItem="Diu-zd-yf7" firstAttribute="leading" secondItem="Dcy-ZM-7ds" secondAttribute="leadingMargin" constant="20" id="FHl-qI-mbK"/>
-                            <constraint firstItem="7cM-5s-4yK" firstAttribute="top" secondItem="TZP-zU-4hV" secondAttribute="bottom" constant="8" symbolic="YES" id="JHF-m6-HTF"/>
-                            <constraint firstItem="uye-C7-Zsf" firstAttribute="top" secondItem="b2c-AR-zEs" secondAttribute="bottom" constant="31" id="NcB-uj-uBO"/>
-                            <constraint firstItem="7cM-5s-4yK" firstAttribute="trailing" secondItem="TZP-zU-4hV" secondAttribute="trailing" id="Noe-s2-xXD"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Diu-zd-yf7" secondAttribute="trailing" constant="28" id="ON5-Ae-1Vs"/>
-                            <constraint firstItem="a7k-eH-3z1" firstAttribute="centerX" secondItem="Diu-zd-yf7" secondAttribute="centerX" id="SMT-Vd-GKF"/>
-                            <constraint firstItem="Diu-zd-yf7" firstAttribute="top" secondItem="a7k-eH-3z1" secondAttribute="bottom" constant="20" id="TKh-9K-yTu"/>
-                            <constraint firstItem="Diu-zd-yf7" firstAttribute="leading" secondItem="sGN-x0-gIe" secondAttribute="leading" id="Tnp-1Y-R6b"/>
-                            <constraint firstItem="Diu-zd-yf7" firstAttribute="trailing" secondItem="sGN-x0-gIe" secondAttribute="trailing" id="dFy-jz-WWZ"/>
-                            <constraint firstItem="7cM-5s-4yK" firstAttribute="trailing" secondItem="eRg-2V-27q" secondAttribute="trailing" id="gcA-xQ-ACO"/>
-                            <constraint firstItem="sGN-x0-gIe" firstAttribute="top" secondItem="Diu-zd-yf7" secondAttribute="bottom" constant="20" id="lzW-XL-wYO"/>
-                            <constraint firstItem="a7k-eH-3z1" firstAttribute="top" secondItem="PtC-kD-fgc" secondAttribute="bottom" constant="29" id="oRJ-41-xqw"/>
-                            <constraint firstItem="b2c-AR-zEs" firstAttribute="top" secondItem="eRg-2V-27q" secondAttribute="bottom" constant="19" id="sDi-fS-SeC"/>
-                            <constraint firstItem="TZP-zU-4hV" firstAttribute="leading" secondItem="sGN-x0-gIe" secondAttribute="leading" id="sHp-B6-coD"/>
-                            <constraint firstItem="eRg-2V-27q" firstAttribute="leading" secondItem="7cM-5s-4yK" secondAttribute="leading" id="uEE-Cx-08C"/>
-                            <constraint firstItem="sGN-x0-gIe" firstAttribute="trailing" secondItem="TZP-zU-4hV" secondAttribute="trailing" id="wH7-PG-52m"/>
-                            <constraint firstItem="eRg-2V-27q" firstAttribute="top" secondItem="7cM-5s-4yK" secondAttribute="bottom" constant="16" id="zIH-8g-XTp"/>
-                            <constraint firstItem="TZP-zU-4hV" firstAttribute="top" secondItem="sGN-x0-gIe" secondAttribute="bottom" constant="20" id="zrE-ND-mBz"/>
+                            <constraint firstItem="b2c-AR-zEs" firstAttribute="top" secondItem="eRg-2V-27q" secondAttribute="bottom" constant="35" id="1rY-do-7U0"/>
+                            <constraint firstItem="a7k-eH-3z1" firstAttribute="leading" secondItem="Dcy-ZM-7ds" secondAttribute="leading" constant="135" id="2h8-Nv-lqW"/>
+                            <constraint firstItem="OEx-6q-nac" firstAttribute="top" secondItem="TZP-zU-4hV" secondAttribute="bottom" constant="8" symbolic="YES" id="9QI-NF-FQf"/>
+                            <constraint firstItem="7cM-5s-4yK" firstAttribute="trailing" secondItem="OEx-6q-nac" secondAttribute="trailing" id="E4d-lA-KB6"/>
+                            <constraint firstItem="b2c-AR-zEs" firstAttribute="centerX" secondItem="Dcy-ZM-7ds" secondAttribute="centerX" id="GqU-BV-lOF"/>
+                            <constraint firstItem="Diu-zd-yf7" firstAttribute="top" secondItem="a7k-eH-3z1" secondAttribute="bottom" constant="20" id="L1C-Qi-Os8"/>
+                            <constraint firstItem="OEx-6q-nac" firstAttribute="leading" secondItem="TZP-zU-4hV" secondAttribute="leading" id="RJv-cG-jM5"/>
+                            <constraint firstItem="eRg-2V-27q" firstAttribute="top" secondItem="7cM-5s-4yK" secondAttribute="bottom" constant="13" id="U1z-G6-G9F"/>
+                            <constraint firstItem="TZP-zU-4hV" firstAttribute="trailing" secondItem="OEx-6q-nac" secondAttribute="trailing" id="VXG-An-eiv"/>
+                            <constraint firstItem="Diu-zd-yf7" firstAttribute="trailing" secondItem="TZP-zU-4hV" secondAttribute="trailing" id="bLL-E4-dHa"/>
+                            <constraint firstItem="eRg-2V-27q" firstAttribute="leading" secondItem="7cM-5s-4yK" secondAttribute="leading" id="dfd-qo-dMC"/>
+                            <constraint firstItem="7cM-5s-4yK" firstAttribute="top" secondItem="OEx-6q-nac" secondAttribute="bottom" constant="11" id="f8i-WW-BxL"/>
+                            <constraint firstItem="a7k-eH-3z1" firstAttribute="top" secondItem="PtC-kD-fgc" secondAttribute="bottom" constant="26" id="gYW-0L-bML"/>
+                            <constraint firstItem="uye-C7-Zsf" firstAttribute="top" secondItem="b2c-AR-zEs" secondAttribute="bottom" constant="42" id="kSO-rK-Vmu"/>
+                            <constraint firstItem="TZP-zU-4hV" firstAttribute="top" secondItem="Diu-zd-yf7" secondAttribute="bottom" constant="8" symbolic="YES" id="qPI-Si-me6"/>
+                            <constraint firstItem="7cM-5s-4yK" firstAttribute="leading" secondItem="OEx-6q-nac" secondAttribute="leading" id="rk2-V7-vws"/>
+                            <constraint firstItem="7cM-5s-4yK" firstAttribute="trailing" secondItem="eRg-2V-27q" secondAttribute="trailing" id="tAZ-rM-JzS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Diu-zd-yf7" secondAttribute="trailing" constant="28" id="xZT-rb-hxV"/>
+                            <constraint firstItem="TZP-zU-4hV" firstAttribute="leading" secondItem="Diu-zd-yf7" secondAttribute="leading" id="ypf-ka-kff"/>
+                            <constraint firstItem="Diu-zd-yf7" firstAttribute="leading" secondItem="Dcy-ZM-7ds" secondAttribute="leadingMargin" constant="20" id="zTH-9J-tjY"/>
                         </constraints>
                         <connections>
                             <action selector="controlTouchdown:" destination="75I-7J-FlC" eventType="touchDown" id="p0n-cr-of1"/>
@@ -1432,9 +1439,10 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="age" destination="sGN-x0-gIe" id="hby-N2-155"/>
                         <outlet property="brithdate" destination="7cM-5s-4yK" id="k4f-2c-2jn"/>
                         <outlet property="headface" destination="a7k-eH-3z1" id="ZdX-MQ-SO2"/>
+                        <outlet property="introduce" destination="OEx-6q-nac" id="DMM-Gx-m5k"/>
+                        <outlet property="myview" destination="Dcy-ZM-7ds" id="4rp-pL-Izn"/>
                         <outlet property="nickname" destination="Diu-zd-yf7" id="c7X-YK-FU7"/>
                         <outlet property="sex" destination="eRg-2V-27q" id="MCj-HO-B3K"/>
                         <outlet property="tel" destination="TZP-zU-4hV" id="r9j-sA-dSC"/>

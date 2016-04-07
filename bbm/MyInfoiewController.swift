@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , UIPickerViewDelegate, UIPickerViewDataSource,UIImagePickerControllerDelegate,UIActionSheetDelegate{
+class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource,UIImagePickerControllerDelegate,UIActionSheetDelegate{
     
     var fullPath:String = "";
     var xiaoquid:String = "";
@@ -17,15 +17,20 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
     var xiaoqulat:String = "";
     var xiaoqulng:String = "";
     var brithday:String="";
+    var agenum:String="";
+    
     @IBOutlet weak var headface: UIImageView!
     @IBOutlet weak var nickname: UITextField!
-    @IBOutlet weak var age: UITextField!
+    //@IBOutlet weak var age: UITextField!
     //@IBOutlet weak var xiaoqu: UITextField!
     @IBOutlet weak var tel: UITextField!
     @IBOutlet weak var sex: UIPickerView!
     
     @IBOutlet weak var brithdate: UIDatePicker!
     
+    @IBOutlet weak var introduce: UITextView!
+    
+    @IBOutlet var myview: UIControl!
     @IBAction func calcage(sender: UIDatePicker) {
         //需要转换的字符串
         //var dateString:NSString="2015-06-26";
@@ -44,17 +49,19 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
         let year=Int(second/(60*60*24*365))
         NSLog("second:\(second)")
         NSLog("year:\(year)")
-        age.text=String(year);
+        //age.text=String(year);
+        agenum=String(year);
         
     }
     
     var img = UIImage()
     @IBAction func controlTouchdown(sender: UIControl) {
         nickname.resignFirstResponder()
-        age.resignFirstResponder()
+        //age.resignFirstResponder()
         //xiaoqu.resignFirstResponder()
         tel.resignFirstResponder()
         sex.resignFirstResponder()
+        introduce.resignFirstResponder()
     }
 
     @IBAction func nicknameexit(sender: AnyObject) {
@@ -114,7 +121,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
         }
         
         dic["username"]=nickname.text;
-        dic["age"] = age.text;
+        dic["age"] = agenum;
         dic["brithday"] = brithday;
         if(selsexpicker=="男")
         {
@@ -128,6 +135,8 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
         dic["community_id"] = xiaoquid;
         dic["community_lat"] = xiaoqulat;
         dic["community_lng"] = xiaoqulng;
+        dic["introduce"] = introduce.text;
+        
         Alamofire.request(.POST, "http://api.bbxiaoqu.com/saveuserinfo.php", parameters: dic)
             .responseJSON { response in
                 print(response.request)  // original URL request
@@ -168,9 +177,139 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
         let defaults = NSUserDefaults.standardUserDefaults();
         let userid = defaults.objectForKey("userid") as! NSString;
         loaduserinfo(userid as String)
+        
+        //let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTouches:")
+        
+        //tapGestureRecognizer.cancelsTouchesInView = false
+        
+        //self.view.addGestureRecognizer(tapGestureRecognizer)
+        
+        
+        
+        
+        
+       // NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillShow:", name:UIKeyboardWillShowNotification, object: nil)
+        
+       // NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
      }
     
+    func keyBoardWillShow(note:NSNotification)
+        
+    {
+        
+        let userInfo  = note.userInfo as! NSDictionary
+        
+        var  keyBoardBounds = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        
+        
+        var keyBoardBoundsRect = self.view.convertRect(keyBoardBounds, toView:nil)
+        
+        
+        
+        var keyBaoardViewFrame = myview.frame
+        
+        var deltaY = keyBoardBounds.size.height
+        
+        
+        
+        let animations:(() -> Void) = {
+            
+            
+            
+            self.myview.transform = CGAffineTransformMakeTranslation(0,-deltaY)
+            
+        }
+        
+        
+        
+        if duration > 0 {
+            
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            
+            
+            UIView.animateWithDuration(duration, delay: 0, options:options, animations: animations, completion: nil)
+            
+            
+            
+            
+            
+        }else{
+            
+            
+            
+            animations()
+            
+        }
+        
+        
+        
+        
+        
+    }
     
+    
+    
+    func keyBoardWillHide(note:NSNotification)
+        
+    {
+        
+        
+        
+        let userInfo  = note.userInfo as! NSDictionary
+        
+        
+        
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        
+        
+        
+        
+        
+        let animations:(() -> Void) = {
+            
+            
+            
+            self.myview.transform = CGAffineTransformIdentity
+            
+            
+            
+        }
+        
+        
+        
+        if duration > 0 {
+            
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            
+            
+            UIView.animateWithDuration(duration, delay: 0, options:options, animations: animations, completion: nil)
+            
+            
+            
+            
+            
+        }else{
+            
+            
+            
+            animations()
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
    
 
     override func didReceiveMemoryWarning() {
@@ -284,8 +423,8 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                         self.nickname.text=username;
                         self.tel.text=telphone;
                         //self.xiaoqu.text=community;
-                        self.age.text=age;
-                        
+                       // self.age.text=age;
+                        self.agenum=age
                         //print("JSON1: \(self.sex?.selectedRowInComponent(0))")
                         if(usersex=="1")
                         {//男
@@ -304,7 +443,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
                         self.nickname.text=username;
                         self.tel.text=telphone;
                         //self.xiaoqu.text=community;
-                        self.age.text=age;
+                        //self.age.text=age;
                         
                         //print("JSON1: \(self.sex?.selectedRowInComponent(0))")
                         if(usersex=="1")
@@ -583,6 +722,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate , U
         
     }
 
+    
     
     
 }
