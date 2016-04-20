@@ -9,10 +9,10 @@
 import UIKit
 import Alamofire
 
-class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServiceDelegate,XxDL{
+class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,XxDL{
 
-       var items:[itemDaymic]=[]
-     var ggid:String = "";
+    var items:[itemDaymic]=[]
+    var ggid:String = "";
     
     @IBOutlet weak var galleryScrollView: UIScrollView!
     @IBOutlet weak var galleryPageControl: UIPageControl!
@@ -23,6 +23,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
     //定位管理器
     //let locationManager:CLLocationManager = CLLocationManager()
     var locService:BMKLocationService!
+     var _search:BMKGeoCodeSearch!
     var marquee: CHWMarqueeView?
     var timer:NSTimer!
     var imageView:BadgeView!;
@@ -102,6 +103,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         //启动LocationService
         locService.startUserLocationService()
         
+        _search=BMKGeoCodeSearch()
+        _search.delegate=self
         
         
         zdl().xxdl = self
@@ -176,6 +179,20 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
             let defaults = NSUserDefaults.standardUserDefaults();
             defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
             defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
+            
+                
+            
+            
+//            defaults.setObject(p.country, forKey: "country");
+//            defaults.setObject(p.locality, forKey: "province");//省直辖市
+//            defaults.setObject(p.administrativeArea  , forKey: "city");//城市
+//            defaults.setObject(p.subAdministrativeArea  , forKey: "subadministrativearea");//城市
+//            defaults.setObject(p.subLocality  , forKey: "sublocality");//区县
+//            defaults.setObject(p.thoroughfare  , forKey: "thoroughfare");//街道
+//            defaults.setObject(p.name  , forKey: "address");
+            defaults.synchronize();
+            
+            
             defaults.synchronize();
             locService.stopUserLocationService()
         }else{
@@ -183,19 +200,27 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         }
     }
     
+    
+    
     //处理位置坐标更新
     func didUpdateBMKUserLocation(userLocation: BMKUserLocation!) {
          if(userLocation.location != nil)
          {
             print("经度: \(userLocation.location.coordinate.latitude)")
             print("纬度: \(userLocation.location.coordinate.longitude)")
+            
+            print("纬度: \(userLocation.location.coordinate.longitude)")
             let defaults = NSUserDefaults.standardUserDefaults();
             defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
             defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
             defaults.synchronize();
-            locService.stopUserLocationService()
+           
             
+            let pt:CLLocationCoordinate2D=CLLocationCoordinate2D(latitude: userLocation.location.coordinate.latitude, longitude: userLocation.location.coordinate.longitude)
             
+            var option:BMKReverseGeoCodeOption=BMKReverseGeoCodeOption();
+            option.reverseGeoPoint=pt;
+            _search.reverseGeoCode(option)
             
             let _userid = defaults.objectForKey("userid") as! NSString;
             let _token = defaults.objectForKey("token") as! NSString;
@@ -228,6 +253,33 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         }
     }
     
+    
+    func onGetReverseGeoCodeResult(searcher:BMKGeoCodeSearch, result:BMKReverseGeoCodeResult,  errorCode:BMKSearchErrorCode)
+    {
+        if(errorCode.rawValue==0)
+        {
+           
+            print("province: \(result.addressDetail.province)")
+            print("city: \(result.addressDetail.city)")
+            print("district: \(result.addressDetail.district)")
+            print("streetName: \(result.addressDetail.streetName)")
+            print("streetNumber: \(result.addressDetail.streetNumber)")
+            
+
+            
+            print("address: \(result.address)")
+                            let defaults = NSUserDefaults.standardUserDefaults();
+                            defaults.setObject(result.addressDetail.province, forKey: "province");//省直辖市
+                            defaults.setObject(result.addressDetail.city , forKey: "city");//城市
+                            defaults.setObject(result.addressDetail.district , forKey: "sublocality");//区县
+                            defaults.setObject(result.addressDetail.streetName, forKey: "thoroughfare");//街道
+                            defaults.setObject(result.address  , forKey: "address");
+                            defaults.synchronize();
+            
+        }
+    }
+    
+
     override func viewWillAppear(animated: Bool) {
             locService.delegate = self
     }
