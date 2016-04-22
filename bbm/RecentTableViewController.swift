@@ -147,7 +147,11 @@ class RecentTableViewController: UITableViewController {
             
         }
         cell?.name!.text = (self.items[indexPath.row] as itemRecent).username
+        
+        
         cell?.content!.text = (self.items[indexPath.row] as itemRecent).lastnickname.stringByAppendingString(":").stringByAppendingString((self.items[indexPath.row] as itemRecent).lastinfo)
+        
+        
         cell?.lasttime!.text = (self.items[indexPath.row] as itemRecent).lastchattimer
 
 
@@ -169,7 +173,8 @@ class RecentTableViewController: UITableViewController {
 
         }
 
-        
+        cell?.lastuericon.layer.cornerRadius = 5.0
+        cell?.lastuericon.layer.masksToBounds = true
         return cell!
         
         

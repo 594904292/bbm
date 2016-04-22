@@ -62,7 +62,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                 
             }
         }
-
+        cell.images.layer.cornerRadius = 3.0
+        cell.images.layer.masksToBounds = true
         return cell
     }
     
@@ -277,12 +278,22 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
 
     func loadheadface(userid:String,headname:String)
     {
+        if(headname.characters.count>0)
+        {
         var myhead:String="http://api.bbxiaoqu.com/uploads/".stringByAppendingString(headface)
         Alamofire.request(.GET, myhead).response { (_, _, data, _) -> Void in
             if let d = data as? NSData!
             {
                 self.headimgview?.image=UIImage(data: d)
+                self.headimgview.layer.cornerRadius = 5.0
+                self.headimgview.layer.masksToBounds = true
             }
+        }
+        }else
+        {
+            self.headimgview?.image=UIImage(named: "logo")
+            self.headimgview.layer.cornerRadius = 5.0
+            self.headimgview.layer.masksToBounds = true
         }
         
     }
@@ -378,7 +389,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-50,self.view.frame.size.width,50))
         sendView.backgroundColor=UIColor.grayColor()
         sendView.alpha=0.9
-        txtMsg = UITextField(frame:CGRectMake(7,10,self.view.frame.size.width-91,36))
+        //txtMsg = UITextField(frame:CGRectMake(7,10,self.view.frame.size.width-91,36))
+        txtMsg = UITextField(frame:CGRectMake(7,10,self.view.frame.size.width-14,36))
         txtMsg.backgroundColor = UIColor.whiteColor()
         txtMsg.textColor=UIColor.blackColor()
         txtMsg.font=UIFont.boldSystemFontOfSize(12)
@@ -393,13 +405,13 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         
         self.view.addSubview(sendView)
 
-        let sendButton = UIButton(frame:CGRectMake(view.frame.size.width-77,10,77,36))
-        sendButton.backgroundColor=UIColor.lightGrayColor()
-        sendButton.addTarget(self, action:Selector("sendMessage") ,forControlEvents:UIControlEvents.TouchUpInside)
-        sendButton.layer.cornerRadius=6.0
-        sendButton.setTitle("发送", forState:UIControlState.Normal)
-        
-        sendView.addSubview(sendButton)
+//        let sendButton = UIButton(frame:CGRectMake(view.frame.size.width-77,10,77,36))
+//        sendButton.backgroundColor=UIColor.lightGrayColor()
+//        sendButton.addTarget(self, action:Selector("sendMessage") ,forControlEvents:UIControlEvents.TouchUpInside)
+//        sendButton.layer.cornerRadius=6.0
+//        sendButton.setTitle("发送", forState:UIControlState.Normal)
+//        
+//        sendView.addSubview(sendButton)
        
        
         
@@ -445,9 +457,10 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         
         self._tableview.reloadData()
         sender.resignFirstResponder()
-        
+      
         
         let  dic:Dictionary<String,String> = ["_infoid" : infoid,"_sendtime" : strNowTime,"_puserid" : puserid,"_puser" : puser,"_touserid" : senduserid,"_touser" : senduser,"_message" : sender.text!]
+          sender.text="";
         var url_str:String = "http://api.bbxiaoqu.com/discuzz.php";
         Alamofire.request(.POST,url_str, parameters:dic)
             .responseString{ response in
@@ -456,6 +469,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                 if let ret = response.result.value  {
                     if String(ret)=="1"
                     {
+                        
                         self.alertView = UIAlertView()
                         self.alertView!.title = "提示"
                         self.alertView!.message = "发送成功"
@@ -536,16 +550,24 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         cell?.plcontent?.lineBreakMode = NSLineBreakMode.ByWordWrapping
         cell?.plcontent?.numberOfLines=0
         cell?.plcontent?.text=(self.items[indexPath.row] as itempl).content
-        var picname:String = (self.items[indexPath.row] as itempl).headface;
-        var myhead:String="http://api.bbxiaoqu.com/uploads/".stringByAppendingString(picname)
-        Alamofire.request(.GET, myhead).response {
-            (_, _, data, _) -> Void in
-            if let d = data as? NSData!
-            {
-                cell?.plheadface?.image=UIImage(data: d)
+        var headface:String = (self.items[indexPath.row] as itempl).headface;
+        if(headface.characters.count>0)
+        {
+            var myhead:String="http://api.bbxiaoqu.com/uploads/".stringByAppendingString(headface)
+            Alamofire.request(.GET, myhead).response {
+                (_, _, data, _) -> Void in
+                if let d = data as? NSData!
+                {
+                    cell?.plheadface?.image=UIImage(data: d)
+                }
             }
+        }else
+        {
+            cell?.plheadface?.image=UIImage(named: "logo")
         }
-        
+        cell?.plheadface.layer.cornerRadius = 5.0
+        cell?.plheadface.layer.masksToBounds = true
+
         tableView.userInteractionEnabled = true
         if(self.issolution)
         {
@@ -585,9 +607,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     
     
     func tapped(button:UIButton){
-        //print(button.titleForState(.Normal))
         var pos:Int = button.tag
-        
         var date = NSDate()
         var timeFormatter = NSDateFormatter()
         timeFormatter.dateFormat = "yyy-MM-dd HH:mm:ss"
@@ -604,13 +624,6 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             .responseJSON { response in
                 if(response.result.isSuccess)
                 {
-                    
-//                    print(response.request)  // original URL request
-//                    print(response.response) // URL response
-//                    print(response.data)     // server data
-//                    print(response.result)   // result of response serialization
-//                    print(response.result.value)
-                  
                     self.successNotice("已解决")
                     print("已解决")
 

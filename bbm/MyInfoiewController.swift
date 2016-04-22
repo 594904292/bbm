@@ -171,26 +171,22 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
         var singleTap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goImagesel")
         headface .addGestureRecognizer(singleTap)
         
-         //headface.addTarget(self, action: "goImagesel", forControlEvents: UIControlEvents.TouchUpInside)
         
+        var layer:CALayer = headface.layer
+        layer.borderColor=UIColor.lightGrayColor().CGColor
+        layer.borderWidth = 1.0;
+
+         //headface.addTarget(self, action: "goImagesel", forControlEvents: UIControlEvents.TouchUpInside)
+        var layer1:CALayer = introduce.layer
+        layer1.borderColor=UIColor.lightGrayColor().CGColor
+        layer1.borderWidth = 1.0;
+
         
         let defaults = NSUserDefaults.standardUserDefaults();
         let userid = defaults.objectForKey("userid") as! NSString;
         loaduserinfo(userid as String)
+      
         
-        //let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTouches:")
-        
-        //tapGestureRecognizer.cancelsTouchesInView = false
-        
-        //self.view.addGestureRecognizer(tapGestureRecognizer)
-        
-        
-        
-        
-        
-       // NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillShow:", name:UIKeyboardWillShowNotification, object: nil)
-        
-       // NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
      }
     
     func keyBoardWillShow(note:NSNotification)
@@ -360,40 +356,6 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
                         let telphone:String = JSON[0].objectForKey("telphone") as! String;
                         let headfaceurl:String = JSON[0].objectForKey("headface") as! String;
                         let username:String = JSON[0].objectForKey("username") as! String;
-//                        var community:String;
-//                        if(JSON[0].objectForKey("community")!.isKindOfClass(NSNull))
-//                        {
-//                            community="";
-//                        }else
-//                        {
-//                            community = JSON[0].objectForKey("community") as! String;
-//                        }
-//                        var community_id:String;
-//                        if(JSON[0].objectForKey("community_id")!.isKindOfClass(NSNull))
-//                        {
-//                            community_id="";
-//                        }else
-//                        {
-//                            community_id = JSON[0].objectForKey("community_id") as! String;
-//                        }
-//                        
-//                        var community_lat:String;
-//                        if(JSON[0].objectForKey("community_lat")!.isKindOfClass(NSNull))
-//                        {
-//                            community_lat="";
-//                        }else
-//                        {
-//                            community_lat = JSON[0].objectForKey("community_lat") as! String;
-//                        }
-//                        var community_lng:String;
-//                        if(JSON[0].objectForKey("community_lng")!.isKindOfClass(NSNull))
-//                        {
-//                            community_lng="";
-//                        }else
-//                        {
-//                            community_lng = JSON[0].objectForKey("community_lng") as! String;
-//                        }
-                        
                         var age:String;
                         if(JSON[0].objectForKey("age")!.isKindOfClass(NSNull))
                         {
@@ -413,12 +375,6 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
                         }
                         
                        
-                        
-                        
-//                        self.xiaoquid=community_id;
-//                        self.xiaoquname=community;
-//                        self.xiaoqulat=community_lat;
-//                        self.xiaoqulng=community_lng;
                         
                         self.nickname.text=username;
                         self.tel.text=telphone;
@@ -478,19 +434,22 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
                         
                         self.brithdate.setDate(now, animated: true)
                         
-                        //if(headfaceurl.isKindOfClass(NSNull))
-                         //{
+                        if(headfaceurl.characters.count>0)
+                        {
                             let url="http://api.bbxiaoqu.com/uploads/"+headfaceurl;
-                        Alamofire.request(.GET, url).response { (_, _, data, _) -> Void in
-                            if let d = data as? NSData!
-                            {
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    
-                                    self.headface?.image = UIImage(data: d)
-                                })
+                            Alamofire.request(.GET, url).response { (_, _, data, _) -> Void in
+                                if let d = data as? NSData!
+                                {
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        
+                                        self.headface?.image = UIImage(data: d)
+                                    })
+                                }
                             }
+                        }else
+                        {
+                            self.headface?.image = UIImage(named: "logo")
                         }
-                        //}
                     }
 
                     

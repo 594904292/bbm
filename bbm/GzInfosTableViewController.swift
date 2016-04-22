@@ -97,7 +97,7 @@ class GzInfosTableViewController: UITableViewController {
             
             cell?.senduser.text=(items[indexPath.row] as itemMess).username
             cell?.message.text=(items[indexPath.row] as itemMess).content
-            cell?.sendaddress.text=(items[indexPath.row] as itemMess).time
+            cell?.sendtime.text=(items[indexPath.row] as itemMess).time
             cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
             if ((items[indexPath.row] as itemMess).infocatagory == "0")
             {
@@ -117,6 +117,8 @@ class GzInfosTableViewController: UITableViewController {
             if((items[indexPath.row] as itemMess).photo.isKindOfClass(NSNull))
             {
                 cell?.icon.image=UIImage(named: "icon")
+                cell?.icon.layer.cornerRadius = 5.0
+                cell?.icon.layer.masksToBounds = true
                 
             }else
             {
@@ -149,6 +151,8 @@ class GzInfosTableViewController: UITableViewController {
                 {
                     cell?.icon.image=UIImage(named: "icon")
                 }
+                cell?.icon.layer.cornerRadius = 5.0
+                cell?.icon.layer.masksToBounds = true
             }
             cell?.gz.text="关:"+(items[indexPath.row] as itemMess).visnum;
             cell?.pl.text="评:"+(items[indexPath.row] as itemMess).plnum;
@@ -163,7 +167,7 @@ class GzInfosTableViewController: UITableViewController {
             }
             cell?.senduser.text=(items[indexPath.row] as itemMess).username
             cell?.Message.text=(items[indexPath.row] as itemMess).content
-            cell?.sendaddress.text=(items[indexPath.row] as itemMess).time
+            cell?.sendtime.text=(items[indexPath.row] as itemMess).time
             cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
             
             

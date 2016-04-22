@@ -152,6 +152,8 @@ class UserInfoViewController: UIViewController ,UITableViewDataSource,UITableVie
                                 self.headface?.image = UIImage(named: "logo")
                             })
                         }
+                        self.headface?.layer.cornerRadius = 5.0
+                        self.headface?.layer.masksToBounds = true
                     }
                     
                     

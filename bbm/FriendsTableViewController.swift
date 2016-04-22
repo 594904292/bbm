@@ -108,6 +108,8 @@ class FriendsTableViewController: UITableViewController {
         
         var avatar:String = (self.items[indexPath.row] as Friends).avatar;
         
+        if(avatar.characters.count>0)
+        {
         var head = "http://api.bbxiaoqu.com/uploads/".stringByAppendingString(avatar)
          Alamofire.request(.GET, head).response {
                  (_, _, data, _) -> Void in
@@ -116,7 +118,14 @@ class FriendsTableViewController: UITableViewController {
                     cell?.headface.image=UIImage(data: d)
                 }
             
+            }
+        }else
+        {
+            cell?.headface.image=UIImage(named: "logo")
         }
+        
+        cell?.headface.layer.cornerRadius = 5.0
+        cell?.headface.layer.masksToBounds = true
 
          return cell!
     }

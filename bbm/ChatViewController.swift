@@ -213,9 +213,11 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         sendButton.setTitle("发送", forState:UIControlState.Normal)
         sendView.addSubview(sendButton)
         self.view.addSubview(sendView)
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTouches:")
         tapGestureRecognizer.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tapGestureRecognizer)
+        self.tableView.addGestureRecognizer(tapGestureRecognizer)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillShow:", name:UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillHide:", name:UIKeyboardWillHideNotification, object: nil)
     }

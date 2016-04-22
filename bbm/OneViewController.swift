@@ -234,7 +234,8 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                         
                     }
 
-                    
+                    cell?.icon.layer.cornerRadius = 5.0
+                    cell?.icon.layer.masksToBounds = true
                    if((items[indexPath.row] as itemMess).photo.isKindOfClass(NSNull))
                     {
                         cell?.icon.image=UIImage(named: "icon")
@@ -576,92 +577,92 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     
     
     
-    //////////////////////////////
-    //定位改变执行，可以得到新位置、旧位置
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //获取最新的坐标
-        
-        let currLocation:CLLocation = locations.last!
-        print("经度：\(currLocation.coordinate.longitude)")
-        print("纬度：\(currLocation.coordinate.latitude)")
-        
-        let defaults = NSUserDefaults.standardUserDefaults();
-        defaults.setObject(String(currLocation.coordinate.latitude), forKey: "lat");
-        defaults.setObject(String(currLocation.coordinate.longitude), forKey: "lng");
-        defaults.synchronize();
-        
-        
-        var geocoder:CLGeocoder=CLGeocoder();
-        geocoder.reverseGeocodeLocation(currLocation,
-            completionHandler: { (placemarks, error) -> Void in
-                if error != nil {
-                    return
-                }
-                let p:CLPlacemark = placemarks!.last!
-                //NSLog(p.description)
-                print("name：\(p.name)")
-                print("country：\(p.country)")
-                print("postalCode：\(p.postalCode)")
-                print("locality：\(p.locality)")
-                print("subLocality：\(p.subLocality)")
-                
-                print("thoroughfare：\(p.thoroughfare)")
-                
-                print("administrativeArea：\(p.administrativeArea)")
-                print("subAdministrativeArea：\(p.subAdministrativeArea)")
-                print("inlandWater：\(p.inlandWater)")
-                
-                print("areasOfInterest：\(p.areasOfInterest)")
-                
-                
-                
-                let defaults = NSUserDefaults.standardUserDefaults();
-                defaults.setObject(p.country, forKey: "country");
-                defaults.setObject(p.locality, forKey: "province");//省直辖市
-                defaults.setObject(p.administrativeArea  , forKey: "city");//城市
-                defaults.setObject(p.subAdministrativeArea  , forKey: "subadministrativearea");//城市
-                defaults.setObject(p.subLocality  , forKey: "sublocality");//区县
-                defaults.setObject(p.thoroughfare  , forKey: "thoroughfare");//街道
-                defaults.setObject(p.name  , forKey: "address");
-                defaults.synchronize();
-                
-                
-                let _userid = defaults.objectForKey("userid") as! NSString;
-                let _token = defaults.objectForKey("token") as! NSString;
-                //更新下地理位置
-                
-                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
-                    .responseJSON { response in
-                        print(response.request)  // original URL request
-                        print(response.response) // URL response
-                        print(response.data)     // server data
-                        print(response.result)   // result of response serialization
-                        print(response.result.value)
-                        
-                        
-                }
-                
-                
-                
-                
-                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
-                    .responseJSON { response in
-                        print(response.request)  // original URL request
-                        print(response.response) // URL response
-                        print(response.data)     // server data
-                        print(response.result)   // result of response serialization
-                        print(response.result.value)
-                        
-                        
-                }
-                
-         })
-        
-        
-      }
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
-        print(error)
-    }
+//    //////////////////////////////
+//    //定位改变执行，可以得到新位置、旧位置
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        //获取最新的坐标
+//        
+//        let currLocation:CLLocation = locations.last!
+//        print("经度：\(currLocation.coordinate.longitude)")
+//        print("纬度：\(currLocation.coordinate.latitude)")
+//        
+//        let defaults = NSUserDefaults.standardUserDefaults();
+//        defaults.setObject(String(currLocation.coordinate.latitude), forKey: "lat");
+//        defaults.setObject(String(currLocation.coordinate.longitude), forKey: "lng");
+//        defaults.synchronize();
+//        
+//        
+//        var geocoder:CLGeocoder=CLGeocoder();
+//        geocoder.reverseGeocodeLocation(currLocation,
+//            completionHandler: { (placemarks, error) -> Void in
+//                if error != nil {
+//                    return
+//                }
+//                let p:CLPlacemark = placemarks!.last!
+//                //NSLog(p.description)
+//                print("name：\(p.name)")
+//                print("country：\(p.country)")
+//                print("postalCode：\(p.postalCode)")
+//                print("locality：\(p.locality)")
+//                print("subLocality：\(p.subLocality)")
+//                
+//                print("thoroughfare：\(p.thoroughfare)")
+//                
+//                print("administrativeArea：\(p.administrativeArea)")
+//                print("subAdministrativeArea：\(p.subAdministrativeArea)")
+//                print("inlandWater：\(p.inlandWater)")
+//                
+//                print("areasOfInterest：\(p.areasOfInterest)")
+//                
+//                
+//                
+//                let defaults = NSUserDefaults.standardUserDefaults();
+//                defaults.setObject(p.country, forKey: "country");
+//                defaults.setObject(p.locality, forKey: "province");//省直辖市
+//                defaults.setObject(p.administrativeArea  , forKey: "city");//城市
+//                defaults.setObject(p.subAdministrativeArea  , forKey: "subadministrativearea");//城市
+//                defaults.setObject(p.subLocality  , forKey: "sublocality");//区县
+//                defaults.setObject(p.thoroughfare  , forKey: "thoroughfare");//街道
+//                defaults.setObject(p.name  , forKey: "address");
+//                defaults.synchronize();
+//                
+//                
+//                let _userid = defaults.objectForKey("userid") as! NSString;
+//                let _token = defaults.objectForKey("token") as! NSString;
+//                //更新下地理位置
+//                
+//                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
+//                    .responseJSON { response in
+//                        print(response.request)  // original URL request
+//                        print(response.response) // URL response
+//                        print(response.data)     // server data
+//                        print(response.result)   // result of response serialization
+//                        print(response.result.value)
+//                        
+//                        
+//                }
+//                
+//                
+//                
+//                
+//                Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(currLocation.coordinate.latitude),"_lng":String(currLocation.coordinate.longitude),"_os":"ios"])
+//                    .responseJSON { response in
+//                        print(response.request)  // original URL request
+//                        print(response.response) // URL response
+//                        print(response.data)     // server data
+//                        print(response.result)   // result of response serialization
+//                        print(response.result.value)
+//                        
+//                        
+//                }
+//                
+//         })
+//        
+//        
+//      }
+//    
+//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError){
+//        print(error)
+//    }
     
 }

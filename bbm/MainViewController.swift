@@ -179,21 +179,9 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
             let defaults = NSUserDefaults.standardUserDefaults();
             defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
             defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
-            
-                
-            
-            
-//            defaults.setObject(p.country, forKey: "country");
-//            defaults.setObject(p.locality, forKey: "province");//省直辖市
-//            defaults.setObject(p.administrativeArea  , forKey: "city");//城市
-//            defaults.setObject(p.subAdministrativeArea  , forKey: "subadministrativearea");//城市
-//            defaults.setObject(p.subLocality  , forKey: "sublocality");//区县
-//            defaults.setObject(p.thoroughfare  , forKey: "thoroughfare");//街道
-//            defaults.setObject(p.name  , forKey: "address");
             defaults.synchronize();
             
             
-            defaults.synchronize();
             locService.stopUserLocationService()
         }else{
             NSLog("userLocation.location is nil")
@@ -209,12 +197,19 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
             print("经度: \(userLocation.location.coordinate.latitude)")
             print("纬度: \(userLocation.location.coordinate.longitude)")
             
-            print("纬度: \(userLocation.location.coordinate.longitude)")
-            let defaults = NSUserDefaults.standardUserDefaults();
+            var defaults = NSUserDefaults.standardUserDefaults();
             defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
             defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
+            
+//            defaults.setNilValueForKey("province");//省直辖市
+//            defaults.setNilValueForKey("city");//城市
+//            defaults.setNilValueForKey("sublocality");//区县
+//            defaults.setNilValueForKey("thoroughfare");//街道
+//            defaults.setNilValueForKey("address");
+
+
             defaults.synchronize();
-           
+            
             
             let pt:CLLocationCoordinate2D=CLLocationCoordinate2D(latitude: userLocation.location.coordinate.latitude, longitude: userLocation.location.coordinate.longitude)
             
@@ -268,14 +263,25 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
 
             
             print("address: \(result.address)")
-                            let defaults = NSUserDefaults.standardUserDefaults();
-                            defaults.setObject(result.addressDetail.province, forKey: "province");//省直辖市
-                            defaults.setObject(result.addressDetail.city , forKey: "city");//城市
-                            defaults.setObject(result.addressDetail.district , forKey: "sublocality");//区县
-                            defaults.setObject(result.addressDetail.streetName, forKey: "thoroughfare");//街道
-                            defaults.setObject(result.address  , forKey: "address");
-                            defaults.synchronize();
-            
+            let defaults = NSUserDefaults.standardUserDefaults();
+            defaults.setObject(result.addressDetail.province, forKey: "province");//省直辖市
+            defaults.setObject(result.addressDetail.city , forKey: "city");//城市
+            defaults.setObject(result.addressDetail.district , forKey: "sublocality");//区县
+            defaults.setObject(result.addressDetail.streetName, forKey: "thoroughfare");//街道
+            defaults.setObject(result.address  , forKey: "address");
+            defaults.synchronize();
+
+        }else
+        {
+            let defaults = NSUserDefaults.standardUserDefaults();
+            let a:String = "";
+            defaults.setObject("", forKey: "province");//省直辖市
+            defaults.setObject(a, forKey: "city");//城市
+            defaults.setObject(a, forKey: "sublocality");//区县
+            defaults.setObject(a, forKey: "thoroughfare");//街道
+            defaults.setObject(a, forKey: "address");
+            defaults.synchronize();
+
         }
     }
     

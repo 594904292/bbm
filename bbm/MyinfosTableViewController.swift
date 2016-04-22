@@ -99,7 +99,7 @@ class MyinfosTableViewController: UITableViewController {
             
             cell?.senduser.text=(items[indexPath.row] as itemMess).username
             cell?.message.text=(items[indexPath.row] as itemMess).content
-            cell?.sendaddress.text=(items[indexPath.row] as itemMess).time
+            cell?.sendtime.text=(items[indexPath.row] as itemMess).time
             cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
             if ((items[indexPath.row] as itemMess).infocatagory == "0")
             {
@@ -152,6 +152,8 @@ class MyinfosTableViewController: UITableViewController {
                     cell?.icon.image=UIImage(named: "icon")
                 }
             }
+            cell?.icon.layer.cornerRadius = 5.0
+            cell?.icon.layer.masksToBounds = true
             cell?.gz.text="关:"+(items[indexPath.row] as itemMess).visnum;
             cell?.pl.text="评:"+(items[indexPath.row] as itemMess).plnum;
             return cell!
@@ -165,7 +167,7 @@ class MyinfosTableViewController: UITableViewController {
             }
             cell?.senduser.text=(items[indexPath.row] as itemMess).username
             cell?.Message.text=(items[indexPath.row] as itemMess).content
-            cell?.sendaddress.text=(items[indexPath.row] as itemMess).time
+            cell?.sendtime.text=(items[indexPath.row] as itemMess).time
             cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
             
             

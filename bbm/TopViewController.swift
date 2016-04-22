@@ -45,7 +45,9 @@ class TopViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
     }
     func loadrate()
     {
-        var url:String="http://api.bbxiaoqu.com/myrank.php?userid=888";
+        let defaults = NSUserDefaults.standardUserDefaults();
+        let userid = defaults.objectForKey("userid") as! String;
+        var url:String="http://api.bbxiaoqu.com/myrank.php?userid=".stringByAppendingString(userid);
         print("url: \(url)")
         Alamofire.request(.GET, url, parameters: nil)
             .response { (request, response, data, error) in
@@ -214,7 +216,6 @@ class TopViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         var f  =  CGFloat ( ( (items[indexPath.row] as itemTop).score as NSString).floatValue)
         
         cell?.score.rating = f
-
         
             var avatar:String = (self.items[indexPath.row] as itemTop).headface
             

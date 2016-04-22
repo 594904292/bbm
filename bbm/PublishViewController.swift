@@ -83,21 +83,16 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
                 //添加边框
                 
                 var layer:CALayer = imageView.layer
-                layer.borderColor=UIColor.whiteColor().CGColor
-                layer.borderWidth = 5.0;
+                layer.borderColor=UIColor.lightGrayColor().CGColor
+                layer.borderWidth = 1.0;
                 
                 //添加四个边阴影
-                imageView.layer.shadowColor = UIColor.blackColor().CGColor
-                imageView.layer.shadowOffset = CGSizeMake(0, 0);
-                imageView.layer.shadowOpacity = 0.5;
-                 imageView.layer.shadowRadius = 10.0;
+//                imageView.layer.shadowColor = UIColor.blueColor().CGColor
+//                imageView.layer.shadowOffset = CGSizeMake(2, 2);
+//                imageView.layer.shadowOpacity = 0.5;
+//                 imageView.layer.shadowRadius = 10.0;
                 imageView.hidden=true
                 
-                //添加四个边阴影
-//                imageView.layer.shadowColor = UIColor.blackColor().CGColor
-//                imageView.layer.shadowOffset = CGSizeMake(4, 4);
-//                imageView.layer.shadowOpacity = 0.5;
-//                imageView.layer.shadowRadius = 2.0;
                 
                 //设置按钮文字
                 //button.setTitle("按钮", forState:UIControlState.Normal)
@@ -258,6 +253,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         let userid = defaults.objectForKey("userid") as! String;
         let lat = defaults.objectForKey("lat") as! String;
         let lng = defaults.objectForKey("lng") as! String;
+        
         var photo:String = "";
         print(self.imgarr.count)
 
@@ -338,15 +334,18 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
             var thoroughfare = "";
         }
         
-        
-        var address:String = "";
-        if(defaults.objectIsForcedForKey("address"))
-        {
-            var address = defaults.objectForKey("address") as! String;
-        }else
-        {
-            var address = "";
-        }
+        let address = defaults.objectForKey("address") as! String;
+//        var address:String = "";
+//        var aflag=defaults.objectIsForcedForKey("address");
+//        var bflag=defaults.boolForKey("address");
+//        
+//        if(defaults.boolForKey("address"))
+//        {
+//            var address = defaults.objectForKey("address") as! String;
+//        }else
+//        {
+//            var address = "";
+//        }
         
         var  dic:Dictionary<String,String> = ["content" : mess, "guid": guid]
         dic["title"]="";
