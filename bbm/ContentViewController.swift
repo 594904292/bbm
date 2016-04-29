@@ -10,13 +10,13 @@ import UIKit
 import Alamofire
 
 class ContentViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate ,UICollectionViewDataSource,UICollectionViewDelegate{
-    
-
     var alertView:UIAlertView?
     @IBOutlet weak var contentLab: UILabel!
     @IBOutlet weak var lvsv: UIScrollView!
+    @IBOutlet var scrollview: UIScrollView!
     var txtMsg:UITextField!
-    
+    var sendView:UIView!;
+
     @IBOutlet weak var headimgview: UIImageView!
     var infoid:String = "";
     var guid:String = "";
@@ -134,16 +134,22 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
             self.navigationController?.pushViewController(vc, animated: true)
         }else
         {
-//            let vc = sb.instantiateViewControllerWithIdentifier("chatviewController") as! ChatViewController
-//            //创建导航控制器
-//            vc.from=puserid
-//            vc.myself=senduserid;
-//            self.navigationController?.pushViewController(vc, animated: true)
             
-            let vc = sb.instantiateViewControllerWithIdentifier("userinfoviewcontroller") as! UserInfoViewController
-            //创建导航控制器
-            vc.userid=self.puserid;
+            //做了一次报名动作
+            self.savebmThread();
+            
+            var sqlitehelpInstance1=sqlitehelp.shareInstance()
+            
+            let defaults = NSUserDefaults.standardUserDefaults();
+            var myuserid = defaults.objectForKey("userid") as! String;
+            
+            let sb = UIStoryboard(name:"Main", bundle: nil)
+            let vc = sb.instantiateViewControllerWithIdentifier("chatviewController") as! ChatViewController
+            vc.from=puserid
+            vc.myself=myuserid;
             self.navigationController?.pushViewController(vc, animated: true)
+            
+            
         }
     }
     
@@ -382,8 +388,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     }
     */
     
-    var sendView:UIView!;
-   // var txtMsg:UITextField!
+  
     func setupSendPanel1()
     {
         sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height-50,self.view.frame.size.width,50))
@@ -403,7 +408,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         txtMsg.enablesReturnKeyAutomatically  = true
         sendView.addSubview(txtMsg)
         
-        self.view.addSubview(sendView)
+       
 
 //        let sendButton = UIButton(frame:CGRectMake(view.frame.size.width-77,10,77,36))
 //        sendButton.backgroundColor=UIColor.lightGrayColor()
@@ -412,12 +417,13 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
 //        sendButton.setTitle("发送", forState:UIControlState.Normal)
 //        
 //        sendView.addSubview(sendButton)
-       
-       
+        
+        self.view.addSubview(sendView)
+       self.view.bringSubviewToFront(sendView)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTouches:")
         tapGestureRecognizer.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tapGestureRecognizer)
+        self.scrollview.addGestureRecognizer(tapGestureRecognizer)
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"keyBoardWillShow:", name:UIKeyboardWillShowNotification, object: nil)
@@ -469,6 +475,8 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                 if let ret = response.result.value  {
                     if String(ret)=="1"
                     {
+                        //做了一次报名动作
+                        self.savebmThread();
                         
                         self.alertView = UIAlertView()
                         self.alertView!.title = "提示"
@@ -476,6 +484,7 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
                         self.alertView!.addButtonWithTitle("关闭")
                         NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
                         self.alertView!.show()
+                        
                     }
                 }
                 }else
@@ -486,6 +495,27 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         }
     }
     
+    
+    func savebmThread()
+    {
+        let defaults = NSUserDefaults.standardUserDefaults();
+        var senduseridstr = defaults.objectForKey("userid") as! String;
+
+        let  dics:Dictionary<String,String> = ["_infoid" : self.infoid,"_userid" : senduseridstr,"_guid" : self.guid,"_action" : "add"]
+        
+        var url_str:String = "http://api.bbxiaoqu.com/adduserbminfo.php";
+        Alamofire.request(.POST,url_str, parameters:dics)
+            .responseString{ response in
+                if(response.result.isSuccess)
+                {
+                    print("报名成功")
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
+        }
+    }
     @IBOutlet weak var reportbtn: UIButton!
         
     
