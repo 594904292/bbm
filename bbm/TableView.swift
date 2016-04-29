@@ -141,7 +141,8 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
             return TableHeaderViewCell.getHeight()
         }
         var section : AnyObject  =  self.bubbleSection[indexPath.section]
-        var data = section[indexPath.row - 1]
+        var pos:Int=indexPath.row - 1
+        var data:AnyObject = section[pos] as AnyObject
         
         var item =  data as! MessageItem
         var height  = max(item.insets.top + item.view.frame.size.height + item.insets.bottom, 52)
@@ -160,18 +161,27 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
             var hcell =  TableHeaderViewCell(reuseIdentifier:cellId)
             var secno = indexPath.section
             var section : AnyObject  =  self.bubbleSection[indexPath.section]
-            var data = section[indexPath.row] as! MessageItem
+            var pos:Int=indexPath.row
+            var data:AnyObject = section[pos] as AnyObject
             
-            hcell.setDate(data.date)
+            var item =  data as! MessageItem
+            
+            //var msgdata:MessageItem = section[indexPath.row] as! MessageItem
+            
+            hcell.setDate(item.date)
             return hcell
         }
         // Standard
         var cellId = "ChatCell"
         
         var section : AnyObject  =  self.bubbleSection[indexPath.section]
-        var data = section[indexPath.row - 1]
         
-        let cell =  TableViewCell(data:data! as! MessageItem, reuseIdentifier:cellId)
+        var pos:Int=indexPath.row - 1
+        var data:AnyObject = section[pos] as AnyObject
+
+       
+        
+        let cell =  TableViewCell(data:data as! MessageItem, reuseIdentifier:cellId)
         
         return cell
     }
