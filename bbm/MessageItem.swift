@@ -41,10 +41,14 @@ class MessageItem
         
         var width =  225, height = 10000.0
         
-        var atts =  NSMutableDictionary()
-        atts.setObject(font,forKey:NSFontAttributeName)
+        //var atts =  NSMutableDictionary()
+        //atts.setObject(font,forKey:NSFontAttributeName)
         
-        var size =  body.boundingRectWithSize(CGSizeMake(CGFloat(width), CGFloat(height))  ,     options:NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:nil ,     context:nil)
+        //let attributes = NSDictionary(object: font, forKey: NSFontAttributeName)
+          let option = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let atts = NSDictionary(object: font, forKey: NSFontAttributeName)
+
+        var size =  body.boundingRectWithSize(CGSizeMake(CGFloat(width), CGFloat(height)),options:option,attributes:atts as! [String : AnyObject] ,context:nil)
         
         var label =  UILabel(frame:CGRectMake(0, 0, size.size.width+2, size.size.height))
         
