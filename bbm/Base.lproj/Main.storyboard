@@ -2240,7 +2240,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UPj-Fm-YpJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2402" y="-555"/>
+            <point key="canvasLocation" x="2138" y="-551"/>
         </scene>
         <!--Setting-->
         <scene sceneID="Pxf-nu-vSk">
@@ -2294,6 +2294,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="content" destination="mev-He-cX5" id="6br-h0-cPW"/>
+                        <outlet property="desc" destination="W50-qK-4t2" id="OcY-5P-Yee"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W71-37-ik7" userLabel="First Responder" sceneMemberID="firstResponder"/>
