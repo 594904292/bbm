@@ -19,7 +19,7 @@ class DbHelp
         db.execute(sql0  as String);
         
         
-        let sql:NSString = "create table  IF NOT EXISTS [user] (id integer primary key autoincrement,userid varchar(20),nickname varchar(20),password varchar(20),telphone varchar(2),headface varchar(2),pass BOOLEAN  NULL,online BOOLEAN  NULL)";
+        let sql:NSString = "create table  IF NOT EXISTS [user] (id integer primary key autoincrement,userid varchar(20),nickname varchar(20),password varchar(20),telphone varchar(2),headface varchar(2),pass BOOLEAN  NULL,online BOOLEAN  NULL,lastlogintime varchar(50)  NULL)";
         db.execute(sql  as String);
         
         
@@ -125,7 +125,7 @@ class DbHelp
         
         
         
-         db.execute("create table if not exists users(uid integer primary key,userid varchar(100),nickname varchar(100),usericon varchar(100))")
+         db.execute("create table if not exists users(uid integer primary key,userid varchar(100),nickname varchar(100),usericon varchar(100),lastlogintime varchar(100))")
     
         
     }
