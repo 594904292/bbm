@@ -216,7 +216,7 @@ class TopViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
         var f  =  CGFloat ( ( (items[indexPath.row] as itemTop).score as NSString).floatValue)
         
         cell?.score.rating = f
-        
+        cell?.score.isIndicator=true
             var avatar:String = (self.items[indexPath.row] as itemTop).headface
             
             if(avatar.characters.count>0)

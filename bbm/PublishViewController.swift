@@ -13,8 +13,9 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     var cat=0;
     //@IBOutlet weak var content: UITextField!
     @IBOutlet weak var contenttip: UILabel!
-    @IBOutlet weak var content: UITextView!
+    //@IBOutlet weak var content: UITextView!
     
+    @IBOutlet weak var content: UITextView!
     @IBOutlet weak var picdiv: UIView!
     var alertView:UIAlertView?
     var img = UIImage()
@@ -50,6 +51,11 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
             //content.placeholder="请输入你的能帮助信息"
         }
 
+        var contentlayer:CALayer = content.layer
+        contentlayer.borderColor=UIColor.lightGrayColor().CGColor
+        contentlayer.opacity=0.3
+        contentlayer.borderWidth = 1.0;
+
         
         let bw:CGFloat = self.view.frame.width
         var index=0
@@ -84,6 +90,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
                 
                 var layer:CALayer = imageView.layer
                 layer.borderColor=UIColor.lightGrayColor().CGColor
+                layer.opacity=0.7
                 layer.borderWidth = 1.0;
                 
                 //添加四个边阴影

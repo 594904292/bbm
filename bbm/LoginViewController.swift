@@ -45,7 +45,7 @@ class LoginViewController: UIViewController {
     
     
     func getuser()->String{
-        let sql="select * from [user] limit 0,1";
+        let sql="select * from [user] order by lastlogintime desc limit 0,1";
         NSLog(sql)
         let row = db.query(sql)
         if row.count > 0 {
@@ -78,6 +78,15 @@ class LoginViewController: UIViewController {
         var a = self.login_username.text as String!
         let b = self.login_password.text as String!
 
+        //lastlogintime
+        var date:NSDate = NSDate()
+        var formatter:NSDateFormatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        var lastlogintime = formatter.stringFromDate(date)
+        //println(dateString)
+        
+       // self.saveuser(userid, nickname: username, password: pass, telphone: telphone, headface: headface,lastlogintime:lastlogintime)
+        updateuserlogintime(a,lastlogintime: lastlogintime);
         if(login(a,pass:b))
         {
             
@@ -150,8 +159,14 @@ class LoginViewController: UIViewController {
                             let telphone:String = JSON.objectForKey("telphone") as! String;
                             let headface:String = JSON.objectForKey("headface") as! String;
                             let username:String = JSON.objectForKey("username") as! String;
+                            //lastlogintime
+                            var date:NSDate = NSDate()
+                            var formatter:NSDateFormatter = NSDateFormatter()
+                            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            var lastlogintime = formatter.stringFromDate(date)
+                            //println(dateString)
                             
-                            self.saveuser(userid, nickname: username, password: pass, telphone: telphone, headface: headface)
+                            self.saveuser(userid, nickname: username, password: pass, telphone: telphone, headface: headface,lastlogintime:lastlogintime)
                             let flag:Bool = self.login(userid, pass:pass)
                             if(flag)
                             {
@@ -230,13 +245,22 @@ class LoginViewController: UIViewController {
     }
     
     
-    func saveuser(userid: String, nickname: String, password: String, telphone: String,headface:String)  {
-        let sql = "insert into user(userid,nickname,password,telphone,headface,pass,online) values('\(userid)','\(nickname)','\(password)','\(telphone)','\(headface)','1','0')"
+    func saveuser(userid: String, nickname: String, password: String, telphone: String,headface:String,lastlogintime:String)  {
+        let sql = "insert into user(userid,nickname,password,telphone,headface,pass,online,lastlogintime) values('\(userid)','\(nickname)','\(password)','\(telphone)','\(headface)','1','0','\(lastlogintime)')"
         NSLog("sql: \(sql)")
         //通过封装的方法执行sql
         db.execute(sql)
     }
     
+    
+    func updateuserlogintime(userid: String,lastlogintime:String)  {
+        //let sql = "update user (userid,lastlogintime) values('\(userid)','\(lastlogintime)')";
+        let sql = "update user set lastlogintime='\(lastlogintime)' where userid='\(userid)'";
+        NSLog("sql: \(sql)")
+        //通过封装的方法执行sql
+        db.execute(sql)
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

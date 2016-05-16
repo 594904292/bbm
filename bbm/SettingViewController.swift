@@ -18,6 +18,12 @@ class SettingViewController: UIViewController,UINavigationControllerDelegate {
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         
         
+        
+        var contentlayer:CALayer = content.layer
+        contentlayer.borderColor=UIColor.lightGrayColor().CGColor
+        contentlayer.opacity=0.3
+        contentlayer.borderWidth = 1.0;
+        
         let infoDictionary = NSBundle .mainBundle ().infoDictionary
         
         let appDisplayName: AnyObject? = infoDictionary![ "CFBundleDisplayName"]
@@ -41,8 +47,8 @@ class SettingViewController: UIViewController,UINavigationControllerDelegate {
     }
 
     
+    @IBOutlet weak var content: UITextView!
     @IBOutlet weak var desc: UILabel!
-    @IBOutlet weak var content: UITextField!
     @IBAction func submit(sender: UIButton) {
         if(content.text?.characters.count==0)
         {

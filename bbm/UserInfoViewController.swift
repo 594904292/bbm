@@ -276,7 +276,7 @@ class UserInfoViewController: UIViewController ,UITableViewDataSource,UITableVie
         var f  =  CGFloat ( ( (items[indexPath.row] as ItemEvaluate).score as NSString).floatValue)
         
         cell?.ratingbar.rating = f
-
+         cell?.ratingbar.isIndicator=true
         cell?.eveluate.text=(items[indexPath.row] as ItemEvaluate).evalute
         cell?.addtime.text=(items[indexPath.row] as ItemEvaluate).addtime
         

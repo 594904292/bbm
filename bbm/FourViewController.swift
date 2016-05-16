@@ -80,9 +80,17 @@ class FourViewController: UIViewController,UINavigationControllerDelegate{
     }
     @IBAction func offline(sender: UIButton) {
         NSLog("offlineClick")
-        exit(0)
+        //exit(0)
+        let sb = UIStoryboard(name:"Main", bundle: nil)
+        let vc = sb.instantiateViewControllerWithIdentifier("loginController") as! LoginViewController
+        vc.reloadInputViews();
+        //创建导航控制器
+        //let nvc=UINavigationController(rootViewController:vc);
+        //设置根视图
+        //self.view.window!.rootViewController=nvc;
+        self.presentViewController(vc, animated: true, completion: nil)
     }
-       
+    
     /*
     // MARK: - Navigation
 
