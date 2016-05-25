@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
     var mapManager: BMKMapManager?
     //var xmppStream:XMPPStream?
     //var password:String = ""
-   // var isOpen:Bool = false
+    // var isOpen:Bool = false
     //var chatDelegate:ChatDelegate?
     //var messageDelegate:MessageDelegate?
     
@@ -30,53 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
     //状态代理
     var ztdl : ZtDL?
     
-    //消息代理
+    //消息代理--针对会话
     var xxdl : XxDL?
     
-    
-//    func loadusername(userid:String) -> String
-//    {
-//        var username="";
-//        var url_str:String = "http://api.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
-//        Alamofire.request(.POST,url_str, parameters:nil)
-//            .responseJSON { response in
-//                print(response.result.value)
-//                if let JSON = response.result.value {
-//                    print("JSON1: \(JSON.count)")
-//                       username = JSON[0].objectForKey("username") as! String;
-//                    
-//                }
-//        }
-//        var flag:Int = 0
-//        while(username.characters.count==0 && flag<10){
-//            sleep(200)
-//            flag++
-//        }
-//        return username;
-//    }
-//    
-//    func loadheadface(userid:String) -> String
-//    {
-//        var headfaceurl="";
-//        var url_str:String = "http://api.bbxiaoqu.com/getuserinfo.php?userid=".stringByAppendingString(userid)
-//        Alamofire.request(.POST,url_str, parameters:nil)
-//            .responseJSON { response in
-//                print(response.result.value)
-//                if let JSON = response.result.value {
-//                    print("JSON1: \(JSON.count)")
-//                    headfaceurl = JSON[0].objectForKey("headface") as! String;
-//                    
-//                }
-//        }
-//        var flag:Int = 0
-//        while(headfaceurl.characters.count==0 && flag<10){
-//            sleep(200)
-//            flag++
-//        }
-//        return headfaceurl;
-//    }
-
-    
+    //消息代理--针对主界面
+    var xxmaindl : XxMainDL?
+        
     //收到消息
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
         //如果消息是聊天消息
@@ -137,22 +96,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
             sqlitehelpInstance1.updatefriendlastinfo(from, lastuserid: from, lastinfo: msg.body, lasttime: strNowTime)
             //添加到消息代理中
             xxdl?.newMsg(msg)
+            xxmaindl?.newMainMsg(msg)
             
 
         }
     }
-    
-//    func cleanchat()
-//    {
-//        var db: SQLiteDB! = SQLiteDB.sharedInstance()
-//        let sql = "delete from chat";
-//        db.execute(sql)
-//        
-//        let sql1 = "delete from users";
-//        db.execute(sql1)
-//
-//        
-//    }
     
     
     
@@ -225,9 +173,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
         if xs!.isConnected(){
             return true
         }
-        // defaults.setObject(userid, forKey: "userid");
-        //defaults.setObject(pass, forKey: "password");
-        
         let defaults = NSUserDefaults.standardUserDefaults();
         let userid:String = defaults.objectForKey("userid") as! String;
         let pass:String = defaults.objectForKey("password") as! String;
@@ -261,8 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
     func disConnect(){
         if xs != nil {
             if xs!.isConnected() {
-                
-                goOffline()
+                 goOffline()
                 xs!.disconnect()
             }
         }
@@ -350,211 +294,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
         //调用代理函数，改变Label值
         self.apnsdelegate?.NewMessage("newmess")
     }
-    
-//    //点击推送消息的按钮时
-//    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
-//        print("identifier=\(identifier)")  //这里的identifier是按钮的identifier
-//        
-//        completionHandler()  //最后一定要调用这上方法
-//    }
-    
-//    // 设置XMPPStream
-//    func setupStream(){
-//        
-//        //初始化XMPPStream
-//        self.xmppStream = XMPPStream()
-//        self.xmppStream!.addDelegate(self,delegateQueue:dispatch_get_main_queue());
-//        
-//    }
-//    // 通知服务器器用户上线
-//    func goOnline(){
-//        
-//        //发送在线状态
-//        var presence:XMPPPresence = XMPPPresence(type:"available")
-//        self.xmppStream!.sendElement(presence)
-//        
-//    }
-//   // 通知服务器器用户下线
-//    func goOffline(){
-//        
-//        //发送下线状态
-//        var presence:XMPPPresence = XMPPPresence(type:"available");
-//        self.xmppStream!.sendElement(presence)
-//        
-//    }
-//    // 连接到服务器
-//    func connect() -> Bool{
-//        
-//        setupStream()
-//        
-//        //从本地取得用户名，密码和服务器地址
-//        var defaults:NSUserDefaults  = NSUserDefaults.standardUserDefaults()
-//        
-//        var userId:String  = "888@bbxiaoqu"
-//        var pass:String = "888"
-//        var server:String = "101.200.194.1"
-//        var port:UInt16 = 5222
-//        if (!xmppStream!.isDisconnected()) {
-//            return true
-//        }
-//        
-//        if (userId == "" || pass == "") {
-//            return false;
-//        }
-//        
-//        //设置用户
-//        self.xmppStream!.myJID = XMPPJID.jidWithString(userId)        //设置服务器
-//        self.xmppStream!.hostName = server;
-//        //密码
-//        password = pass;
-//        
-//        self.xmppStream!.hostPort = port;
-//        
-//        //连接服务器
-//        do
-//       {
-//            _  = try self.xmppStream?.connectWithTimeout(XMPPStreamTimeoutNone)
-//       }catch let error as NSError {
-//          print(error.localizedDescription)
-//          print("cannot connect \(server)")
-//          return false;
-//        }
-//        print("connect success!!!")
-//        return true;
-//        
-//    }
-//    // 与服务器断开连接
-//    func disconnect(){
-//        
-//        self.goOffline()
-//        self.xmppStream!.disconnect()
-//        
-//    }
-//    //XMPPStreamDelegate协议实现
-//    //连接服务器
-//    func xmppStreamDidConnect(sender:XMPPStream ){
-//        print("xmppStreamDidConnect \(xmppStream!.isConnected())")
-//        isOpen = true;
-//        var error:NSError? ;
-//        //验证密码
-//        print(password)
-//        
-//         do
-//        {
-//            _  = try self.xmppStream?.authenticateWithPassword(password)
-//
-//        }catch let error as NSError {
-//            print(error.localizedDescription)
-//            
-//        }
-//        self.goOnline()
-//    }
-//    
-//    //验证通过
-//    func xmppStreamDidAuthenticate(sender:XMPPStream ){
-//        print("xmppStreamDidAuthenticate")
-//        self.goOnline()
-//    }
-//    
-//    func xmppStream(sender:XMPPStream , didNotAuthenticate error:DDXMLElement ){
-//        print(error)
-//        var alter:UIAlertView = UIAlertView(title: "提示", message: "密码验证失败!", delegate: nil, cancelButtonTitle: "取消");
-//        alter.show();
-//    }
-//    
-//    //收到消息
-//    func xmppStream(sender:XMPPStream ,didReceiveMessage message:XMPPMessage? ){
-//        if message != nil {
-//            print(message)
-//            var cont:String = message!.elementForName("body").stringValue();
-//            var from:String = message!.attributeForName("from").stringValue();
-//            
-//            var date = NSDate()
-//            var timeFormatter = NSDateFormatter()
-//            timeFormatter.dateFormat = "yyy-MM-dd HH:mm:ss.SSS" //(格式可俺按自己需求修整)
-//            var strNowTime = timeFormatter.stringFromDate(date) as String
-//            
-//            var msg:Message = Message(content:cont,sender:from,ctime:strNowTime)
-//            
-//            
-//            //消息委托(这个后面讲)
-//            self.messageDelegate?.newMessageReceived(msg);
-//            
-//            send("369",to: "18600888703",mess: "888888888888888888");
-//        }
-//        
-//    }
-//    
-//    
-// 
-//    func xmppStreamConnectDidTimeout(sender: XMPPStream!) {
-//        var alter:UIAlertView = UIAlertView(title: "对不起", message: "连接超时!", delegate: nil, cancelButtonTitle: "取消");
-//        alter.show();
-//    }
-//    
-//
-//    
-//    
-//    //收到好友状态
-//    func xmppStream(sender:XMPPStream ,didReceivePresence presence:XMPPPresence ){
-//        
-//        print(presence)
-//        
-//        //取得好友状态
-//        var presenceType:NSString = presence.type() //online/offline
-//        //当前用户
-//        var userId:NSString  = sender.myJID.user;
-//        //在线用户
-//        var presenceFromUser:NSString  = presence.from().user;
-//        
-//        if (!presenceFromUser.isEqualToString(userId as String)) {
-//            
-//            //在线状态
-//            var srv:String = "bbxiaoqu"
-//            if (presenceType.isEqualToString("available")) {
-//                
-//                //用户列表委托
-//                chatDelegate?.newBuddyOnline("\(presenceFromUser)@\(srv)")
-//                
-//            }else if (presenceType.isEqualToString("unavailable")) {
-//                //用户列表委托
-//                chatDelegate?.buddyWentOffline("\(presenceFromUser)@\(srv)")
-//            }
-//            
-//        }
-//        
-//    }
-////    func sendElement(mes:DDXMLElement){
-////        xmppStream!.sendElement(mes)
-////    }
-//    
-//    
-//    func send(send:String,to:String,mess:String)
-//    {
-//      
-//            //XMPPFramework主要是通过KissXML来生成XML文件
-//            //生成<body>文档
-//            let body:DDXMLElement = DDXMLElement.elementWithName("body") as! DDXMLElement
-//            body.setStringValue(mess)
-//            
-//            //生成XML消息文档
-//            let mes:DDXMLElement = DDXMLElement.elementWithName("message") as! DDXMLElement
-//            //消息类型
-//            mes.addAttributeWithName("type",stringValue:"chat")
-//            //发送给谁
-//            mes.addAttributeWithName("to" ,stringValue:"369@bbxiaoqu")
-//            //由谁发送
-//            mes.addAttributeWithName("from" ,stringValue:"888@bbxiaoqu")
-//            //组合
-//            mes.addChild(body)
-//        
-//        
-//            print(mes)
-//            //发送消息
-//            self.xmppStream!.sendElement(mes)
-//        
-//        
-//    }
     
 
 

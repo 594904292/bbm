@@ -25,9 +25,8 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         
         //远程同步
-        zdl().xxdl = self
         db = SQLiteDB.sharedInstance()
-        zdl().connect()
+      
         
         Chats = NSMutableArray()
         let defaults = NSUserDefaults.standardUserDefaults();
@@ -40,10 +39,21 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         setupChatTable()
         setupSendPanel()
         getData()
+        
+        openxmpp()
     }
     
     
+    func openxmpp() {
+        zdl().xxdl = self
+        zdl().connect()
+    }
     
+    //获取总代理
+    func zdl() -> AppDelegate {
+        return UIApplication.sharedApplication().delegate as! AppDelegate
+    }
+
     
     //收到消息
     func newMsg(aMsg: WXMessage) {
@@ -60,10 +70,11 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
             Chats.addObject(thisChat)
              //通知表格刷新
             self.tableView.reloadData()
+            tableViewScrollToBottom(true)
         }
     }
 
-    
+
     
     func backClick()
     {
@@ -152,14 +163,14 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
             
 
             self.tableView.reloadData();
-//            if(self.Chats.count>0)
-//            {
-//                //NSLog(self.Chats.count);
-//                print("Chats count: \(self.Chats.count)")
-//
-//                var indexPath =  NSIndexPath(forRow:self.Chats.count-1,inSection:0)
-//                self.tableView.scrollToRowAtIndexPath(indexPath,atScrollPosition:UITableViewScrollPosition.Bottom,animated:true)
-//            }
+            if(self.Chats.count>0)
+            {
+                //NSLog(self.Chats.count);
+                print("Chats count: \(self.Chats.count)")
+
+                var indexPath =  NSIndexPath(forRow:self.Chats.count-1,inSection:0)
+                self.tableView.scrollToRowAtIndexPath(indexPath,atScrollPosition:UITableViewScrollPosition.Bottom,animated:true)
+            }
             
             tableViewScrollToBottom(true)
             
@@ -227,14 +238,12 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     func textFieldShouldReturn(textField:UITextField) -> Bool
     {
         sendMessage()
+        tableViewScrollToBottom(true)
+
         return true
     }
     
-    //获取总代理
-    func zdl() -> AppDelegate {
-        return UIApplication.sharedApplication().delegate as! AppDelegate
-    }
-
+  
     
     func sendMessage()
      {
@@ -242,7 +251,6 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         var sendcontent:String=sender.text!
         var me:UserInfo! = UserInfo(name:myselfname ,logo:(myselfheadface))
         //通过通道发送XML文本
-        zdl().connect()
         let thisChat =  MessageItem(body:sendcontent, user:me, date:NSDate(), mtype:ChatType.Mine)
         Chats.addObject(thisChat)
         self.tableView.chatDataSource = self
@@ -283,7 +291,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                             self.alertView!.addButtonWithTitle("关闭")
                             NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
                             self.alertView!.show()
-                        }
+                                                   }
                     }
                 }else
                 {

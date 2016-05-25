@@ -29,6 +29,10 @@ protocol XxDL {
     func newMsg(aMsg:WXMessage)
 }
 
+protocol XxMainDL {
+    func newMainMsg(aMsg:WXMessage)
+}
+
 //状态代理协议
 protocol ZtDL {
     func isOn(zt:Zhuangtai)
@@ -37,6 +41,3 @@ protocol ZtDL {
 }
 
 
-protocol xiaoquDelegate{
-    func sendxiaoqu(id:String,name:String,lag:String,lng:String)
-}

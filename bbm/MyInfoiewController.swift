@@ -158,7 +158,6 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
     
     var selsexpicker:String="男";
     var arr = [String]()
-    //var xiaoqudl : xiaoquDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         arr = ["男","女"]

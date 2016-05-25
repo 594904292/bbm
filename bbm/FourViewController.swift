@@ -10,13 +10,34 @@ import UIKit
 
 class FourViewController: UIViewController,UINavigationControllerDelegate{
 
+    
+//    @IBOutlet weak var messopenswitch: UISwitch!
+//    
+//    @IBOutlet weak var messopenlabel: UILabel!
+//    
+//    @IBAction func messopenaction(sender: UISwitch) {
+//        if self.messopenswitch.on == true
+//        {
+//            self.messopenlabel.text="接收消息"
+//        }else
+//        {
+//            self.messopenlabel.text="关闭通知"
+//        }
+//        
+//        //print(messopenswitch.on)
+//        
+//    }
+    var isopenmess:Bool=true;
     override func viewDidLoad() {
         super.viewDidLoad()
          self.title="我的"
         //self.view.backgroundColor=UIColor.grayColor()
         // Do any additional setup after loading the view.
-        self.navigationItem.title="个人中心"
+            self.navigationItem.title="个人中心"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -79,16 +100,20 @@ class FourViewController: UIViewController,UINavigationControllerDelegate{
     
     }
     @IBAction func offline(sender: UIButton) {
-        NSLog("offlineClick")
-        //exit(0)
-        let sb = UIStoryboard(name:"Main", bundle: nil)
-        let vc = sb.instantiateViewControllerWithIdentifier("loginController") as! LoginViewController
-        vc.reloadInputViews();
-        //创建导航控制器
-        //let nvc=UINavigationController(rootViewController:vc);
-        //设置根视图
-        //self.view.window!.rootViewController=nvc;
-        self.presentViewController(vc, animated: true, completion: nil)
+//        NSLog("offlineClick")
+//        //exit(0)
+//        let sb = UIStoryboard(name:"Main", bundle: nil)
+//        let vc = sb.instantiateViewControllerWithIdentifier("loginController") as! LoginViewController
+//        vc.reloadInputViews();
+//        //创建导航控制器
+//        //let nvc=UINavigationController(rootViewController:vc);
+//        //设置根视图
+//        //self.view.window!.rootViewController=nvc;
+//        self.presentViewController(vc, animated: true, completion: nil)
+        var sb = UIStoryboard(name:"Main", bundle: nil)
+        var vc = sb.instantiateViewControllerWithIdentifier("systemsettingviewcontroller") as! SystemSettingViewController
+        self.navigationController?.pushViewController(vc, animated: true)
+
     }
     
     /*

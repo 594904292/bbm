@@ -14,7 +14,7 @@ class SettingViewController: UIViewController,UINavigationControllerDelegate {
         super.viewDidLoad()
        
         // Do any additional setup after loading the view.
-        self.navigationItem.title="系统设置"
+        self.navigationItem.title="关于建议"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         
         
@@ -32,7 +32,7 @@ class SettingViewController: UIViewController,UINavigationControllerDelegate {
         
         let minorVersion : String = infoDictionary! [ "CFBundleVersion"] as! String
         
-        desc.text="帮帮忙(".stringByAppendingString(majorVersion).stringByAppendingString("_").stringByAppendingString(minorVersion).stringByAppendingString(")平台，是基于位置的传播正能量的公益性互联网互助平台。让附近的人互相帮忙，我们希望把大众的力量组织起来，有一技之长的人可以通过“帮帮忙”无 偿为附近的人提供帮助；普通大众可以通过“帮帮忙” 快速寻求帮助。 “涓滴之水成海洋，颗颗爱心变希望”。")
+        desc.text="帮帮忙(".stringByAppendingString(majorVersion).stringByAppendingString("_").stringByAppendingString(minorVersion).stringByAppendingString(")平台，是基于位置的传播正能量的互联网互助平台。让附近的人互相帮忙，我们希望把大众的力量组织起来，有一技之长的人可以通过“帮帮忙”为附近的人提供帮助；普通大众可以通过“帮帮忙” 快速寻求帮助。 “涓滴之水成海洋，颗颗爱心变希望”。")
     }
 
     override func didReceiveMemoryWarning() {

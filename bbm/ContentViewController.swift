@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ContentViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate ,UICollectionViewDataSource,UICollectionViewDelegate{
+class ContentViewController: UIViewController,UINavigationControllerDelegate,UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate ,UICollectionViewDataSource,UICollectionViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate{
     var alertView:UIAlertView?
     @IBOutlet weak var contentLab: UILabel!
     @IBOutlet weak var lvsv: UIScrollView!
@@ -43,6 +43,9 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
     @IBOutlet weak var collectionView: UICollectionView!
     
     
+    var locService:BMKLocationService!
+    var _search:BMKGeoCodeSearch!
+
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -176,7 +179,126 @@ class ContentViewController: UIViewController,UINavigationControllerDelegate,UIT
         //self.marquee!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: Selector("showpage")))
         
         setupSendPanel1()
+        
+        
+        // 设置定位精确度，默认：kCLLocationAccuracyBest
+        BMKLocationService.setLocationDesiredAccuracy(kCLLocationAccuracyBest)
+        //指定最小距离更新(米)，默认：kCLDistanceFilterNone
+        BMKLocationService.setLocationDistanceFilter(10)
+        
+        //初始化BMKLocationService
+        locService = BMKLocationService()
+        locService.delegate = self
+        //启动LocationService
+        locService.startUserLocationService()
+        
+        _search=BMKGeoCodeSearch()
+        _search.delegate=self
+
   }
+    override func viewWillDisappear(animated: Bool) {
+        
+        _search.delegate=nil
+        locService.delegate=self
+
+
+    }
+    //处理位置坐标更新
+    func didUpdateBMKUserLocation(userLocation: BMKUserLocation!) {
+        if(userLocation.location != nil)
+        {
+            print("经度: \(userLocation.location.coordinate.latitude)")
+            print("纬度: \(userLocation.location.coordinate.longitude)")
+            
+            var defaults = NSUserDefaults.standardUserDefaults();
+            defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
+            defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
+            
+            //            defaults.setNilValueForKey("province");//省直辖市
+            //            defaults.setNilValueForKey("city");//城市
+            //            defaults.setNilValueForKey("sublocality");//区县
+            //            defaults.setNilValueForKey("thoroughfare");//街道
+            //            defaults.setNilValueForKey("address");
+            
+            
+            defaults.synchronize();
+            
+            
+            let pt:CLLocationCoordinate2D=CLLocationCoordinate2D(latitude: userLocation.location.coordinate.latitude, longitude: userLocation.location.coordinate.longitude)
+            
+            var option:BMKReverseGeoCodeOption=BMKReverseGeoCodeOption();
+            option.reverseGeoPoint=pt;
+            _search.reverseGeoCode(option)
+           locService.stopUserLocationService()
+            let _userid = defaults.objectForKey("userid") as! NSString;
+            let _token = defaults.objectForKey("token") as! NSString;
+            
+            Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
+                .responseJSON { response in
+                    print(response.request)  // original URL request
+                    print(response.response) // URL response
+                    print(response.data)     // server data
+                    print(response.result)   // result of response serialization
+                    print(response.result.value)
+                    
+                    
+            }
+            
+            
+            
+            
+            Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(userLocation.location.coordinate.latitude),"_lng":String(userLocation.location.coordinate.longitude),"_os":"ios"])
+                .responseJSON { response in
+                    print(response.request)  // original URL request
+                    print(response.response) // URL response
+                    print(response.data)     // server data
+                    print(response.result)   // result of response serialization
+                    print(response.result.value)
+                    
+            }
+        }else{
+            NSLog("userLocation.location is nil")
+        }
+    }
+    
+    
+    func onGetReverseGeoCodeResult(searcher:BMKGeoCodeSearch, result:BMKReverseGeoCodeResult,  errorCode:BMKSearchErrorCode)
+    {
+        if(errorCode.rawValue==0)
+        {
+            
+            print("province: \(result.addressDetail.province)")
+            print("city: \(result.addressDetail.city)")
+            print("district: \(result.addressDetail.district)")
+            print("streetName: \(result.addressDetail.streetName)")
+            print("streetNumber: \(result.addressDetail.streetNumber)")
+            
+            
+            
+            print("address: \(result.address)")
+            let defaults = NSUserDefaults.standardUserDefaults();
+            defaults.setObject(result.addressDetail.province, forKey: "province");//省直辖市
+            defaults.setObject(result.addressDetail.city , forKey: "city");//城市
+            defaults.setObject(result.addressDetail.district , forKey: "sublocality");//区县
+            defaults.setObject(result.addressDetail.streetName, forKey: "thoroughfare");//街道
+            defaults.setObject(result.address  , forKey: "address");
+            defaults.synchronize();
+            
+        }else
+        {
+            let defaults = NSUserDefaults.standardUserDefaults();
+            let a:String = "";
+            defaults.setObject("", forKey: "province");//省直辖市
+            defaults.setObject(a, forKey: "city");//城市
+            defaults.setObject(a, forKey: "sublocality");//区县
+            defaults.setObject(a, forKey: "thoroughfare");//街道
+            defaults.setObject(a, forKey: "address");
+            defaults.synchronize();
+            
+        }
+        //_search.delegate=nil
+    }
+
     
     func showuser()
     {

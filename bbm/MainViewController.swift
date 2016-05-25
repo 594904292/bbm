@@ -8,8 +8,9 @@
 
 import UIKit
 import Alamofire
+import AudioToolbox
 
-class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,XxDL{
+class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate,XxMainDL{
 
     var items:[itemDaymic]=[]
     var ggid:String = "";
@@ -20,8 +21,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
     @IBOutlet weak var ggview: UIView!
     
 
-    //定位管理器
-    //let locationManager:CLLocationManager = CLLocationManager()
+  
     var locService:BMKLocationService!
      var _search:BMKGeoCodeSearch!
     var marquee: CHWMarqueeView?
@@ -34,16 +34,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         
         self.navigationItem.title="帮帮小区"
         
-//        let button =   UIButton(type: .System)
-//        button.frame = CGRectMake(0, 0, 35, 30)
-//        button.setImage(UIImage(named:"back"), forState: .Normal)
-//        button.setTitle("设置", forState: .Normal)
-//        button.addTarget(self, action: "SetClick", forControlEvents: .TouchUpInside)
-//        
-//        let leftBarBtn = UIBarButtonItem(customView: button)
-//        self.navigationItem.leftBarButtonItems = [leftBarBtn]
-        
-        
+       
          self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "设置", style: UIBarButtonItemStyle.Done, target: self, action: "SetClick")
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
@@ -89,7 +80,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         self.automaticallyAdjustsScrollViewInsets = false
         
         
-        self.appDelegate().connect()
+        
         
 
         // 设置定位精确度，默认：kCLLocationAccuracyBest
@@ -106,39 +97,75 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         _search=BMKGeoCodeSearch()
         _search.delegate=self
         
-        
-        zdl().xxdl = self
-        
-        zdl().connect()
+        openxmpp() //开启xmpp
        
      }
     
+    
+     func openxmpp() {
+        zdl().xxmaindl = self
+        zdl().connect()
+    }
+    
+    
+    override func viewWillDisappear(animated: Bool) {
+        print("-2");
+        locService.stopUserLocationService()
+        _search.delegate=nil
+        locService.delegate=self
+    }
+
+    
+   override  func viewDidDisappear(animated: Bool)
+   {
+        print("-1");
+    }
+    
+       
+
     //获取总代理
     func zdl() -> AppDelegate {
         return UIApplication.sharedApplication().delegate as! AppDelegate
     }
-
     
-    func newMsg(aMsg: WXMessage) {
-        //对方正在输入
-        if aMsg.isComposing {
-            self.navigationItem.title = "对方正在输入。。。"
-        }else if (aMsg.body != "") {
-            
-             //print("aMsg.body: \(aMsg.body)")
-            //self.navigationItem.title="新消息"
-            imageView.value=imageView.value+1
-            if(imageView.value>0)
-            {
-                imageView.hidden=false
-            }else
-            {
-                imageView.hidden=true
+    
+   
+
+  
+    
+    func newMainMsg(aMsg: WXMessage) {
+        
+        let defaults = NSUserDefaults.standardUserDefaults();
+        var openmessflag:Bool = defaults.objectForKey("openmessflag") as! Bool;
+        var openvoiceflag:Bool = defaults.objectForKey("openvoiceflag") as! Bool;
+        
+        if openmessflag==true
+        {
+            //对方正在输入
+            if aMsg.isComposing {
+                self.navigationItem.title = "对方正在输入。。。"
+            }else if (aMsg.body != "") {
+                
+                imageView.value=imageView.value+1
+                if(imageView.value>0)
+                {
+                    imageView.hidden=false
+                }else
+                {
+                    imageView.hidden=true
+                }
+                if openvoiceflag==true
+                {
+                    
+                    var o:Notice=Notice();
+                    o.systemAlert();
+                    
+                }
             }
-        }
+            }
     }
 
-    
+       
     @IBAction func gonggaobtn(sender: UIButton) {
         
         var urlstr:String="http://api.bbxiaoqu.com/wap/gonggao.php?id=".stringByAppendingString(ggid)
@@ -290,16 +317,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
             locService.delegate = self
     }
     
-    override func viewWillDisappear(animated: Bool) {
-            locService.delegate = nil
-    }
-    
-    //取得当前程序的委托
-    func  appDelegate() -> AppDelegate{
-         return UIApplication.sharedApplication().delegate as! AppDelegate
-    }
-    
-
+   
+   
     
     
   
@@ -351,7 +370,8 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
     
     func jumpchatlist()
     {
-        
+        imageView.value=0;
+        imageView.hidden=true;
         
         var sb = UIStoryboard(name:"Main", bundle: nil)
         var vc = sb.instantiateViewControllerWithIdentifier("recentviewcontroller") as! RecentTableViewController

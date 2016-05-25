@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate {
+class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate{
     var cat=0;
     //@IBOutlet weak var content: UITextField!
     @IBOutlet weak var contenttip: UILabel!
@@ -22,6 +22,10 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
     var arr = [UIImageView]()
     var mCurrent:Int = 0;
     var imgarr = [String]()
+    
+    
+    var locService:BMKLocationService!
+    var _search:BMKGeoCodeSearch!
     
     @IBAction func contentexit(sender: UITextField) {
         sender.resignFirstResponder()
@@ -120,8 +124,128 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
        // btn.setTitle("添加", forState:UIControlState.Normal)
         //btn.enabled=true
         
+        
+        // 设置定位精确度，默认：kCLLocationAccuracyBest
+        BMKLocationService.setLocationDesiredAccuracy(kCLLocationAccuracyBest)
+        //指定最小距离更新(米)，默认：kCLDistanceFilterNone
+        BMKLocationService.setLocationDistanceFilter(10)
+        
+        //初始化BMKLocationService
+        locService = BMKLocationService()
+        locService.delegate = self
+        //启动LocationService
+        locService.startUserLocationService()
+        
+        _search=BMKGeoCodeSearch()
+        _search.delegate=self
+
+        
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        
+        _search.delegate=nil
+        locService.delegate=self
+        
+        
+    }
+
+    
+    //处理位置坐标更新
+    func didUpdateBMKUserLocation(userLocation: BMKUserLocation!) {
+        if(userLocation.location != nil)
+        {
+            print("经度: \(userLocation.location.coordinate.latitude)")
+            print("纬度: \(userLocation.location.coordinate.longitude)")
+            
+            var defaults = NSUserDefaults.standardUserDefaults();
+            defaults.setObject(String(userLocation.location.coordinate.latitude), forKey: "lat");
+            defaults.setObject(String(userLocation.location.coordinate.longitude), forKey: "lng");
+            
+            //            defaults.setNilValueForKey("province");//省直辖市
+            //            defaults.setNilValueForKey("city");//城市
+            //            defaults.setNilValueForKey("sublocality");//区县
+            //            defaults.setNilValueForKey("thoroughfare");//街道
+            //            defaults.setNilValueForKey("address");
+            
+            
+            defaults.synchronize();
+            
+            
+            let pt:CLLocationCoordinate2D=CLLocationCoordinate2D(latitude: userLocation.location.coordinate.latitude, longitude: userLocation.location.coordinate.longitude)
+            
+            var option:BMKReverseGeoCodeOption=BMKReverseGeoCodeOption();
+            option.reverseGeoPoint=pt;
+            _search.reverseGeoCode(option)
+            locService.stopUserLocationService()
+            let _userid = defaults.objectForKey("userid") as! NSString;
+            let _token = defaults.objectForKey("token") as! NSString;
+            
+            Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatechannelid.php", parameters:["_userId" : _userid,"_channelId":_token])
+                .responseJSON { response in
+                    print(response.request)  // original URL request
+                    print(response.response) // URL response
+                    print(response.data)     // server data
+                    print(response.result)   // result of response serialization
+                    print(response.result.value)
+                    
+                    
+            }
+            
+            
+            
+            
+            Alamofire.request(.POST, "http://api.bbxiaoqu.com/updatelocation.php", parameters:["_userId" : _userid,"_lat":String(userLocation.location.coordinate.latitude),"_lng":String(userLocation.location.coordinate.longitude),"_os":"ios"])
+                .responseJSON { response in
+                    print(response.request)  // original URL request
+                    print(response.response) // URL response
+                    print(response.data)     // server data
+                    print(response.result)   // result of response serialization
+                    print(response.result.value)
+                    
+            }
+        }else{
+            NSLog("userLocation.location is nil")
+        }
+    }
+    
+    
+    func onGetReverseGeoCodeResult(searcher:BMKGeoCodeSearch, result:BMKReverseGeoCodeResult,  errorCode:BMKSearchErrorCode)
+    {
+        if(errorCode.rawValue==0)
+        {
+            
+            print("province: \(result.addressDetail.province)")
+            print("city: \(result.addressDetail.city)")
+            print("district: \(result.addressDetail.district)")
+            print("streetName: \(result.addressDetail.streetName)")
+            print("streetNumber: \(result.addressDetail.streetNumber)")
+            
+            
+            
+            print("address: \(result.address)")
+            let defaults = NSUserDefaults.standardUserDefaults();
+            defaults.setObject(result.addressDetail.province, forKey: "province");//省直辖市
+            defaults.setObject(result.addressDetail.city , forKey: "city");//城市
+            defaults.setObject(result.addressDetail.district , forKey: "sublocality");//区县
+            defaults.setObject(result.addressDetail.streetName, forKey: "thoroughfare");//街道
+            defaults.setObject(result.address  , forKey: "address");
+            defaults.synchronize();
+            
+        }else
+        {
+            let defaults = NSUserDefaults.standardUserDefaults();
+            let a:String = "";
+            defaults.setObject("", forKey: "province");//省直辖市
+            defaults.setObject(a, forKey: "city");//城市
+            defaults.setObject(a, forKey: "sublocality");//区县
+            defaults.setObject(a, forKey: "thoroughfare");//街道
+            defaults.setObject(a, forKey: "address");
+            defaults.synchronize();
+            
+        }
+    }
+
     
 //var images=["movie_home","icon_cinema","start_top250","msg_new"]
     override func didReceiveMemoryWarning() {
@@ -424,6 +548,7 @@ class PublishViewController: UIViewController,UIImagePickerControllerDelegate,UI
         picker.delegate = self
         picker.allowsEditing = true//设置可编辑
         picker.sourceType = sourceType
+        
         self.presentViewController(picker, animated: true, completion: nil)//进入照相界面
     }
     

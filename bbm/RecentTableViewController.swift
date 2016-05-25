@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import AudioToolbox
 class RecentTableViewController: UITableViewController {
 
     var dataSource = NSMutableArray()
@@ -26,7 +27,59 @@ class RecentTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         db = SQLiteDB.sharedInstance()
         querydata()
+        
+//        zdl().xxdl = self
+//        
+//        zdl().connect()
+
     }
+    
+//    
+//    //获取总代理
+//    func zdl() -> AppDelegate {
+//        return UIApplication.sharedApplication().delegate as! AppDelegate
+//    }
+//    
+//    
+//    func newMsg(aMsg: WXMessage) {
+//        systemVibration();
+//        //viewDidLoad()
+//  
+//    }
+    func systemSound() {
+        //建立的SystemSoundID对象
+        var soundID:SystemSoundID = 0
+        //获取声音地址
+        let path = NSBundle.mainBundle().pathForResource("msg", ofType: "wav")
+        //地址转换
+        let baseURL = NSURL(fileURLWithPath: path!)
+        //赋值
+        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        //播放声音
+        AudioServicesPlaySystemSound(soundID)
+    }
+    
+    func systemAlert() {
+        //建立的SystemSoundID对象
+        var soundID:SystemSoundID = 0
+        //获取声音地址
+        let path = NSBundle.mainBundle().pathForResource("msg", ofType: "wav")
+        //地址转换
+        let baseURL = NSURL(fileURLWithPath: path!)
+        //赋值
+        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        //提醒（同上面唯一的一个区别）
+        AudioServicesPlayAlertSound(soundID)
+    }
+    
+    
+    func systemVibration() {
+        //建立的SystemSoundID对象
+        var soundID = SystemSoundID(kSystemSoundID_Vibrate)
+        //振动
+        AudioServicesPlaySystemSound(soundID)
+    }
+
     
     func backClick()
     {
@@ -43,7 +96,7 @@ class RecentTableViewController: UITableViewController {
     func querydata()
     {
         //let sql="select userid,nickname,usericon,lastinfo,lasttime,messnu,lastnickname　from friend";
-        let sql="select * from friend ";
+        let sql="select * from friend order by lasttime desc";
         NSLog(sql)
         let mess = db.query(sql)
         if mess.count > 0 {

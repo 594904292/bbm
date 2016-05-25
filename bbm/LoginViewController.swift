@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginbtn: UIButton!
     @IBOutlet weak var searchpassbtn: UIButton!
@@ -77,25 +78,40 @@ class LoginViewController: UIViewController {
     @IBAction func loginAction(sender: AnyObject) {
         var a = self.login_username.text as String!
         let b = self.login_password.text as String!
-
-        //lastlogintime
         var date:NSDate = NSDate()
         var formatter:NSDateFormatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         var lastlogintime = formatter.stringFromDate(date)
-        //println(dateString)
-        
-       // self.saveuser(userid, nickname: username, password: pass, telphone: telphone, headface: headface,lastlogintime:lastlogintime)
         updateuserlogintime(a,lastlogintime: lastlogintime);
         if(login(a,pass:b))
         {
             
-//            let sb = UIStoryboard(name:"Main", bundle: nil)
-//            let vc = sb.instantiateViewControllerWithIdentifier("mainController") as! MainViewController
-//            self.presentViewController(vc, animated: true, completion: nil)
-            
             let sb = UIStoryboard(name:"Main", bundle: nil)
             let vc = sb.instantiateViewControllerWithIdentifier("mainController") as! MainViewController
+            
+            
+            let defaults = NSUserDefaults.standardUserDefaults();
+            if defaults.boolForKey("openmessflag")
+            {
+            
+            }else
+            {
+                defaults.setObject("1", forKey: "openmessflag");
+
+            }
+            
+            if defaults.boolForKey("openvoiceflag")
+            {
+                
+            }else
+            {
+                 defaults.setObject("1", forKey: "openvoiceflag");
+            }
+            
+            
+            defaults.synchronize();
+
+            
              //创建导航控制器
             let nvc=UINavigationController(rootViewController:vc);
             //设置根视图
@@ -108,10 +124,6 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func register(sender: UIButton) {
-       // let sb = UIStoryboard(name:"Main", bundle: nil)
-        //let vc = sb.instantiateViewControllerWithIdentifier("registerController") as! RegisterViewController
-        //self.presentViewController(vc, animated: true, completion: nil)
-        
         self.navigationItem.title=""
         let sb = UIStoryboard(name:"Main", bundle: nil)
         let vc = sb.instantiateViewControllerWithIdentifier("registerController") as! RegisterViewController
@@ -159,6 +171,8 @@ class LoginViewController: UIViewController {
                             let telphone:String = JSON.objectForKey("telphone") as! String;
                             let headface:String = JSON.objectForKey("headface") as! String;
                             let username:String = JSON.objectForKey("username") as! String;
+                            let isrecvmess:String = JSON.objectForKey("isrecvmess") as! String;
+                            let isopenvoice:String = JSON.objectForKey("isopenvoice") as! String;
                             //lastlogintime
                             var date:NSDate = NSDate()
                             var formatter:NSDateFormatter = NSDateFormatter()
@@ -166,6 +180,12 @@ class LoginViewController: UIViewController {
                             var lastlogintime = formatter.stringFromDate(date)
                             //println(dateString)
                             
+                            let defaults = NSUserDefaults.standardUserDefaults();
+            
+                            defaults.setObject(isrecvmess, forKey: "openmessflag");
+                            defaults.setObject(isopenvoice, forKey: "openvoiceflag");
+                            defaults.synchronize();
+
                             self.saveuser(userid, nickname: username, password: pass, telphone: telphone, headface: headface,lastlogintime:lastlogintime)
                             let flag:Bool = self.login(userid, pass:pass)
                             if(flag)
@@ -229,6 +249,7 @@ class LoginViewController: UIViewController {
             
                  defaults.setObject("0", forKey: "lat");
                 defaults.setObject("0", forKey: "lng");
+                
                 defaults.synchronize();
             
                 
