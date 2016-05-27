@@ -110,8 +110,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "FeB-hc-yFA"; */
 "FeB-hc-yFA.text" = "Label";
 
-/* Class = "UILabel"; text = "帮帮忙"; ObjectID = "FlW-Tq-ymY"; */
-"FlW-Tq-ymY.text" = "帮帮忙";
+/* Class = "UILabel"; text = "帮助他人,快乐你我"; ObjectID = "FlW-Tq-ymY"; */
+"FlW-Tq-ymY.text" = "帮助他人,快乐你我";
 
 /* Class = "UILabel"; text = "sendtime"; ObjectID = "Frz-PF-QoF"; */
 "Frz-PF-QoF.text" = "sendtime";
@@ -242,8 +242,8 @@
 /* Class = "UIButton"; normalTitle = "我参帮"; ObjectID = "Vyo-oQ-kfi"; */
 "Vyo-oQ-kfi.normalTitle" = "我参帮";
 
-/* Class = "UILabel"; text = "帮帮忙作为全球首家个人C2C服务平台，是北京思博易科技有限公司独立开发运营的一款针对家庭小区生活服务而打造的手机端应用，初期为小区用户提供全方位的生活配套信息求助、二手交易服务，服务内容包括：生活求助、二手求购、二手出售等四项服务内容。"; ObjectID = "W50-qK-4t2"; */
-"W50-qK-4t2.text" = "帮帮忙作为全球首家个人C2C服务平台，是北京思博易科技有限公司独立开发运营的一款针对家庭小区生活服务而打造的手机端应用，初期为小区用户提供全方位的生活配套信息求助、二手交易服务，服务内容包括：生活求助、二手求购、二手出售等四项服务内容。";
+
+"W50-qK-4t2.text" = "襄助是基于位置的是传播正能量的联网互助平台。让附近的人互相帮忙，我们希望把大众的力量组织起来，有一技之长的人可以通过“襄助”为附近的人提供帮助；普通大众可以通过“襄助” 快速寻求帮助。 “涓滴之水成海洋，颗颗爱心变希望”。";
 
 /* Class = "UITextField"; placeholder = "确认新密码"; ObjectID = "W7Q-Br-GJd"; */
 "W7Q-Br-GJd.placeholder" = "确认新密码";
@@ -374,8 +374,8 @@
 /* Class = "UILabel"; text = "北京市"; ObjectID = "jgK-v1-Ua5"; */
 "jgK-v1-Ua5.text" = "北京市";
 
-/* Class = "UILabel"; text = "©帮帮忙bbxiaoqu.com"; ObjectID = "jkV-Zd-lef"; */
-"jkV-Zd-lef.text" = "©帮帮忙bbxiaoqu.com";
+/* Class = "UILabel"; text = "@襄助 bbxiaoqu.com"; ObjectID = "jkV-Zd-lef"; */
+"jkV-Zd-lef.text" = "@襄助 bbxiaoqu.com";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "k3r-TR-sE7"; */
 "k3r-TR-sE7.text" = "Label";

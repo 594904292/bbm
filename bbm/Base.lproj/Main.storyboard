@@ -27,7 +27,7 @@
                                     <constraint firstAttribute="height" constant="75" id="otJ-0O-vtt"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="login_userid" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="用户名" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kg8-46-2JG">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="login_userid" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="用户名" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kg8-46-2JG">
                                 <rect key="frame" x="37" y="247" width="300" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Iqd-Bq-ylM"/>
@@ -38,7 +38,7 @@
                                     <action selector="usernameExit:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="Xxv-L2-bdz"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="login_userpass" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kZn-BE-dc3">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="login_userpass" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kZn-BE-dc3">
                                 <rect key="frame" x="37" y="285" width="300" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="A8Z-i6-3qF"/>
@@ -58,8 +58,8 @@ GkDopYTliqkaIGJieGlhb3F1LmNvbQ
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="帮助他人,快乐你我" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FlW-Tq-ymY">
-                                <rect key="frame" x="128" y="193" width="121" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帮助他人,快乐你我" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FlW-Tq-ymY">
+                                <rect key="frame" x="127" y="193" width="121" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14.5"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -1300,6 +1300,18 @@ GkDopYTliqkaIGJieGlhb3F1LmNvbQ
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7cm-QW-pKV">
                                             <rect key="frame" x="10" y="10" width="51" height="50"/>
                                         </imageView>
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s5i-bJ-d8q" customClass="BadgeView" customModule="bbm" customModuleProvider="target">
+                                            <rect key="frame" x="282" y="19" width="30" height="30"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="value">
+                                                    <integer key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="fontColor">
+                                                    <color key="value" red="0.97433327879999998" green="0.55098073960000005" blue="0.48104421990000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottomMargin" secondItem="vf5-P0-PCI" secondAttribute="bottom" constant="-7" id="0QU-uW-fAb"/>
@@ -1321,6 +1333,7 @@ GkDopYTliqkaIGJieGlhb3F1LmNvbQ
                                     <outlet property="content" destination="MTX-nT-frU" id="pCG-O2-cfn"/>
                                     <outlet property="lasttime" destination="vf5-P0-PCI" id="Xk0-IN-aUW"/>
                                     <outlet property="lastuericon" destination="7cm-QW-pKV" id="9FQ-Xg-g6G"/>
+                                    <outlet property="messnum" destination="s5i-bJ-d8q" id="r4r-Cw-UKv"/>
                                     <outlet property="name" destination="1M8-qI-dE3" id="AR7-2h-s3B"/>
                                 </connections>
                             </tableViewCell>
@@ -2329,7 +2342,7 @@ GkDopYTliqkaIGJieGlhb3F1LmNvbQ
                         <viewControllerLayoutGuide type="top" id="LVR-tD-BA6"/>
                         <viewControllerLayoutGuide type="bottom" id="06s-KP-qWF"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8i3-vG-73A">
+                    <view key="view" contentMode="scaleToFill" id="8i3-vG-73A" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -2340,7 +2353,7 @@ GkDopYTliqkaIGJieGlhb3F1LmNvbQ
                                     <action selector="submit:" destination="xfd-Xa-QeD" eventType="touchUpInside" id="L72-ku-CKZ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帮帮忙作为全球首家个人C2C服务平台，是北京思博易科技有限公司独立开发运营的一款针对家庭小区生活服务而打造的手机端应用，初期为小区用户提供全方位的生活配套信息求助、二手交易服务，服务内容包括：生活求助、二手求购、二手出售等四项服务内容。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W50-qK-4t2">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="襄助是基于位置的是传播正能量的联网互助平台。让附近的人互相帮忙，我们希望把大众的力量组织起来，有一技之长的人可以通过“襄助”为附近的人提供帮助；普通大众可以通过“襄助” 快速寻求帮助。 “涓滴之水成海洋，颗颗爱心变希望”。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W50-qK-4t2">
                                 <rect key="frame" x="9" y="219" width="303" height="143"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.56470588239999997" green="0.63921568630000003" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
@@ -2353,7 +2366,7 @@ GkDopYTliqkaIGJieGlhb3F1LmNvbQ
                                     <constraint firstAttribute="height" constant="128" id="5UM-pv-BRV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2368,6 +2381,9 @@ GkDopYTliqkaIGJieGlhb3F1LmNvbQ
                             <constraint firstItem="LSG-g3-CEJ" firstAttribute="leading" secondItem="W50-qK-4t2" secondAttribute="leading" id="qkL-fR-Lib"/>
                             <constraint firstItem="LSG-g3-CEJ" firstAttribute="top" secondItem="LVR-tD-BA6" secondAttribute="bottom" constant="8" symbolic="YES" id="xre-ap-TaM"/>
                         </constraints>
+                        <connections>
+                            <action selector="uicontroldown:" destination="xfd-Xa-QeD" eventType="touchDown" id="UEQ-8U-K2P"/>
+                        </connections>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -3140,7 +3156,7 @@ GkDopYTliqkaIGJieGlhb3F1LmNvbQ
         <image name="dynamic_join_left" width="5" height="141"/>
         <image name="help" width="203" height="204"/>
         <image name="icon.png" width="108" height="108"/>
-        <image name="logo" width="60" height="60"/>
+        <image name="logo" width="29" height="29"/>
         <image name="notice" width="47" height="43"/>
         <image name="sundy" width="220" height="220"/>
     </resources>
