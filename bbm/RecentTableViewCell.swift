@@ -16,5 +16,7 @@ class RecentTableViewCell: UITableViewCell  {
     
     @IBOutlet weak var lastuericon: UIImageView!
     
+    @IBOutlet weak var messnum: BadgeView!
+    
 }
     
