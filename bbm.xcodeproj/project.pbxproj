@@ -324,6 +324,9 @@
 		80578F6B1CAB75C10000F891 /* RatingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80578F6A1CAB75C10000F891 /* RatingBar.swift */; };
 		80E24C491CB38A3D001FFFF7 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80E24C481CB38A3C001FFFF7 /* Bugly.framework */; };
 		80E24C501CB4EBAA001FFFF7 /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E24C4F1CB4EBAA001FFFF7 /* BadgeView.swift */; };
+		80E355851CF5BBE60043F14F /* SystemSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E355841CF5BBE60043F14F /* SystemSettingViewController.swift */; };
+		80E3558B1CF5BBEE0043F14F /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3558A1CF5BBEE0043F14F /* Notice.swift */; };
+		80E3558D1CF5BF270043F14F /* msg.wav in Resources */ = {isa = PBXBuildFile; fileRef = 80E3558C1CF5BF270043F14F /* msg.wav */; };
 		9C709A991C887C170019B91A /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 491398641BC8EAA4007866C1 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9C709A9B1C8A656A0019B91A /* ContentfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */; };
 		9C709A9D1C8A65870019B91A /* PublishfwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */; };
@@ -889,6 +892,11 @@
 		80578F6A1CAB75C10000F891 /* RatingBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingBar.swift; sourceTree = "<group>"; };
 		80E24C481CB38A3C001FFFF7 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bugly.framework; path = bbm/Bugly.framework; sourceTree = "<group>"; };
 		80E24C4F1CB4EBAA001FFFF7 /* BadgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
+		80E355841CF5BBE60043F14F /* SystemSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSettingViewController.swift; sourceTree = "<group>"; };
+		80E3558A1CF5BBEE0043F14F /* Notice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
+		80E3558C1CF5BF270043F14F /* msg.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = msg.wav; sourceTree = "<group>"; };
+		80E3558E1CF5C4EF0043F14F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		80E3558F1CF5C4EF0043F14F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentfwViewController.swift; sourceTree = "<group>"; };
 		9C709A9C1C8A65870019B91A /* PublishfwViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublishfwViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1024,6 +1032,7 @@
 				49BAA4121BDA1B4E003AD8B6 /* RegisterViewController.swift */,
 				494435751BB3E6A1004EAECB /* HomeViewController.swift */,
 				9C709A9A1C8A656A0019B91A /* ContentfwViewController.swift */,
+				80E355841CF5BBE60043F14F /* SystemSettingViewController.swift */,
 				497E9AE81BB8D4CC00653FB4 /* OneViewController.swift */,
 				497E9AEA1BB8D4F100653FB4 /* TwoViewController.swift */,
 				497E9AEC1BB8D53E00653FB4 /* ThreeViewController.swift */,
@@ -1188,6 +1197,7 @@
 		49C655651BC67AAD00C6EF7F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				80E3558C1CF5BF270043F14F /* msg.wav */,
 				49BAA4101BDA01F2003AD8B6 /* city_checkbox_selected.png */,
 				49B8AAAE1BE088D00052475F /* icon_76.png */,
 				49B8AAAF1BE088D00052475F /* icon_120.png */,
@@ -2226,6 +2236,7 @@
 		80E24C4E1CB4EB89001FFFF7 /* other */ = {
 			isa = PBXGroup;
 			children = (
+				80E3558A1CF5BBEE0043F14F /* Notice.swift */,
 				49F6E9A21C3BA3DD007E5B0F /* CHWMarqueeView.swift */,
 				80578F6A1CAB75C10000F891 /* RatingBar.swift */,
 				80E24C4F1CB4EBAA001FFFF7 /* BadgeView.swift */,
@@ -2450,6 +2461,7 @@
 				49B8AAB11BE088D00052475F /* icon_76.png in Resources */,
 				49B8AAB31BE088D00052475F /* icon_152.png in Resources */,
 				49C655BE1BC67AAD00C6EF7F /* poster_title_home.png in Resources */,
+				80E3558D1CF5BF270043F14F /* msg.wav in Resources */,
 				49C655AB1BC67AAD00C6EF7F /* more_setting.png in Resources */,
 				49C655A51BC67AAD00C6EF7F /* msg_new.png in Resources */,
 				4944354B1BB3E20D004EAECB /* Main.storyboard in Resources */,
@@ -2581,6 +2593,7 @@
 				49F3E7C41C27EA720036F7C7 /* XMPPAutoPing.m in Sources */,
 				49F3E7B61C27EA720036F7C7 /* XMPPMessageArchiving.xcdatamodeld in Sources */,
 				4987FF5F1C17C113006361F8 /* XWRefreshComponent.swift in Sources */,
+				80E355851CF5BBE60043F14F /* SystemSettingViewController.swift in Sources */,
 				497E7B7A1BCCFA8100BAEB2F /* GzCommunityViewController.swift in Sources */,
 				49F3E7EA1C291EF60036F7C7 /* RecentTableViewController.swift in Sources */,
 				49380B041C2A9EF5008EF785 /* Friends.swift in Sources */,
@@ -2636,6 +2649,7 @@
 				49F3E7C51C27EA720036F7C7 /* XMPPPing.m in Sources */,
 				49F3E7D81C27EA730036F7C7 /* XMPPTimer.m in Sources */,
 				49F3E79C1C27EA720036F7C7 /* XMPPvCardTempAdr.m in Sources */,
+				80E3558B1CF5BBEE0043F14F /* Notice.swift in Sources */,
 				49F3E7A01C27EA720036F7C7 /* XMPPvCardTempLabel.m in Sources */,
 				494435761BB3E6A1004EAECB /* HomeViewController.swift in Sources */,
 				49F3E7961C27EA720036F7C7 /* XMPPvCard.xcdatamodeld in Sources */,
@@ -2754,6 +2768,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4944354A1BB3E20D004EAECB /* Base */,
+				80E3558E1CF5C4EF0043F14F /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2762,6 +2777,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4944354F1BB3E20D004EAECB /* Base */,
+				80E3558F1CF5C4EF0043F14F /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
