@@ -32,7 +32,7 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
 
         // Do any additional setup after loading the view.
         
-        self.navigationItem.title="帮帮小区"
+        self.navigationItem.title="小区"
         
        
          self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "设置", style: UIBarButtonItemStyle.Done, target: self, action: "SetClick")
@@ -98,8 +98,46 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
         _search.delegate=self
         
         openxmpp() //开启xmpp
+        
+        loaduser()
        
      }
+    
+    func loaduser() {
+        let defaults = NSUserDefaults.standardUserDefaults();
+         let _userid = defaults.objectForKey("userid") as! NSString;
+        Alamofire.request(.POST, "http://api.bbxiaoqu.com/login.php", parameters:["_userid" : _userid])
+            .responseJSON { response in
+                if(response.result.isSuccess)
+                {
+                    if let JSON = response.result.value {
+                        print("JSON1: \(JSON.count)")
+                        if(JSON.count>0)
+                        {
+                            
+                                let isrecvmess:String = JSON.objectForKey("isrecvmess") as! String;
+                                let isopenvoice:String = JSON.objectForKey("isopenvoice") as! String;
+                            
+                                
+                                defaults.setObject(isrecvmess, forKey: "openmessflag");
+                                defaults.setObject(isopenvoice, forKey: "openvoiceflag");
+                                defaults.synchronize();
+                                
+                            
+                        }else
+                        {
+                            defaults.setObject("1", forKey: "openmessflag");
+                            defaults.setObject("1", forKey: "openvoiceflag");
+                            defaults.synchronize();
+                        }
+                    }
+                }else
+                {
+                    self.successNotice("网络请求错误")
+                    print("网络请求错误")
+                }
+        }
+    }
     
     
      func openxmpp() {
@@ -136,10 +174,26 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
     func newMainMsg(aMsg: WXMessage) {
         
         let defaults = NSUserDefaults.standardUserDefaults();
-        var openmessflag:Bool = defaults.objectForKey("openmessflag") as! Bool;
-        var openvoiceflag:Bool = defaults.objectForKey("openvoiceflag") as! Bool;
-        
-        if openmessflag==true
+        var openmessflag:String=""
+        if(defaults.boolForKey("openmessflag"))
+        {
+             openmessflag = defaults.objectForKey("openmessflag") as! String;
+        }else
+        {
+            openmessflag="0"
+        }
+        //var openmessflag:Bool = defaults.objectForKey("openmessflag") as! Bool;
+       // var openvoiceflag:Bool = defaults.objectForKey("openvoiceflag") as! Bool;
+        var openvoiceflag:String=""
+        if(defaults.boolForKey("openvoiceflag"))
+        {
+            openvoiceflag = defaults.objectForKey("openvoiceflag") as! String;
+        }else
+        {
+            openvoiceflag="0"
+        }
+
+        if openmessflag=="1"
         {
             //对方正在输入
             if aMsg.isComposing {
@@ -154,11 +208,11 @@ class MainViewController: UIViewController,UIScrollViewDelegate,BMKLocationServi
                 {
                     imageView.hidden=true
                 }
-                if openvoiceflag==true
+                if openvoiceflag=="1"
                 {
                     
                     var o:Notice=Notice();
-                    o.systemAlert();
+                    o.systemSound()
                     
                 }
             }

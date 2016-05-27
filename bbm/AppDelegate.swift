@@ -35,6 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
     
     //消息代理--针对主界面
     var xxmaindl : XxMainDL?
+    
+    //消息代理--针对主界面
+    var xxrecentdl : XxRecentDL?
         
     //收到消息
     func xmppStream(sender: XMPPStream!, didReceiveMessage message: XMPPMessage!) {
@@ -97,6 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,XMPPStreamDelegate{
             //添加到消息代理中
             xxdl?.newMsg(msg)
             xxmaindl?.newMainMsg(msg)
+            xxrecentdl?.newRecentMsg(msg)
             
 
         }

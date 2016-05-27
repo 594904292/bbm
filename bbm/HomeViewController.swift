@@ -29,7 +29,7 @@ class HomeViewController: UITabBarController,UINavigationControllerDelegate,Apns
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor=UIColor.whiteColor()
-        self.navigationItem.title="帮帮忙"
+        self.navigationItem.title="襄助"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         one=storyboard?.instantiateViewControllerWithIdentifier("tabone") as UIViewController!
         two=storyboard?.instantiateViewControllerWithIdentifier("tabtwo") as UIViewController!

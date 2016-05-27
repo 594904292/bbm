@@ -9,6 +9,14 @@
 import UIKit
 import Alamofire
 class SettingViewController: UIViewController,UINavigationControllerDelegate {
+    
+    
+    @IBAction func uicontroldown(sender: UIControl) {
+        self.content.resignFirstResponder()
+        //sender.resignFirstResponder()
+    }
+    
+    
     var alertView:UIAlertView?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +40,7 @@ class SettingViewController: UIViewController,UINavigationControllerDelegate {
         
         let minorVersion : String = infoDictionary! [ "CFBundleVersion"] as! String
         
-        desc.text="帮帮忙(".stringByAppendingString(majorVersion).stringByAppendingString("_").stringByAppendingString(minorVersion).stringByAppendingString(")平台，是基于位置的传播正能量的互联网互助平台。让附近的人互相帮忙，我们希望把大众的力量组织起来，有一技之长的人可以通过“帮帮忙”为附近的人提供帮助；普通大众可以通过“帮帮忙” 快速寻求帮助。 “涓滴之水成海洋，颗颗爱心变希望”。")
+        desc.text="襄助(".stringByAppendingString(majorVersion).stringByAppendingString(".").stringByAppendingString(minorVersion).stringByAppendingString(")是基于位置的是传播正能量的联网互助平台。让附近的人互相帮忙，我们希望把大众的力量组织起来，有一技之长的人可以通过“襄助”为附近的人提供帮助；普通大众可以通过“襄助” 快速寻求帮助。 “涓滴之水成海洋，颗颗爱心变希望”。")
     }
 
     override func didReceiveMemoryWarning() {

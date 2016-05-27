@@ -64,7 +64,7 @@ class FourViewController: UIViewController,UINavigationControllerDelegate{
     }
     
     @IBAction func recent(sender: UIButton) {
-        var sb = UIStoryboard(name:"Main", bundle: nil)
+        let sb = UIStoryboard(name:"Main", bundle: nil)
         var vc = sb.instantiateViewControllerWithIdentifier("recentviewcontroller") as! RecentTableViewController
         self.navigationController?.pushViewController(vc, animated: true)
 

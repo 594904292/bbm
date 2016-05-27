@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import AudioToolbox
-class RecentTableViewController: UITableViewController {
+class RecentTableViewController: UITableViewController,XxRecentDL {
 
     var dataSource = NSMutableArray()
     var currentIndexPath: NSIndexPath?
@@ -28,13 +28,27 @@ class RecentTableViewController: UITableViewController {
         db = SQLiteDB.sharedInstance()
         querydata()
         
-//        zdl().xxdl = self
-//        
-//        zdl().connect()
+        zdl().xxrecentdl = self
+
 
     }
     
-//    
+    
+       //获取总代理
+    func zdl() -> AppDelegate {
+        return UIApplication.sharedApplication().delegate as! AppDelegate
+    }
+
+    
+    //收到消息
+    func newRecentMsg(aMsg: WXMessage) {
+        db = SQLiteDB.sharedInstance()
+        querydata()
+        
+       
+    }
+
+//
 //    //获取总代理
 //    func zdl() -> AppDelegate {
 //        return UIApplication.sharedApplication().delegate as! AppDelegate
@@ -46,39 +60,7 @@ class RecentTableViewController: UITableViewController {
 //        //viewDidLoad()
 //  
 //    }
-    func systemSound() {
-        //建立的SystemSoundID对象
-        var soundID:SystemSoundID = 0
-        //获取声音地址
-        let path = NSBundle.mainBundle().pathForResource("msg", ofType: "wav")
-        //地址转换
-        let baseURL = NSURL(fileURLWithPath: path!)
-        //赋值
-        AudioServicesCreateSystemSoundID(baseURL, &soundID)
-        //播放声音
-        AudioServicesPlaySystemSound(soundID)
-    }
     
-    func systemAlert() {
-        //建立的SystemSoundID对象
-        var soundID:SystemSoundID = 0
-        //获取声音地址
-        let path = NSBundle.mainBundle().pathForResource("msg", ofType: "wav")
-        //地址转换
-        let baseURL = NSURL(fileURLWithPath: path!)
-        //赋值
-        AudioServicesCreateSystemSoundID(baseURL, &soundID)
-        //提醒（同上面唯一的一个区别）
-        AudioServicesPlayAlertSound(soundID)
-    }
-    
-    
-    func systemVibration() {
-        //建立的SystemSoundID对象
-        var soundID = SystemSoundID(kSystemSoundID_Vibrate)
-        //振动
-        AudioServicesPlaySystemSound(soundID)
-    }
 
     
     func backClick()
@@ -96,6 +78,11 @@ class RecentTableViewController: UITableViewController {
     func querydata()
     {
         //let sql="select userid,nickname,usericon,lastinfo,lasttime,messnu,lastnickname　from friend";
+        if self.items.count>0
+        {
+            self.items.removeAll()
+        }
+        
         let sql="select * from friend order by lasttime desc";
         NSLog(sql)
         let mess = db.query(sql)
@@ -139,6 +126,7 @@ class RecentTableViewController: UITableViewController {
                 let item_obj:itemRecent=itemRecent(userid: userid, username: nickname, usericon: usericon, lastinfo: lastinfo, lastchattimer: lasttime, messnum: messnum, lastnickname: lastnickname)
                  self.items.append(item_obj)
             }
+             self.tableView.reloadData();
         }else
         {   self.successNotice("会话列表为空")
             print("会话列表为空")
@@ -228,6 +216,20 @@ class RecentTableViewController: UITableViewController {
 
         cell?.lastuericon.layer.cornerRadius = 5.0
         cell?.lastuericon.layer.masksToBounds = true
+        //cell?.messnum.value=(self.items[indexPath.row] as itemRecent).messnum
+        var anum:String = (self.items[indexPath.row] as itemRecent).messnum
+       
+        var aanum:Int = Int(anum)!
+         cell?.messnum.value=aanum
+        if aanum>0
+        {
+            cell?.messnum.hidden=false;
+        }else
+        {
+            cell?.messnum.hidden=true;
+        }
+       
+        //messnum: BadgeView!
         return cell!
         
         
@@ -239,7 +241,18 @@ class RecentTableViewController: UITableViewController {
         NSLog("select \(indexPath.row)")
         
         let defaults = NSUserDefaults.standardUserDefaults();
-        var senduserid = defaults.objectForKey("userid") as! String;
+        let senduserid = defaults.objectForKey("userid") as! String;
+        var seluserid:String = (self.items[indexPath.row] as itemRecent).userid
+        
+        let sql = "update friend set messnum=0 where userid='\(seluserid)'"
+        db.execute(sql)
+        
+        let sql1 = "update chat set readed=1 where senduserid='\(seluserid)' or touserid='\(seluserid)'"
+        db.execute(sql1)
+        
+        (self.items[indexPath.row] as itemRecent).messnum = "0";
+        self.tableView.reloadData()
+        
         let sb = UIStoryboard(name:"Main", bundle: nil)
         let vc = sb.instantiateViewControllerWithIdentifier("chatviewController") as! ChatViewController
         //创建导航控制器

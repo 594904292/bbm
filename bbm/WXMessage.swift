@@ -33,6 +33,10 @@ protocol XxMainDL {
     func newMainMsg(aMsg:WXMessage)
 }
 
+protocol XxRecentDL {
+    func newRecentMsg(aMsg:WXMessage)
+}
+
 //状态代理协议
 protocol ZtDL {
     func isOn(zt:Zhuangtai)

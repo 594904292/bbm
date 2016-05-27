@@ -21,21 +21,21 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         self.navigationItem.title="私聊"
+        self.navigationItem.title="私聊"
         self.navigationItem.leftBarButtonItem=UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Done, target: self, action: "backClick")
         
         //远程同步
         db = SQLiteDB.sharedInstance()
-      
+        
         
         Chats = NSMutableArray()
         let defaults = NSUserDefaults.standardUserDefaults();
         myselfname = defaults.objectForKey("nickname") as! String;
         myselfheadface = defaults.objectForKey("headface") as! String;
-       
+        
         loaduserinfo(from)
         loaduserinfo(myself)
-
+        
         setupChatTable()
         setupSendPanel()
         getData()
@@ -53,7 +53,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     func zdl() -> AppDelegate {
         return UIApplication.sharedApplication().delegate as! AppDelegate
     }
-
+    
     
     //收到消息
     func newMsg(aMsg: WXMessage) {
@@ -68,13 +68,18 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
             let me:UserInfo! = UserInfo(name:fromname ,logo:(fromheadface))
             let thisChat =  MessageItem(body:aMsg.body, user:me, date:NSDate(), mtype:ChatType.Someone)
             Chats.addObject(thisChat)
-             //通知表格刷新
+            //通知表格刷新
             self.tableView.reloadData()
-            tableViewScrollToBottom(true)
+            
         }
     }
-
-
+    
+    //    override func viewWillDisappear(animated: Bool) {
+    //
+    //        zdl().xxdl=nil
+    //        zdl().disConnect()
+    //    }
+    
     
     func backClick()
     {
@@ -102,7 +107,7 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                             }
                             var name:String = data.objectForKey("username") as! String;
                             var headface:String = data.objectForKey("headface") as! String;
-
+                            
                             if(!sqlitehelp.shareInstance().isexituser(userid))
                             {//缓存用户数据
                                 sqlitehelp.shareInstance().addusers(userid, nickname: name, usericon: headface)
@@ -125,16 +130,16 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         let mess = db.query(sql)
         if mess.count > 0 {
             //获取最后一行数据显示
-             for i in 0...mess.count-1
+            for i in 0...mess.count-1
             {
                 let item = mess[i] as SQLRow
-                 let message = item["message"]!.asString()
+                let message = item["message"]!.asString()
                 //let guid = item["guid"]!.asString()
                 let date = item["date"]!.asString()
                 let senduserid = item["senduserid"]!.asString()
                 let touserid = item["touserid"]!.asString()
-                 let sendnickname = sqlitehelp.shareInstance().loadusername(senduserid)
-                 let sendusericon = sqlitehelp.shareInstance().loadheadface(senduserid)
+                let sendnickname = sqlitehelp.shareInstance().loadusername(senduserid)
+                let sendusericon = sqlitehelp.shareInstance().loadheadface(senduserid)
                 let tonickname = sqlitehelp.shareInstance().loadusername(touserid)
                 let tousericon = sqlitehelp.shareInstance().loadheadface(touserid)
                 
@@ -161,16 +166,16 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                 }
             }
             
-
+            
             self.tableView.reloadData();
-            if(self.Chats.count>0)
-            {
-                //NSLog(self.Chats.count);
-                print("Chats count: \(self.Chats.count)")
-
-                var indexPath =  NSIndexPath(forRow:self.Chats.count-1,inSection:0)
-                self.tableView.scrollToRowAtIndexPath(indexPath,atScrollPosition:UITableViewScrollPosition.Bottom,animated:true)
-            }
+            //            if(self.Chats.count>0)
+            //            {
+            //                //NSLog(self.Chats.count);
+            //                print("Chats count: \(self.Chats.count)")
+            //
+            //                var indexPath =  NSIndexPath(forRow:self.Chats.count-1,inSection:0)
+            //                self.tableView.scrollToRowAtIndexPath(indexPath,atScrollPosition:UITableViewScrollPosition.Bottom,animated:true)
+            //            }
             
             tableViewScrollToBottom(true)
             
@@ -210,12 +215,12 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         txtMsg.textColor=UIColor.blackColor()
         txtMsg.font=UIFont.boldSystemFontOfSize(12)
         txtMsg.layer.cornerRadius = 10.0
-         //Set the delegate so you can respond to user input
+        //Set the delegate so you can respond to user input
         txtMsg.delegate=self
         txtMsg.placeholder = "输入消息内容"
         txtMsg.returnKeyType = UIReturnKeyType.Send
         txtMsg.enablesReturnKeyAutomatically  = true
-       sendView.addSubview(txtMsg)
+        sendView.addSubview(txtMsg)
         
         let sendButton = UIButton(frame:CGRectMake(self.view.frame.size.width-77,10,77,36))
         sendButton.backgroundColor=UIColor.lightGrayColor()
@@ -238,15 +243,13 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     func textFieldShouldReturn(textField:UITextField) -> Bool
     {
         sendMessage()
-        tableViewScrollToBottom(true)
-
         return true
     }
     
-  
+    
     
     func sendMessage()
-     {
+    {
         var sender = txtMsg
         var sendcontent:String=sender.text!
         var me:UserInfo! = UserInfo(name:myselfname ,logo:(myselfheadface))
@@ -285,20 +288,20 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
                         if String(ret)=="1"
                             
                         {
-                             self.alertView = UIAlertView()
-                             self.alertView!.title = "提示"
+                            self.alertView = UIAlertView()
+                            self.alertView!.title = "提示"
                             self.alertView!.message = "发送成功"
                             self.alertView!.addButtonWithTitle("关闭")
                             NSTimer.scheduledTimerWithTimeInterval(1, target:self, selector:"dismiss:", userInfo:self.alertView!, repeats:false)
                             self.alertView!.show()
-                                                   }
+                        }
                     }
                 }else
                 {
                     self.successNotice("网络请求错误")
                     print("网络请求错误")
                 }
-         }
+        }
     }
     
     
@@ -310,15 +313,15 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
         //创建一个重用的单元格
         
         self.tableView!.registerClass(TableViewCell.self, forCellReuseIdentifier: "ChatCell")
-         self.tableView.chatDataSource = self
+        self.tableView.chatDataSource = self
         self.tableView.reloadData()
         self.view.addSubview(self.tableView)
-       }
+    }
     
     
     
     override func didReceiveMemoryWarning() {
-         super.didReceiveMemoryWarning()
+        super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
         
     }
@@ -343,16 +346,16 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     
     func keyBoardWillShow(note:NSNotification)
     {
-         let userInfo  = note.userInfo as! NSDictionary
+        let userInfo  = note.userInfo as! NSDictionary
         var  keyBoardBounds = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
         var keyBoardBoundsRect = self.view.convertRect(keyBoardBounds, toView:nil)
         var keyBaoardViewFrame = sendView.frame
         var deltaY = keyBoardBounds.size.height
         let animations:(() -> Void) = {
-             self.sendView.transform = CGAffineTransformMakeTranslation(0,-deltaY)
+            self.sendView.transform = CGAffineTransformMakeTranslation(0,-deltaY)
         }
-         if duration > 0 {
+        if duration > 0 {
             let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
             UIView.animateWithDuration(duration, delay: 0, options:options, animations: animations, completion: nil)
         }else{
@@ -380,9 +383,9 @@ class ChatViewController: UIViewController, ChatDataSource,UITextFieldDelegate,U
     func handleTouches(sender:UITapGestureRecognizer){
         if sender.locationInView(self.view).y < self.view.bounds.height - 250{
             txtMsg.resignFirstResponder()
-         }
+        }
     }
-
+    
     
 }
 
