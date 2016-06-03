@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource,UIImagePickerControllerDelegate,UIActionSheetDelegate{
+class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UIScrollViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource,UIImagePickerControllerDelegate,UIActionSheetDelegate,UITextFieldDelegate,UITextViewDelegate{
     
     var fullPath:String = "";
     var xiaoquid:String = "";
@@ -18,6 +18,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
     var xiaoqulng:String = "";
     var brithday:String="";
     var agenum:String="";
+    
     
     @IBOutlet weak var headface: UIImageView!
     @IBOutlet weak var nickname: UITextField!
@@ -29,6 +30,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
     @IBOutlet weak var brithdate: UIDatePicker!
     
     @IBOutlet weak var introduce: UITextView!
+    @IBOutlet weak var weixin_textfield: UITextField!
     
     @IBOutlet var myview: UIControl!
     @IBAction func calcage(sender: UIDatePicker) {
@@ -62,6 +64,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
         tel.resignFirstResponder()
         sex.resignFirstResponder()
         introduce.resignFirstResponder()
+        weixin_textfield.resignFirstResponder()
     }
 
     @IBAction func nicknameexit(sender: AnyObject) {
@@ -80,6 +83,9 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
         sender.resignFirstResponder()
     }
     
+    @IBAction func weixinexit(sender: UITextField) {
+        sender.resignFirstResponder()
+    }
     
 //    func changeWord(controller:XiaoquTableViewController,xqname:String,xqid:String,xqlat:String,xqlng:String){
 //        //qzLabel!.text = string
@@ -136,7 +142,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
         dic["community_lat"] = xiaoqulat;
         dic["community_lng"] = xiaoqulng;
         dic["introduce"] = introduce.text;
-        
+        dic["weixin"] = weixin_textfield.text;
         Alamofire.request(.POST, "http://api.bbxiaoqu.com/saveuserinfo.php", parameters: dic)
             .responseJSON { response in
                 print(response.request)  // original URL request
@@ -185,6 +191,10 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
         let userid = defaults.objectForKey("userid") as! NSString;
         loaduserinfo(userid as String)
       
+        
+        self.weixin_textfield.delegate = self
+        self.nickname.delegate = self
+        self.tel.delegate=self
         
      }
     
@@ -373,7 +383,17 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
                             usersex = JSON[0].objectForKey("sex") as! String;
                         }
                         
-                       
+                        var weixin:String;
+                        if(JSON[0].objectForKey("weixin")!.isKindOfClass(NSNull))
+                        {
+                            weixin="";
+                        }else
+                        {
+                            weixin = JSON[0].objectForKey("weixin") as! String;
+                        }
+
+                        
+                       self.weixin_textfield.text=weixin
                         
                         self.nickname.text=username;
                         self.tel.text=telphone;
@@ -681,6 +701,58 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
     }
 
     
+    /**
+     解决textview遮挡键盘代码
+     
+     :param: textView textView description
+     */
+    func textViewDidBeginEditing(textView: UITextView) {
+        var frame:CGRect = textView.frame
+        var offset:CGFloat = frame.origin.y + 100 - (self.view.frame.size.height-330)
+        
+        if offset > 0  {
+            
+            self.view.frame = CGRectMake(0.0, -offset, self.view.frame.size.width, self.view.frame.size.height)
+        }
+        
+    }
     
     
+    /**
+     恢复视图
+     
+     :param: textView textView description
+     */
+    func textViewDidEndEditing(textView: UITextView) {
+        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+    }
+    
+    
+    /**
+     
+     解决textField遮挡键盘代码
+     :param: textField textField description
+     */
+    func textFieldDidBeginEditing(textField: UITextField) {
+        //
+        var frame:CGRect = textField.frame
+        var offset:CGFloat = frame.origin.y + 100 - (self.view.frame.size.height-216)
+        
+        if offset > 0  {
+            
+            self.view.frame = CGRectMake(0.0, -offset, self.view.frame.size.width, self.view.frame.size.height)
+        }
+    }
+    
+    /**
+     恢复视图
+     
+     :param: textField textField description
+     */
+    func textFieldDidEndEditing(textField: UITextField) {
+        //
+        self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        
+    }
+        
 }
