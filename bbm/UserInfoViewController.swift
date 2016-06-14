@@ -131,7 +131,19 @@ class UserInfoViewController: UIViewController ,UITableViewDataSource,UITableVie
                        
                         let username:String = JSON[0].objectForKey("username") as! String;
                         self.username.text=username;
-                        self.telphone.text=telphone;
+                        if(telphone.characters.count>10)
+                        {
+                            var ns1=(telphone as NSString).substringToIndex(3)
+                        
+                            var ns2=(telphone as NSString).substringFromIndex(7)
+                            var ns3=ns1.stringByAppendingString("****").stringByAppendingString(ns2)
+                            
+                            self.telphone.text=ns3;
+
+                        }else
+                        {
+                            self.telphone.text=telphone;
+                        }
                         let headfaceurl:String = JSON[0].objectForKey("headface") as! String;
                         if(headfaceurl.characters.count>0)
                         {
@@ -232,12 +244,13 @@ class UserInfoViewController: UIViewController ,UITableViewDataSource,UITableVie
                             let id:String = data.objectForKey("id") as! String;
                             let guid:String = data.objectForKey("guid") as! String;
                             let infouser:String = data.objectForKey("infouser") as! String;
+                            let username:String = data.objectForKey("username") as! String;
                             let userid:String = data.objectForKey("userid") as! String;
                             let score:String = data.objectForKey("score") as! String;
                             let evaluate:String = data.objectForKey("evaluate") as! String;
                             let addtime:String = data.objectForKey("addtime") as! String;
                             
-                            let item_obj:ItemEvaluate = ItemEvaluate(id: id, guid: guid, infouser: infouser, userid: userid, score: score, evalute: evaluate, addtime: addtime)
+                            let item_obj:ItemEvaluate = ItemEvaluate(id: id, guid: guid, infouser: infouser,username:username,userid: userid, score: score, evalute: evaluate, addtime: addtime)
                             self.items.append(item_obj)
                             
                         }
@@ -270,8 +283,10 @@ class UserInfoViewController: UIViewController ,UITableViewDataSource,UITableVie
         {
             cell = EvaluateTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
         }
-        cell?.infouser.text=(items[indexPath.row] as ItemEvaluate).infouser
+        //cell?.infouser.text=(items[indexPath.row] as ItemEvaluate).infouser
+        cell?.infouser.text=(items[indexPath.row] as ItemEvaluate).username
         
+
         
         var f  =  CGFloat ( ( (items[indexPath.row] as ItemEvaluate).score as NSString).floatValue)
         
