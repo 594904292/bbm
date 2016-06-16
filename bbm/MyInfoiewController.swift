@@ -102,6 +102,39 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
         NSLog("add")
         let defaults = NSUserDefaults.standardUserDefaults();
         let userid = defaults.objectForKey("userid") as! String;
+        
+         var  dica:Dictionary<String,String> = ["_userid" : userid]
+        dica["_username"]=nickname.text;
+        NSLog(String(dica.count))
+        Alamofire.request(.POST, "http://api.bbxiaoqu.com/isexitusername.php", parameters: dica) .response { request, response, data, error in
+            print(request)
+            print(response)
+            print(error)
+            print(data)
+            if(error==nil)
+            {
+                let str:NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
+                
+                print(str)
+                print(str)
+                if str == "0"
+                {
+                    self.saveinfo();
+                }else
+                {
+                   self.nickname.text = ""
+                  self.successNotice("用户已存在")
+                }
+            }
+        }
+      }
+    
+    
+    func saveinfo() {
+        NSLog("add")
+        //
+        let defaults = NSUserDefaults.standardUserDefaults();
+        let userid = defaults.objectForKey("userid") as! String;
         let lat = defaults.objectForKey("lat") as! String;
         let lng = defaults.objectForKey("lng") as! String;
         var date = NSDate()
@@ -109,12 +142,10 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
         timeFormatter.dateFormat = "yyyMMddHHmmss"
         var strNowTime = timeFormatter.stringFromDate(date) as String
         var fname:String = userid.stringByAppendingString("_").stringByAppendingString(strNowTime).stringByAppendingString(".jpg")
-       // NSLog(fullPath)
+        // NSLog(fullPath)
         
-          print("savemyinfo fullPath=\(fullPath)")
-         print("savemyinfo fname=\(fname)")
-        
-        
+        print("savemyinfo fullPath=\(fullPath)")
+        print("savemyinfo fname=\(fname)")
         var  dic:Dictionary<String,String> = ["userid" : userid]
         
         if(fullPath.characters.count>0)
@@ -123,7 +154,7 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
             dic["headface"]=fname;
         }else
         {
-             dic["headface"]="";
+            dic["headface"]="";
         }
         
         dic["username"]=nickname.text;
@@ -152,15 +183,8 @@ class MyInfoViewController: UIViewController ,UINavigationControllerDelegate ,UI
                 print(response.result.value)
                 self.successNotice("更新成功")
         }
+
     }
-    
-//    @IBAction func selectxq(sender: UIButton) {
-//        print("xiaoqu")
-//        var sb = UIStoryboard(name:"Main", bundle: nil)
-//        var vc = sb.instantiateViewControllerWithIdentifier("xiaoqutableviewcontroller") as! XiaoquTableViewController
-//        vc.delegate=self;
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
     
     var selsexpicker:String="男";
     var arr = [String]()

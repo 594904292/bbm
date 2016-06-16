@@ -200,7 +200,17 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                     }
                     
                     cell?.senduser.text=(items[indexPath.row] as itemMess).username
-                    cell?.message.text=(items[indexPath.row] as itemMess).content
+                    var mess=(items[indexPath.row] as itemMess).content
+                    var messcontent:String;
+                    if mess.characters.count>80
+                    {
+                        messcontent=(mess as NSString).substringToIndex(80).stringByAppendingString("...")
+                    }else
+                    {
+                        messcontent=mess;
+                    }
+                    cell?.message.text=messcontent
+                    
                     cell?.sendtime.text=(items[indexPath.row] as itemMess).time
                     cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
                     if ((items[indexPath.row] as itemMess).infocatagory == "0")
@@ -284,7 +294,19 @@ class OneViewController: UIViewController,UITableViewDataSource,UITableViewDeleg
                         cell = InfoTableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
                     }
                     cell?.senduser.text=(items[indexPath.row] as itemMess).username
-                    cell?.Message.text=(items[indexPath.row] as itemMess).content
+                    
+                    var mess=(items[indexPath.row] as itemMess).content
+                    var messcontent:String;
+                    if mess.characters.count>80
+                    {
+                        messcontent=(mess as NSString).substringToIndex(80).stringByAppendingString("...")
+                    }else
+                    {
+                        messcontent=mess;
+                    }
+                    cell?.Message.text=messcontent
+                    
+                    //cell?.Message.text=(items[indexPath.row] as itemMess).content
                     cell?.sendtime.text=(items[indexPath.row] as itemMess).time
                     cell?.sendaddress.text=(items[indexPath.row] as itemMess).address
 
