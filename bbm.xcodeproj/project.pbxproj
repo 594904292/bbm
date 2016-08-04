@@ -2870,8 +2870,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ni ha (V5W7R3B3PQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ni ha (V5W7R3B3PQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: ni ha (GAX7B99CPF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ni ha (GAX7B99CPF)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2898,7 +2898,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2ad6794d-e68d-4f5b-8100-23bec3ed8292";
+				PROVISIONING_PROFILE = "cd0176fa-07d7-482b-a635-5ef98661f09e";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
@@ -2909,8 +2909,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: ni ha (V5W7R3B3PQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ni ha (V5W7R3B3PQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: ni ha (GAX7B99CPF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ni ha (GAX7B99CPF)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2937,7 +2937,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bbxiaoqu.bbm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2ad6794d-e68d-4f5b-8100-23bec3ed8292";
+				PROVISIONING_PROFILE = "cd0176fa-07d7-482b-a635-5ef98661f09e";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
